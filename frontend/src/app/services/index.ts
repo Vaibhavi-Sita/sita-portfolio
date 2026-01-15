@@ -3,7 +3,9 @@
  * Export all services from this barrel file
  */
 
-export * from './api.service';
-export * from './auth.service';
-export * from './portfolio.service';
-export * from './state.service';
+export { ApiService } from './api.service';
+export { AuthService } from './auth.service';
+export { PortfolioService } from './portfolio.service';
+export { StateService } from './state.service';
+export { ScrollService } from './scroll.service';
+export { MotionService } from './motion.service';

@@ -1,8 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { PortfolioService, StateService } from '../../services';
+import { MotionService } from '../../services/motion.service';
 import { ContactFormData } from '../../models';
 import {
   HeroViewComponent,
@@ -11,6 +13,7 @@ import {
   ProjectsViewComponent,
   SkillsViewComponent,
   EducationViewComponent,
+  CertificationsViewComponent,
   ContactViewComponent
 } from '../../views';
 import { LoadingSpinnerComponent } from '../../shared';
@@ -29,6 +32,7 @@ import { LoadingSpinnerComponent } from '../../shared';
     ProjectsViewComponent,
     SkillsViewComponent,
     EducationViewComponent,
+    CertificationsViewComponent,
     ContactViewComponent,
     LoadingSpinnerComponent
   ],
@@ -38,34 +42,46 @@ import { LoadingSpinnerComponent } from '../../shared';
     }
 
     @if (state.error()) {
-      <div class="error-message">
-        <p>{{ state.error() }}</p>
-        <button (click)="loadPortfolio()">Try Again</button>
+      <div class="error-container">
+        <div class="error-content">
+          <h2>Oops! Something went wrong</h2>
+          <p>{{ state.error() }}</p>
+          <button class="btn-primary" (click)="loadPortfolio()">
+            Try Again
+          </button>
+        </div>
       </div>
     }
 
+    <!-- Home / Hero Section -->
     <app-hero-view
       [profile]="state.profile()"
       (viewWork)="scrollToSection('projects')"
       (contactClick)="scrollToSection('contact')">
     </app-hero-view>
 
+    <!-- About Section -->
     <app-about-view [profile]="state.profile()"></app-about-view>
 
+    <!-- Experience Section -->
     <app-experience-view [experiences]="state.experiences()"></app-experience-view>
 
+    <!-- Projects Section -->
     <app-projects-view 
       [projects]="state.projects()"
       (projectClick)="handleProjectClick($event)">
     </app-projects-view>
 
+    <!-- Skills Section -->
     <app-skills-view [categories]="state.skills()"></app-skills-view>
 
-    <app-education-view 
-      [education]="state.education()"
-      [certifications]="state.certifications()">
-    </app-education-view>
+    <!-- Education Section -->
+    <app-education-view [education]="state.education()"></app-education-view>
 
+    <!-- Certifications Section -->
+    <app-certifications-view [certifications]="state.certifications()"></app-certifications-view>
+
+    <!-- Contact Section -->
     <app-contact-view
       [settings]="state.contactSettings()"
       [isSubmitting]="isSubmittingContact"
@@ -73,34 +89,39 @@ import { LoadingSpinnerComponent } from '../../shared';
     </app-contact-view>
   `,
   styles: [`
-    .error-message {
+    .error-container {
+      min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 50vh;
-      text-align: center;
       padding: 2rem;
+      background: var(--bg-primary);
     }
 
-    .error-message p {
-      color: var(--error-color);
+    .error-content {
+      text-align: center;
+      max-width: 400px;
+    }
+
+    .error-content h2 {
+      font-size: 1.75rem;
       margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--color-tart-orange), var(--color-orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .error-message button {
-      padding: 0.75rem 1.5rem;
-      background: var(--primary-color);
-      color: white;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
+    .error-content p {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
     }
   `]
 })
-export class HomeController implements OnInit {
+export class HomeController implements OnInit, AfterViewInit, OnDestroy {
   private readonly portfolioService = inject(PortfolioService);
   private readonly router = inject(Router);
+  private readonly motionService = inject(MotionService);
   readonly state = inject(StateService);
 
   isSubmittingContact = false;
@@ -109,27 +130,41 @@ export class HomeController implements OnInit {
     this.loadPortfolio();
   }
 
+  ngAfterViewInit(): void {
+    this.motionService.init();
+  }
+
+  ngOnDestroy(): void {
+    this.motionService.destroy();
+  }
+
   loadPortfolio(): void {
     this.state.setLoading(true);
 
     forkJoin({
-      profile: this.portfolioService.getProfile(),
-      experiences: this.portfolioService.getExperiences(),
-      projects: this.portfolioService.getProjects(),
-      skills: this.portfolioService.getSkills(),
-      education: this.portfolioService.getEducation(),
-      certifications: this.portfolioService.getCertifications(),
-      contactSettings: this.portfolioService.getContactSettings()
+      profile: this.portfolioService.getProfile().pipe(catchError(() => of(null))),
+      experiences: this.portfolioService.getExperiences().pipe(catchError(() => of([]))),
+      projects: this.portfolioService.getProjects().pipe(catchError(() => of([]))),
+      skills: this.portfolioService.getSkills().pipe(catchError(() => of([]))),
+      education: this.portfolioService.getEducation().pipe(catchError(() => of([]))),
+      certifications: this.portfolioService.getCertifications().pipe(catchError(() => of([]))),
+      contactSettings: this.portfolioService.getContactSettings().pipe(catchError(() => of(null)))
     }).subscribe({
       next: (data) => {
-        this.state.profile.set(data.profile);
+        if (data.profile) {
+          this.state.profile.set(data.profile);
+        }
         this.state.experiences.set(data.experiences);
         this.state.projects.set(data.projects);
         this.state.skills.set(data.skills);
         this.state.education.set(data.education);
         this.state.certifications.set(data.certifications);
-        this.state.contactSettings.set(data.contactSettings);
+        if (data.contactSettings) {
+          this.state.contactSettings.set(data.contactSettings);
+        }
         this.state.setLoading(false);
+        // Re-run motion observers once content is rendered
+        setTimeout(() => this.motionService.refresh(), 50);
       },
       error: (err) => {
         console.error('Failed to load portfolio:', err);
@@ -141,7 +176,14 @@ export class HomeController implements OnInit {
   scrollToSection(sectionId: string): void {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const navbarHeight = 80;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - navbarHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   }
 

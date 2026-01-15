@@ -13,115 +13,233 @@ import { Profile } from '../../models';
   imports: [CommonModule, MatButtonModule, MatIconModule],
   template: `
     @if (profile) {
-    <section class="hero">
-      <div class="hero-content">
-        <h1 class="hero-name">{{ profile.name }}</h1>
+    <section
+      class="hero hero-gradient-bg parallax-section parallax-home"
+      id="home"
+      data-parallax
+      data-parallax-speed="0.08"
+      data-parallax-speed2="0.16"
+    >
+      <div class="hero-content reveal-on-scroll">
+        <p class="hero-greeting">Hey there, I’m</p>
+        <h1 class="hero-name text-gradient">{{ profile.name }}</h1>
         <p class="hero-title">{{ profile.title }}</p>
         @if (profile.tagline) {
-          <p class="hero-tagline">{{ profile.tagline }}</p>
+        <p class="hero-tagline">{{ profile.tagline }}</p>
+        } @else {
+        <p class="hero-tagline">
+          Building reliable things with clean code and AI.
+        </p>
         }
         <div class="hero-actions">
-          <button mat-raised-button color="primary" (click)="viewWork.emit()">
+          <button class="btn-primary" (click)="viewWork.emit()">
             View My Work
+            <mat-icon>arrow_forward</mat-icon>
           </button>
-          <button mat-stroked-button (click)="contactClick.emit()">
+          <button class="btn-secondary" (click)="contactClick.emit()">
             Get In Touch
           </button>
         </div>
         <div class="hero-social">
           @if (profile.githubUrl) {
-            <a [href]="profile.githubUrl" target="_blank" rel="noopener" aria-label="GitHub">
-              <mat-icon>code</mat-icon>
-            </a>
-          }
-          @if (profile.linkedinUrl) {
-            <a [href]="profile.linkedinUrl" target="_blank" rel="noopener" aria-label="LinkedIn">
-              <mat-icon>business</mat-icon>
-            </a>
-          }
-          @if (profile.email) {
-            <a [href]="'mailto:' + profile.email" aria-label="Email">
-              <mat-icon>email</mat-icon>
-            </a>
+          <a
+            [href]="profile.githubUrl"
+            target="_blank"
+            rel="noopener"
+            aria-label="GitHub"
+            class="social-link"
+          >
+            <mat-icon>code</mat-icon>
+          </a>
+          } @if (profile.linkedinUrl) {
+          <a
+            [href]="profile.linkedinUrl"
+            target="_blank"
+            rel="noopener"
+            aria-label="LinkedIn"
+            class="social-link"
+          >
+            <mat-icon>business</mat-icon>
+          </a>
+          } @if (profile.email) {
+          <a
+            [href]="'mailto:' + profile.email"
+            aria-label="Email"
+            class="social-link"
+          >
+            <mat-icon>email</mat-icon>
+          </a>
           }
         </div>
+      </div>
+      <div class="hero-decoration">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
       </div>
     </section>
     }
   `,
-  styles: [`
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-    }
+  styles: [
+    `
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 6rem 2rem 4rem;
+        position: relative;
+      }
 
-    .hero-content {
-      max-width: 800px;
-    }
+      .hero-content {
+        max-width: 900px;
+        position: relative;
+        z-index: 2;
+      }
 
-    .hero-name {
-      font-size: 4rem;
-      font-weight: 800;
-      margin: 0;
-      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+      .hero-greeting {
+        font-size: 1.125rem;
+        color: var(--color-blue-violet);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
 
-    .hero-title {
-      font-size: 1.75rem;
-      color: var(--text-secondary);
-      margin: 0.5rem 0;
-    }
-
-    .hero-tagline {
-      font-size: 1.25rem;
-      color: var(--text-muted);
-      margin: 1rem 0 2rem;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-bottom: 2rem;
-    }
-
-    .hero-social {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-    }
-
-    .hero-social a {
-      color: var(--text-secondary);
-      transition: color 0.2s, transform 0.2s;
-    }
-
-    .hero-social a:hover {
-      color: var(--primary-color);
-      transform: translateY(-2px);
-    }
-
-    @media (max-width: 768px) {
       .hero-name {
-        font-size: 2.5rem;
+        font-size: clamp(3rem, 8vw, 5.5rem);
+        font-weight: 800;
+        margin: 0;
+        line-height: 1.1;
+        letter-spacing: -0.03em;
       }
 
       .hero-title {
-        font-size: 1.25rem;
+        font-size: clamp(1.25rem, 3vw, 1.75rem);
+        color: var(--text-secondary);
+        margin: 1rem 0;
+        font-weight: 400;
+      }
+
+      .hero-tagline {
+        font-size: 1.125rem;
+        color: var(--text-muted);
+        margin: 0 auto 2.5rem;
+        max-width: 600px;
+        line-height: 1.7;
       }
 
       .hero-actions {
-        flex-direction: column;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-bottom: 3rem;
+        flex-wrap: wrap;
       }
-    }
-  `]
+
+      .hero-social {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+      }
+
+      .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border-subtle);
+        color: var(--text-secondary);
+        transition: all var(--transition-base);
+
+        &:hover {
+          color: var(--color-blue-violet);
+          border-color: var(--color-blue-violet);
+          transform: translateY(-3px);
+          box-shadow: var(--glow-violet);
+        }
+      }
+
+      .hero-decoration {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.5;
+        animation: float 10s ease-in-out infinite;
+      }
+
+      .orb-1 {
+        width: 400px;
+        height: 400px;
+        background: var(--color-blue-violet);
+        top: 10%;
+        left: -10%;
+        animation-delay: 0s;
+      }
+
+      .orb-2 {
+        width: 300px;
+        height: 300px;
+        background: var(--color-winter-sky);
+        top: 50%;
+        right: -5%;
+        animation-delay: -3s;
+      }
+
+      .orb-3 {
+        width: 250px;
+        height: 250px;
+        background: var(--color-orange);
+        bottom: 10%;
+        left: 20%;
+        animation-delay: -6s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translate(0, 0);
+        }
+        33% {
+          transform: translate(20px, -20px);
+        }
+        66% {
+          transform: translate(-20px, 20px);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero {
+          padding-top: 5rem;
+        }
+
+        .hero-actions {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .hero-actions button {
+          width: 100%;
+          max-width: 280px;
+        }
+
+        .orb {
+          opacity: 0.3;
+        }
+      }
+    `,
+  ],
 })
 export class HeroViewComponent {
   @Input() profile: Profile | null = null;

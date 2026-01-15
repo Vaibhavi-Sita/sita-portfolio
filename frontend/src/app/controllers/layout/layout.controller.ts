@@ -1,7 +1,7 @@
-import { Component, inject, HostListener, signal } from '@angular/core';
+import { Component, inject, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { StateService } from '../../services';
+import { StateService, ScrollService } from '../../services';
 import { NavbarViewComponent, FooterViewComponent } from '../../views';
 
 /**
@@ -16,12 +16,16 @@ import { NavbarViewComponent, FooterViewComponent } from '../../views';
       [title]="state.profile()?.name || 'Portfolio'"
       [darkMode]="state.darkMode()"
       [mobileMenuOpen]="state.mobileMenuOpen()"
-      [isScrolled]="isScrolled()"
+      [isScrolled]="scrollService.isScrolled()"
+      [activeSection]="scrollService.activeSection()"
+      [navItems]="navItems"
       (toggleDarkMode)="state.toggleDarkMode()"
-      (toggleMenu)="state.toggleMobileMenu()">
+      (toggleMenu)="state.toggleMobileMenu()"
+      (sectionClick)="onSectionClick($event)"
+      (closeMenu)="state.closeMobileMenu()">
     </app-navbar-view>
 
-    <main class="main-content" (click)="state.closeMobileMenu()" (keydown.escape)="state.closeMobileMenu()" tabindex="0">
+    <main class="main-content" id="main-content" role="main">
       <router-outlet></router-outlet>
     </main>
 
@@ -36,16 +40,41 @@ import { NavbarViewComponent, FooterViewComponent } from '../../views';
 
     .main-content {
       flex: 1;
-      padding-top: 64px; /* Account for fixed navbar */
     }
   `]
 })
-export class LayoutController {
+export class LayoutController implements OnInit, AfterViewInit {
   readonly state = inject(StateService);
-  readonly isScrolled = signal(false);
+  readonly scrollService = inject(ScrollService);
 
-  @HostListener('window:scroll')
-  onScroll(): void {
-    this.isScrolled.set(window.scrollY > 50);
+  readonly navItems = [
+    { id: 'home', label: 'Home' },
+    { id: 'about', label: 'About' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'projects', label: 'Projects' },
+    { id: 'skills', label: 'Skills' },
+    { id: 'education', label: 'Education' },
+    { id: 'certifications', label: 'Certifications' },
+    { id: 'contact', label: 'Contact' }
+  ];
+
+  ngOnInit(): void {
+    // Handle initial hash in URL
+    this.scrollService.handleInitialHash();
+  }
+
+  ngAfterViewInit(): void {
+    // Initialize section observer after view is ready
+    setTimeout(() => {
+      this.scrollService.initSectionObserver(
+        this.navItems.map(item => item.id)
+      );
+    }, 500);
+  }
+
+
+  onSectionClick(sectionId: string): void {
+    this.scrollService.scrollToSection(sectionId);
+    this.state.closeMobileMenu();
   }
 }

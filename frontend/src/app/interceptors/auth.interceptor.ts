@@ -3,26 +3,23 @@ import { inject } from '@angular/core';
 import { AuthService } from '../services';
 
 /**
- * Auth interceptor to add JWT token to requests
+ * Auth interceptor to add JWT token to admin endpoints.
  */
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const token = authService.getToken();
 
-  // Skip authentication for public endpoints
-  if (req.url.includes('/api/public/') || req.url.includes('/api/auth/')) {
+  // Only attach for admin API calls
+  const isAdminRequest = req.url.includes('/api/admin/');
+  if (!isAdminRequest || !token) {
     return next(req);
   }
 
-  // Add token to request if available
-  if (token) {
-    const authReq = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return next(authReq);
-  }
+  const authReq = req.clone({
+    setHeaders: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 
-  return next(req);
+  return next(authReq);
 };

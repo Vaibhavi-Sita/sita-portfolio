@@ -1,157 +1,267 @@
-// Custom Theming for Angular Material
+// ===========================================
+// PORTFOLIO THEME - Custom Palette
+// ===========================================
+// Mango: #FFBE0B
+// Orange: #FB5607
+// Winter Sky: #FF006E
+// Blue Violet: #8338EC
+// Tart Orange: #FF3333
+// Base: #0B0B10 (near-black)
+// ===========================================
+
 @use '@angular/material' as mat;
 
-// Include the common styles for Angular Material
+// ===========================================
+// SCSS Variables - Palette Colors
+// ===========================================
+
+$color-mango: #FFBE0B;
+$color-orange: #FB5607;
+$color-winter-sky: #FF006E;
+$color-blue-violet: #8338EC;
+$color-tart-orange: #FF3333;
+
+// Neutrals
+$color-base-dark: #0B0B10;
+$color-base-light: #FFFFFF;
+$color-surface-dark: rgba($color-base-light, 0.04);
+$color-surface-elevated: rgba($color-base-light, 0.08);
+$color-border-subtle: rgba(255, 255, 255, 0.08);
+$color-border-medium: rgba(255, 255, 255, 0.15);
+
+// Text colors
+$color-text-primary: #FFFFFF;
+$color-text-secondary: rgba(255, 255, 255, 0.7);
+$color-text-muted: rgba(255, 255, 255, 0.45);
+$color-text-inverse: #0B0B10;
+
+// ===========================================
+// Angular Material Custom Palettes
+// ===========================================
+
 @include mat.core();
 
-// Define custom palettes
-$primary-palette: (
-  50: #e3f2fd,
-  100: #bbdefb,
-  200: #90caf9,
-  300: #64b5f6,
-  400: #42a5f5,
-  500: #2196f3,
-  600: #1e88e5,
-  700: #1976d2,
-  800: #1565c0,
-  900: #0d47a1,
+// Blue Violet palette (primary)
+$blue-violet-palette: (
+  50: $color-blue-violet,
+  100: $color-blue-violet,
+  200: $color-blue-violet,
+  300: $color-blue-violet,
+  400: $color-blue-violet,
+  500: $color-blue-violet,
+  600: $color-blue-violet,
+  700: $color-blue-violet,
+  800: $color-blue-violet,
+  900: $color-blue-violet,
   contrast: (
-    50: rgba(0, 0, 0, 0.87),
-    100: rgba(0, 0, 0, 0.87),
-    200: rgba(0, 0, 0, 0.87),
-    300: rgba(0, 0, 0, 0.87),
-    400: rgba(0, 0, 0, 0.87),
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
+    50: $color-text-primary,
+    100: $color-text-primary,
+    200: $color-text-primary,
+    300: $color-text-primary,
+    400: $color-text-primary,
+    500: $color-text-primary,
+    600: $color-text-primary,
+    700: $color-text-primary,
+    800: $color-text-primary,
+    900: $color-text-primary,
   )
 );
 
-$accent-palette: (
-  50: #fce4ec,
-  100: #f8bbd9,
-  200: #f48fb1,
-  300: #f06292,
-  400: #ec407a,
-  500: #e91e63,
-  600: #d81b60,
-  700: #c2185b,
-  800: #ad1457,
-  900: #880e4f,
+// Winter Sky palette (accent)
+$winter-sky-palette: (
+  50: $color-winter-sky,
+  100: $color-winter-sky,
+  200: $color-winter-sky,
+  300: $color-winter-sky,
+  400: $color-winter-sky,
+  500: $color-winter-sky,
+  600: $color-winter-sky,
+  700: $color-winter-sky,
+  800: $color-winter-sky,
+  900: $color-winter-sky,
   contrast: (
-    50: rgba(0, 0, 0, 0.87),
-    100: rgba(0, 0, 0, 0.87),
-    200: rgba(0, 0, 0, 0.87),
-    300: rgba(0, 0, 0, 0.87),
-    400: rgba(0, 0, 0, 0.87),
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
+    50: $color-text-primary,
+    100: $color-text-primary,
+    200: $color-text-primary,
+    300: $color-text-primary,
+    400: $color-text-primary,
+    500: $color-text-primary,
+    600: $color-text-primary,
+    700: $color-text-primary,
+    800: $color-text-primary,
+    900: $color-text-primary,
   )
 );
 
-// Create the theme
-$portfolio-primary: mat.define-palette($primary-palette);
-$portfolio-accent: mat.define-palette($accent-palette);
+// Define palettes
+$portfolio-primary: mat.define-palette($blue-violet-palette);
+$portfolio-accent: mat.define-palette($winter-sky-palette);
 
-$portfolio-theme: mat.define-light-theme((
-  color: (
-    primary: $portfolio-primary,
-    accent: $portfolio-accent,
-  ),
-  typography: mat.define-typography-config(),
-  density: 0,
-));
-
-// Include theme styles for core and each component
-@include mat.all-component-themes($portfolio-theme);
-
-// Dark theme
+// Create dark theme (default)
 $portfolio-dark-theme: mat.define-dark-theme((
   color: (
     primary: $portfolio-primary,
     accent: $portfolio-accent,
   ),
+  typography: mat.define-typography-config(
+    $font-family: '"Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, sans-serif',
+  ),
+  density: 0,
 ));
 
-.dark-theme {
-  @include mat.all-component-colors($portfolio-dark-theme);
-}
+// Apply dark theme as default
+@include mat.all-component-themes($portfolio-dark-theme);
 
 // ===========================================
-// CSS Variables for theming
+// CSS Custom Properties
 // ===========================================
 
 :root {
-  // Colors
-  --primary-color: #2196f3;
-  --accent-color: #e91e63;
-  --error-color: #f44336;
-  --success-color: #4caf50;
-  --warning-color: #ff9800;
+  // Palette colors
+  --color-mango: #{$color-mango};
+  --color-orange: #{$color-orange};
+  --color-winter-sky: #{$color-winter-sky};
+  --color-blue-violet: #{$color-blue-violet};
+  --color-tart-orange: #{$color-tart-orange};
 
-  // Light theme
-  --bg-primary: #ffffff;
-  --bg-secondary: #f5f5f5;
-  --bg-card: #ffffff;
-  --text-primary: #212121;
-  --text-secondary: #616161;
-  --text-muted: #9e9e9e;
+  // Semantic colors
+  --primary-color: var(--color-blue-violet);
+  --accent-color: var(--color-winter-sky);
+  --highlight-color: var(--color-mango);
+  --cta-color: var(--color-orange);
+  --error-color: var(--color-tart-orange);
 
-  // Skill proficiency colors
-  --expert-bg: rgba(76, 175, 80, 0.2);
-  --advanced-bg: rgba(33, 150, 243, 0.2);
-  --intermediate-bg: rgba(255, 152, 0, 0.2);
-}
+  // Background colors
+  --bg-primary: #{$color-base-dark};
+  --bg-secondary: #{$color-surface-dark};
+  --bg-elevated: #{$color-surface-elevated};
+  --bg-card: #{$color-surface-elevated};
 
-.dark-theme {
-  --bg-primary: #121212;
-  --bg-secondary: #1e1e1e;
-  --bg-card: #2d2d2d;
-  --text-primary: #ffffff;
-  --text-secondary: #b0b0b0;
-  --text-muted: #757575;
+  // Text colors
+  --text-primary: #{$color-text-primary};
+  --text-secondary: #{$color-text-secondary};
+  --text-muted: #{$color-text-muted};
+  --text-inverse: #{$color-text-inverse};
+
+  // Border colors
+  --border-subtle: #{$color-border-subtle};
+  --border-medium: #{$color-border-medium};
+
+  // Gradients
+  --gradient-hero: linear-gradient(
+    135deg,
+    #{$color-blue-violet} 0%,
+    #{$color-winter-sky} 50%,
+    #{$color-orange} 100%
+  );
+  
+  --gradient-vibrant: linear-gradient(
+    90deg,
+    #{$color-mango} 0%,
+    #{$color-orange} 25%,
+    #{$color-winter-sky} 50%,
+    #{$color-blue-violet} 75%,
+    #{$color-tart-orange} 100%
+  );
+
+  --gradient-warm: linear-gradient(
+    135deg,
+    #{$color-mango} 0%,
+    #{$color-orange} 50%,
+    #{$color-tart-orange} 100%
+  );
+
+  --gradient-cool: linear-gradient(
+    135deg,
+    #{$color-blue-violet} 0%,
+    #{$color-winter-sky} 100%
+  );
+
+  --gradient-sunset: linear-gradient(
+    135deg,
+    #{$color-winter-sky} 0%,
+    #{$color-orange} 50%,
+    #{$color-mango} 100%
+  );
+
+  // Glows
+  --glow-violet: 0 0 40px rgba(131, 56, 236, 0.4);
+  --glow-pink: 0 0 40px rgba(255, 0, 110, 0.4);
+  --glow-orange: 0 0 40px rgba(251, 86, 7, 0.4);
+  --glow-mango: 0 0 40px rgba(255, 190, 11, 0.4);
+
+  // Shadows
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 8px 32px rgba(131, 56, 236, 0.3);
+
+  // Transitions
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
 }
 
 // ===========================================
-// Global Styles
+// Global Reset & Base Styles
 // ===========================================
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   margin: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
-  transition: background-color 0.3s, color 0.3s;
+  min-height: 100vh;
+}
+
+// ===========================================
+// Typography
+// ===========================================
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 0;
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3rem); }
+h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+
+p {
+  margin-top: 0;
 }
 
 a {
-  color: var(--primary-color);
+  color: var(--color-blue-violet);
   text-decoration: none;
-  transition: color 0.2s;
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--color-winter-sky);
+  }
 }
 
-a:hover {
-  color: var(--accent-color);
-}
+// ===========================================
+// Custom Scrollbar
+// ===========================================
 
-// Custom scrollbar
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -159,50 +269,694 @@ a:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--text-muted);
+  background: var(--border-medium);
+  border-radius: 5px;
+  border: 2px solid var(--bg-secondary);
+
+  &:hover {
+    background: var(--color-blue-violet);
+  }
+}
+
+// ===========================================
+// REUSABLE CLASSES - Hero Gradient Background
+// ===========================================
+
+.hero-gradient-bg {
+  --parallax-layer-1: radial-gradient(ellipse at 20% 30%, rgba($color-blue-violet, 0.3) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 20%, rgba($color-winter-sky, 0.25) 0%, transparent 50%);
+  --parallax-layer-2: radial-gradient(ellipse at 60% 80%, rgba($color-orange, 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse at 10% 90%, rgba($color-mango, 0.2) 0%, transparent 45%);
+}
+
+// Solid gradient hero variant
+.hero-gradient-solid {
+  background: linear-gradient(
+    135deg,
+    #{$color-base-dark} 0%,
+    #{$color-blue-violet} 50%,
+    #{$color-base-dark} 100%
+  );
+}
+
+// ===========================================
+// REUSABLE CLASSES - Accent Borders
+// ===========================================
+
+.accent-border {
+  border: 1px solid transparent;
+  background: 
+    linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+    var(--gradient-cool) border-box;
+}
+
+.accent-border-warm {
+  border: 1px solid transparent;
+  background: 
+    linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+    var(--gradient-warm) border-box;
+}
+
+.accent-border-vibrant {
+  border: 2px solid transparent;
+  background: 
+    linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+    var(--gradient-vibrant) border-box;
+}
+
+.accent-border-left {
+  border-left: 3px solid var(--color-blue-violet);
+}
+
+.accent-border-left-warm {
+  border-left: 3px solid var(--color-orange);
+}
+
+.accent-border-glow {
+  border: 1px solid rgba($color-blue-violet, 0.5);
+  box-shadow: 
+    inset 0 0 20px rgba($color-blue-violet, 0.1),
+    0 0 20px rgba($color-blue-violet, 0.2);
+}
+
+// ===========================================
+// REUSABLE CLASSES - Code-like Tag Chips
+// ===========================================
+
+.chip-code {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+  font-size: 0.8125rem;
+  font-weight: 500;
   border-radius: 4px;
+  background: rgba($color-blue-violet, 0.15);
+  color: var(--color-blue-violet);
+  border: 1px solid rgba($color-blue-violet, 0.3);
+  transition: all var(--transition-fast);
+
+  &:hover {
+    background: rgba($color-blue-violet, 0.25);
+    border-color: rgba($color-blue-violet, 0.5);
+  }
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-secondary);
+.chip-code-orange {
+  background: rgba($color-orange, 0.15);
+  color: var(--color-orange);
+  border-color: rgba($color-orange, 0.3);
+
+  &:hover {
+    background: rgba($color-orange, 0.25);
+    border-color: rgba($color-orange, 0.5);
+  }
 }
 
-// Typography
-h1, h2, h3, h4, h5, h6 {
+.chip-code-pink {
+  background: rgba($color-winter-sky, 0.15);
+  color: var(--color-winter-sky);
+  border-color: rgba($color-winter-sky, 0.3);
+
+  &:hover {
+    background: rgba($color-winter-sky, 0.25);
+    border-color: rgba($color-winter-sky, 0.5);
+  }
+}
+
+.chip-code-mango {
+  background: rgba($color-mango, 0.15);
+  color: $color-mango;
+  border-color: rgba($color-mango, 0.3);
+
+  &:hover {
+    background: rgba($color-mango, 0.25);
+    border-color: rgba($color-mango, 0.5);
+  }
+}
+
+// Chip group container
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+// ===========================================
+// REUSABLE CLASSES - Button Variants
+// ===========================================
+
+// Primary button (Blue Violet with gradient)
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-primary);
+  background: linear-gradient(135deg, $color-blue-violet 0%, $color-winter-sky 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-md), var(--glow-violet);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg), 0 0 50px rgba($color-blue-violet, 0.5);
+    background: var(--gradient-cool);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// Secondary button (Outlined with Winter Sky accent)
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-primary);
+  background: transparent;
+  border: 2px solid var(--color-winter-sky);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--color-winter-sky);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    z-index: -1;
+  }
+
+  &:hover {
+    color: var(--text-inverse);
+    transform: translateY(-2px);
+    box-shadow: var(--glow-pink);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// CTA button (Orange - high emphasis)
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  font-family: inherit;
+  font-size: 1.125rem;
   font-weight: 700;
-  line-height: 1.2;
-  margin-top: 0;
+  text-decoration: none;
+  color: var(--text-inverse);
+  background: linear-gradient(135deg, $color-orange 0%, $color-tart-orange 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-md), var(--glow-orange);
+
+  &:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: var(--shadow-lg), 0 0 60px rgba($color-orange, 0.6);
+  }
+
+  &:active {
+    transform: translateY(0) scale(1);
+  }
 }
 
-// Utility classes
-.text-center {
+// Ghost button (Minimal)
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+
+  &:hover {
+    color: var(--text-primary);
+    border-color: var(--color-blue-violet);
+    background: rgba($color-blue-violet, 0.1);
+  }
+}
+
+// Icon button
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-family: inherit;
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+
+  &:hover {
+    color: var(--color-blue-violet);
+    border-color: var(--color-blue-violet);
+    box-shadow: var(--glow-violet);
+  }
+}
+
+// ===========================================
+// Gradient Text
+// ===========================================
+
+.text-gradient {
+  background: var(--gradient-hero);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-warm {
+  background: var(--gradient-warm);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-cool {
+  background: var(--gradient-cool);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// ===========================================
+// Color Utility Classes
+// ===========================================
+
+.text-mango { color: var(--color-mango); }
+.text-orange { color: var(--color-orange); }
+.text-winter-sky { color: var(--color-winter-sky); }
+.text-blue-violet { color: var(--color-blue-violet); }
+.text-tart-orange { color: var(--color-tart-orange); }
+
+.bg-mango { background-color: var(--color-mango); }
+.bg-orange { background-color: var(--color-orange); }
+.bg-winter-sky { background-color: var(--color-winter-sky); }
+.bg-blue-violet { background-color: var(--color-blue-violet); }
+.bg-tart-orange { background-color: var(--color-tart-orange); }
+
+// ===========================================
+// Card Styles
+// ===========================================
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all var(--transition-base);
+
+  &:hover {
+    border-color: var(--border-medium);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.card-elevated {
+  @extend .card;
+  box-shadow: var(--shadow-sm);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+.card-glow {
+  @extend .card;
+
+  &:hover {
+    border-color: rgba($color-blue-violet, 0.5);
+    box-shadow: var(--shadow-glow);
+  }
+}
+
+// ===========================================
+// Section Styles
+// ===========================================
+
+.section {
+  padding: 5rem 2rem;
+  scroll-margin-top: 64px;
+}
+
+.section-alt {
+  @extend .section;
+  background: var(--bg-secondary);
+}
+
+.section-header {
   text-align: center;
+  margin-bottom: 3rem;
 }
 
-.text-primary {
-  color: var(--primary-color);
+.section-title {
+  margin-bottom: 0.5rem;
 }
 
-.text-accent {
-  color: var(--accent-color);
+.section-subtitle {
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  margin: 0;
 }
+
+// ===========================================
+// Container
+// ===========================================
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
 }
 
-// Section spacing
-section {
-  scroll-margin-top: 64px;
+.container-sm {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
-// Material overrides
+.container-lg {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+// ===========================================
+// Angular Material Overrides
+// ===========================================
+
 .mat-mdc-card {
   --mdc-elevated-card-container-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
 }
 
 .mat-toolbar {
   --mat-toolbar-container-background-color: transparent;
+}
+
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button {
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+}
+
+.mat-mdc-raised-button.mat-primary {
+  background: linear-gradient(135deg, $color-blue-violet 0%, $color-winter-sky 100%) !important;
+  box-shadow: var(--shadow-sm), 0 0 20px rgba($color-blue-violet, 0.3) !important;
+
+  &:hover {
+    box-shadow: var(--shadow-md), 0 0 30px rgba($color-blue-violet, 0.4) !important;
+  }
+}
+
+.mat-mdc-chip {
+  --mdc-chip-elevated-container-color: rgba(131, 56, 236, 0.15);
+  --mdc-chip-label-text-color: #{$color-blue-violet};
+  border: 1px solid rgba($color-blue-violet, 0.3) !important;
+  font-family: 'JetBrains Mono', 'SF Mono', monospace !important;
+  font-size: 0.8125rem !important;
+}
+
+.mat-mdc-form-field {
+  --mdc-filled-text-field-container-color: var(--bg-elevated);
+  --mdc-outlined-text-field-outline-color: var(--border-medium);
+  --mdc-outlined-text-field-focus-outline-color: var(--color-blue-violet);
+}
+
+.mat-mdc-progress-spinner circle {
+  stroke: var(--color-blue-violet) !important;
+}
+
+// ===========================================
+// Focus States (Accessibility)
+// ===========================================
+
+:focus-visible {
+  outline: 2px solid var(--color-blue-violet);
+  outline-offset: 2px;
+}
+
+// ===========================================
+// Selection
+// ===========================================
+
+::selection {
+  background: rgba($color-blue-violet, 0.4);
+  color: var(--text-primary);
+}
+
+// ===========================================
+// Animations
+// ===========================================
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba($color-blue-violet, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba($color-blue-violet, 0.5);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+// ===========================================
+// Microinteractions
+// ===========================================
+
+.hover-elevate {
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+.underline-anim {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 2px;
+    background: var(--gradient-cool);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-base);
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+  }
+}
+
+// ===========================================
+// Parallax Section Backgrounds
+// ===========================================
+
+.parallax-section {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    transform: translate3d(0, var(--parallax-y-1, 0px), 0);
+    transition: transform var(--transition-slow);
+    will-change: transform;
+  }
+
+  &::before {
+    background: var(--parallax-layer-1, var(--gradient-hero));
+  }
+
+  &::after {
+    background: var(--parallax-layer-2, var(--gradient-sunset));
+    opacity: 0.2;
+    mix-blend-mode: screen;
+    transform: translate3d(0, var(--parallax-y-2, 0px), 0);
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.parallax-home {
+  --parallax-layer-1: radial-gradient(ellipse at 15% 20%, rgba($color-blue-violet, 0.3) 0%, transparent 60%),
+    radial-gradient(ellipse at 85% 10%, rgba($color-winter-sky, 0.25) 0%, transparent 55%);
+  --parallax-layer-2: radial-gradient(ellipse at 70% 80%, rgba($color-orange, 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse at 10% 90%, rgba($color-mango, 0.18) 0%, transparent 45%);
+}
+
+.parallax-about {
+  --parallax-layer-1: radial-gradient(ellipse at 20% 30%, rgba($color-mango, 0.2) 0%, transparent 60%),
+    radial-gradient(ellipse at 85% 15%, rgba($color-blue-violet, 0.2) 0%, transparent 55%);
+  --parallax-layer-2: radial-gradient(ellipse at 50% 85%, rgba($color-winter-sky, 0.18) 0%, transparent 55%);
+}
+
+.parallax-experience {
+  --parallax-layer-1: radial-gradient(ellipse at 10% 20%, rgba($color-blue-violet, 0.22) 0%, transparent 60%);
+  --parallax-layer-2: radial-gradient(ellipse at 80% 70%, rgba($color-orange, 0.18) 0%, transparent 55%);
+}
+
+.parallax-projects {
+  --parallax-layer-1: radial-gradient(ellipse at 25% 15%, rgba($color-winter-sky, 0.2) 0%, transparent 60%);
+  --parallax-layer-2: radial-gradient(ellipse at 80% 80%, rgba($color-mango, 0.18) 0%, transparent 55%);
+}
+
+.parallax-skills {
+  --parallax-layer-1: radial-gradient(ellipse at 15% 25%, rgba($color-blue-violet, 0.2) 0%, transparent 60%);
+  --parallax-layer-2: radial-gradient(ellipse at 85% 75%, rgba($color-tart-orange, 0.18) 0%, transparent 55%);
+}
+
+.parallax-education {
+  --parallax-layer-1: radial-gradient(ellipse at 20% 20%, rgba($color-mango, 0.2) 0%, transparent 60%);
+  --parallax-layer-2: radial-gradient(ellipse at 75% 80%, rgba($color-blue-violet, 0.18) 0%, transparent 55%);
+}
+
+.parallax-certifications {
+  --parallax-layer-1: radial-gradient(ellipse at 15% 30%, rgba($color-winter-sky, 0.2) 0%, transparent 60%);
+  --parallax-layer-2: radial-gradient(ellipse at 85% 70%, rgba($color-orange, 0.18) 0%, transparent 55%);
+}
+
+.parallax-contact {
+  --parallax-layer-1: radial-gradient(ellipse at 10% 25%, rgba($color-tart-orange, 0.2) 0%, transparent 60%);
+  --parallax-layer-2: radial-gradient(ellipse at 80% 75%, rgba($color-blue-violet, 0.18) 0%, transparent 55%);
+}
+
+// ===========================================
+// Reveal on Scroll
+// ===========================================
+
+.reveal-on-scroll {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: opacity var(--transition-base), transform var(--transition-base);
+  will-change: opacity, transform;
+}
+
+.motion-enabled .reveal-on-scroll {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+}
+
+.motion-enabled .reveal-on-scroll.reveal-in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+// ===========================================
+// Reduced Motion
+// ===========================================
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .parallax-section::before,
+  .parallax-section::after {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .reveal-on-scroll {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .animate-pulse-glow,
+  .animate-gradient,
+  .orb,
+  .availability-dot,
+  .spinning {
+    animation: none !important;
+  }
 }

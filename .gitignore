@@ -161,3 +161,4 @@ ehthumbs_vista.db
 # Test output
 test-results/
 playwright-report/
+backend/src/test/java/com/sita/portfolio/controller/PasswordGen.java

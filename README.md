@@ -52,11 +52,13 @@ The application will be available at `http://localhost:4200`
 For local development, run both services in separate terminals:
 
 **Terminal 1 - Backend:**
+
 ```bash
 cd backend && ./mvnw spring-boot:run
 ```
 
 **Terminal 2 - Frontend:**
+
 ```bash
 cd frontend && ng serve
 ```
@@ -64,6 +66,7 @@ cd frontend && ng serve
 ## Build for Production
 
 ### Backend
+
 ```bash
 cd backend
 ./mvnw clean package
@@ -71,6 +74,7 @@ java -jar target/*.jar
 ```
 
 ### Frontend
+
 ```bash
 cd frontend
 ng build --configuration production

@@ -9,8 +9,10 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="section-header">
-      <h2 class="section-title">{{ title }}</h2>
+    <div class="section-header reveal-on-scroll">
+      <span class="section-number">{{ number }}</span>
+      <h2 class="section-title underline-anim">{{ title }}</h2>
+      <div class="section-line"></div>
       @if (subtitle) {
         <p class="section-subtitle">{{ subtitle }}</p>
       }
@@ -19,27 +21,53 @@ import { CommonModule } from '@angular/common';
   styles: [`
     .section-header {
       text-align: center;
-      margin-bottom: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    .section-number {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-blue-violet);
+      margin-bottom: 0.5rem;
+      opacity: 0.8;
     }
 
     .section-title {
-      font-size: 2.5rem;
+      font-size: clamp(2rem, 5vw, 2.75rem);
       font-weight: 700;
-      margin: 0 0 0.5rem 0;
-      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      margin: 0;
+      background: linear-gradient(
+        135deg,
+        var(--color-blue-violet) 0%,
+        var(--color-winter-sky) 100%
+      );
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+    }
+
+    .section-line {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-blue-violet), var(--color-winter-sky));
+      margin: 1rem auto;
+      border-radius: 2px;
     }
 
     .section-subtitle {
       font-size: 1.125rem;
       color: var(--text-secondary);
       margin: 0;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
     }
   `]
 })
 export class SectionHeaderComponent {
   @Input({ required: true }) title!: string;
   @Input() subtitle?: string;
+  @Input() number?: string;
 }

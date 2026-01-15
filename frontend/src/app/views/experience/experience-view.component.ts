@@ -12,156 +12,254 @@ import { SectionHeaderComponent } from '../../shared';
 @Component({
   selector: 'app-experience-view',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule, MatChipsModule, SectionHeaderComponent, DatePipe],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatIconModule,
+    MatChipsModule,
+    SectionHeaderComponent,
+    DatePipe,
+  ],
   template: `
-    <section class="experience" id="experience">
-      <app-section-header 
-        title="Work Experience" 
-        subtitle="My professional journey">
+    <section
+      class="experience section parallax-section parallax-experience"
+      id="experience"
+      data-parallax
+      data-parallax-speed="0.12"
+      data-parallax-speed2="0.22"
+    >
+      <app-section-header
+        title="Experience"
+        subtitle="My professional journey"
+        number="02"
+      >
       </app-section-header>
 
+      @if (!experiences.length) {
+      <div class="empty-state reveal-on-scroll">
+        <p class="empty-title">No timelines yet.</p>
+        <p class="empty-copy">
+          Think of this as a TODO: more commits incoming.
+        </p>
+      </div>
+      }
+
       <div class="timeline">
-        @for (exp of experiences; track exp.id) {
-          <div class="timeline-item">
-            <div class="timeline-marker"></div>
-            <mat-card class="experience-card">
-              <mat-card-header>
-                <mat-card-title>{{ exp.role }}</mat-card-title>
-                <mat-card-subtitle>
-                  <span class="company">{{ exp.company }}</span>
-                  @if (exp.location) {
-                    <span class="location">• {{ exp.location }}</span>
-                  }
-                </mat-card-subtitle>
-              </mat-card-header>
-              <mat-card-content>
-                <p class="date-range">
-                  {{ exp.startDate | date:'MMM yyyy' }} - 
-                  {{ exp.endDate ? (exp.endDate | date:'MMM yyyy') : 'Present' }}
-                </p>
-                @if (exp.description) {
-                  <p class="description">{{ exp.description }}</p>
-                }
-                @if (exp.bullets.length) {
-                  <ul class="bullets">
-                    @for (bullet of exp.bullets; track bullet.id) {
-                      <li>{{ bullet.content }}</li>
-                    }
-                  </ul>
-                }
-                @if (exp.techStack) {
-                  <div class="tech-stack">
-                    @for (tech of getTechArray(exp.techStack); track tech) {
-                      <mat-chip>{{ tech }}</mat-chip>
-                    }
-                  </div>
-                }
-              </mat-card-content>
-            </mat-card>
+        @for (exp of experiences; track exp.id; let i = $index) {
+        <div class="timeline-item" [class.timeline-item-right]="i % 2 === 1">
+          <div class="timeline-marker">
+            <div class="marker-dot"></div>
           </div>
+          <div class="experience-card card-glow reveal-on-scroll hover-elevate">
+            <div class="card-header">
+              <h3 class="role">{{ exp.role }}</h3>
+              <div class="company-info">
+                <span class="company text-blue-violet">{{ exp.company }}</span>
+                @if (exp.location) {
+                <span class="location">• {{ exp.location }}</span>
+                }
+              </div>
+              <p class="date-range">
+                {{ exp.startDate | date : 'MMM yyyy' }} —
+                {{
+                  exp.endDate ? (exp.endDate | date : 'MMM yyyy') : 'Present'
+                }}
+              </p>
+            </div>
+
+            @if (exp.description) {
+            <p class="description">{{ exp.description }}</p>
+            } @if (exp.bullets.length) {
+            <ul class="bullets">
+              @for (bullet of exp.bullets; track bullet.id) {
+              <li>{{ bullet.content }}</li>
+              }
+            </ul>
+            } @if (exp.techStack) {
+            <div class="chip-group">
+              @for (tech of getTechArray(exp.techStack); track tech) {
+              <span class="chip-code">{{ tech }}</span>
+              }
+            </div>
+            }
+          </div>
+        </div>
         }
+        <div class="timeline-line"></div>
       </div>
     </section>
   `,
-  styles: [`
-    .experience {
-      padding: 5rem 2rem;
-    }
-
-    .timeline {
-      max-width: 800px;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: var(--primary-color);
-    }
-
-    .timeline-item {
-      padding-left: 2rem;
-      position: relative;
-      margin-bottom: 2rem;
-    }
-
-    .timeline-marker {
-      position: absolute;
-      left: -5px;
-      top: 1.5rem;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--primary-color);
-      border: 2px solid var(--bg-primary);
-    }
-
-    .experience-card {
-      background: var(--bg-card);
-    }
-
-    .company {
-      font-weight: 600;
-      color: var(--primary-color);
-    }
-
-    .location {
-      color: var(--text-muted);
-    }
-
-    .date-range {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      margin-bottom: 1rem;
-    }
-
-    .description {
-      color: var(--text-primary);
-      line-height: 1.6;
-    }
-
-    .bullets {
-      margin: 1rem 0;
-      padding-left: 1.25rem;
-    }
-
-    .bullets li {
-      margin-bottom: 0.5rem;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
-
-    .tech-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 1rem;
-    }
-
-    @media (max-width: 768px) {
-      .timeline::before {
-        left: 10px;
+  styles: [
+    `
+      .experience {
+        background: var(--bg-secondary);
       }
 
-      .timeline-marker {
-        left: 5px;
+      .empty-state {
+        text-align: center;
+        color: var(--text-secondary);
+        margin: 2rem 0 3rem;
+      }
+
+      .empty-title {
+        margin: 0 0 0.25rem;
+        font-weight: 700;
+      }
+
+      .empty-copy {
+        margin: 0;
+        color: var(--text-muted);
+      }
+
+      .timeline {
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .timeline-line {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(
+          180deg,
+          var(--color-blue-violet) 0%,
+          var(--color-winter-sky) 50%,
+          var(--color-orange) 100%
+        );
+        transform: translateX(-50%);
       }
 
       .timeline-item {
-        padding-left: 2.5rem;
+        position: relative;
+        padding: 0 0 3rem;
+        width: 50%;
+        padding-right: 3rem;
       }
-    }
-  `]
+
+      .timeline-item-right {
+        margin-left: 50%;
+        padding-right: 0;
+        padding-left: 3rem;
+      }
+
+      .timeline-marker {
+        position: absolute;
+        right: -8px;
+        top: 0;
+        z-index: 2;
+      }
+
+      .timeline-item-right .timeline-marker {
+        right: auto;
+        left: -8px;
+      }
+
+      .marker-dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--color-blue-violet);
+        border: 3px solid var(--bg-secondary);
+        box-shadow: 0 0 20px rgba(131, 56, 236, 0.5);
+      }
+
+      .experience-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: 12px;
+        padding: 1.5rem;
+        transition: all var(--transition-base);
+
+        &:hover {
+          border-color: rgba(131, 56, 236, 0.5);
+          box-shadow: inset 0 0 20px rgba(131, 56, 236, 0.05),
+            0 0 30px rgba(131, 56, 236, 0.15);
+          transform: translateY(-2px);
+        }
+      }
+
+      .card-header {
+        margin-bottom: 1rem;
+      }
+
+      .role {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0 0 0.25rem;
+        color: var(--text-primary);
+      }
+
+      .company-info {
+        font-size: 0.9375rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .company {
+        font-weight: 600;
+      }
+
+      .location {
+        color: var(--text-muted);
+      }
+
+      .date-range {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        margin: 0;
+        font-family: 'JetBrains Mono', monospace;
+      }
+
+      .description {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        margin-bottom: 1rem;
+      }
+
+      .bullets {
+        margin: 0 0 1rem;
+        padding-left: 1.25rem;
+      }
+
+      .bullets li {
+        margin-bottom: 0.5rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        position: relative;
+
+        &::marker {
+          color: var(--color-winter-sky);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .timeline-line {
+          left: 8px;
+        }
+
+        .timeline-item,
+        .timeline-item-right {
+          width: 100%;
+          margin-left: 0;
+          padding-left: 2.5rem;
+          padding-right: 0;
+        }
+
+        .timeline-marker,
+        .timeline-item-right .timeline-marker {
+          left: 0;
+          right: auto;
+        }
+      }
+    `,
+  ],
 })
 export class ExperienceViewComponent {
   @Input() experiences: Experience[] = [];
 
   getTechArray(techStack: string): string[] {
-    return techStack.split(',').map(t => t.trim());
+    return techStack.split(',').map((t) => t.trim());
   }
 }

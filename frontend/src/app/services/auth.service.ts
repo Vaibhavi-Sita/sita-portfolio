@@ -19,7 +19,7 @@ export class AuthService {
   private readonly router = inject(Router);
   private readonly baseUrl = environment.apiUrl;
 
-  // Reactive state
+  // Reactive state (memory)
   private readonly tokenSignal = signal<string | null>(this.getStoredToken());
   private readonly expiresAtSignal = signal<number | null>(this.getStoredExpiration());
 
@@ -77,10 +77,10 @@ export class AuthService {
    */
   private setSession(authResult: LoginResponse): void {
     const expiresAt = Date.now() + authResult.expiresIn;
-    
-    localStorage.setItem(TOKEN_KEY, authResult.accessToken);
-    localStorage.setItem(EXPIRES_KEY, expiresAt.toString());
-    
+
+    sessionStorage.setItem(TOKEN_KEY, authResult.accessToken);
+    sessionStorage.setItem(EXPIRES_KEY, expiresAt.toString());
+
     this.tokenSignal.set(authResult.accessToken);
     this.expiresAtSignal.set(expiresAt);
   }
@@ -89,9 +89,9 @@ export class AuthService {
    * Clear session data on logout
    */
   private clearSession(): void {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(EXPIRES_KEY);
-    
+    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem(EXPIRES_KEY);
+
     this.tokenSignal.set(null);
     this.expiresAtSignal.set(null);
   }
@@ -100,14 +100,14 @@ export class AuthService {
    * Get stored token from localStorage
    */
   private getStoredToken(): string | null {
-    return localStorage.getItem(TOKEN_KEY);
+    return sessionStorage.getItem(TOKEN_KEY);
   }
 
   /**
    * Get stored expiration from localStorage
    */
   private getStoredExpiration(): number | null {
-    const expires = localStorage.getItem(EXPIRES_KEY);
+    const expires = sessionStorage.getItem(EXPIRES_KEY);
     return expires ? parseInt(expires, 10) : null;
   }
 }
