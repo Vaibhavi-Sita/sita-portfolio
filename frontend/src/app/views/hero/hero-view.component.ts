@@ -61,16 +61,6 @@ import { Profile } from '../../models';
           >
             <mat-icon>business</mat-icon>
           </a>
-          } @if (profile.nickname) {
-          <a
-            [href]="profile.nickname"
-            target="_blank"
-            rel="noopener"
-            aria-label="Nickname"
-            class="social-link"
-          >
-            <mat-icon>person</mat-icon>
-          </a>
           } @if (profile.email) {
           <a
             [href]="'mailto:' + profile.email"
