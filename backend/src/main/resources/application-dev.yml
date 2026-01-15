@@ -1,0 +1,53 @@
+# =========================================
+# Development Profile Configuration
+# =========================================
+# Activate with: SPRING_PROFILES_ACTIVE=dev
+
+spring:
+  # Slightly more lenient connection settings for development
+  datasource:
+    hikari:
+      connection-timeout: 60000     # 60 seconds - more lenient for cold starts
+      leak-detection-threshold: 120000 # 2 minutes
+
+  # SQL logging - set to true to enable query logging
+  jpa:
+    show-sql: false  # Change to true to see SQL queries
+    properties:
+      hibernate:
+        format_sql: true
+
+  # Flyway verbose output
+  flyway:
+    connect-retries: 5
+    connect-retries-interval: 5
+
+# Server error details for debugging
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# =========================================
+# Development Logging
+# =========================================
+# More verbose logging for debugging
+logging:
+  level:
+    root: INFO
+    com.sita.portfolio: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    # Uncomment below to see SQL queries:
+    # org.hibernate.SQL: DEBUG
+    # org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.flywaydb: DEBUG
+    com.zaxxer.hikari: DEBUG
+
+# =========================================
+# Management / Actuator (verbose in dev)
+# =========================================
+management:
+  endpoint:
+    health:
+      show-details: always

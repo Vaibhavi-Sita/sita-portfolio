@@ -1,0 +1,110 @@
+spring:
+  application:
+    name: portfolio-api
+
+  # =========================================
+  # Database Configuration
+  # =========================================
+  # Uses Supabase Session Pooler (IPv4 compatible)
+  # Set SPRING_DATASOURCE_URL to full JDBC URL from Supabase
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:}
+    username: ${SPRING_DATASOURCE_USERNAME:}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    driver-class-name: org.postgresql.Driver
+    
+    # HikariCP settings optimized for connection pooler
+    # Keep small - Supabase pooler already multiplexes connections
+    hikari:
+      pool-name: PortfolioHikariPool
+      maximum-pool-size: 5
+      minimum-idle: 0
+      idle-timeout: 300000           # 5 minutes
+      connection-timeout: 30000      # 30 seconds
+      max-lifetime: 1800000          # 30 minutes
+      keepalive-time: 60000          # 1 minute
+      validation-timeout: 5000       # 5 seconds
+      leak-detection-threshold: 60000
+      connection-test-query: SELECT 1
+
+  # =========================================
+  # JPA / Hibernate Configuration
+  # =========================================
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        default_schema: portfolio
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          time_zone: UTC
+          batch_size: 25
+        order_inserts: true
+        order_updates: true
+
+  # =========================================
+  # Flyway Migration Configuration
+  # =========================================
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    locations: classpath:db/migration
+    schemas: portfolio
+    default-schema: portfolio
+    connect-retries: 3
+    connect-retries-interval: 10
+
+# =========================================
+# Server Configuration
+# =========================================
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  error:
+    include-message: never
+    include-stacktrace: never
+    include-binding-errors: never
+
+# =========================================
+# Application Configuration
+# =========================================
+app:
+  jwt:
+    secret: ${JWT_SECRET:}
+    expiration-ms: 900000           # 15 minutes
+    refresh-expiration-ms: 604800000 # 7 days
+  cors:
+    allowed-origin: ${CORS_ALLOWED_ORIGIN:http://localhost:4200}
+
+# =========================================
+# Logging (defaults)
+# =========================================
+logging:
+  level:
+    root: INFO
+    com.sita.portfolio: INFO
+    org.springframework.security: WARN
+    org.hibernate.SQL: OFF
+    org.hibernate.type.descriptor.sql: OFF
+    org.flywaydb: INFO
+    com.zaxxer.hikari: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# =========================================
+# Management / Actuator
+# =========================================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never

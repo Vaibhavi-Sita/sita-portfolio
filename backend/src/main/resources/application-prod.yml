@@ -1,0 +1,61 @@
+# =========================================
+# Production Profile Configuration
+# =========================================
+# Activate with: SPRING_PROFILES_ACTIVE=prod
+
+spring:
+  # Strict connection settings for production
+  datasource:
+    hikari:
+      connection-timeout: 20000     # 20 seconds - fail fast
+      idle-timeout: 180000          # 3 minutes
+      max-lifetime: 900000          # 15 minutes
+      leak-detection-threshold: 30000 # 30 seconds
+
+  # No SQL logging in production
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        generate_statistics: false
+
+  # Flyway strict mode
+  flyway:
+    validate-on-migrate: true
+    clean-disabled: true
+
+# Server hardening
+server:
+  error:
+    include-message: never
+    include-stacktrace: never
+    include-binding-errors: never
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/plain
+
+# =========================================
+# Production Logging - Minimal
+# =========================================
+logging:
+  level:
+    root: WARN
+    com.sita.portfolio: INFO
+    org.springframework.security: WARN
+    org.hibernate.SQL: OFF
+    org.hibernate.type.descriptor.sql: OFF
+    org.flywaydb: WARN
+    com.zaxxer.hikari: WARN
+
+# =========================================
+# Management / Actuator (minimal in prod)
+# =========================================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never

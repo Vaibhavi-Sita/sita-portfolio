@@ -1,0 +1,245 @@
+{
+  "profile": {
+    "name": "Alex Chen",
+    "title": "Senior Full-Stack Engineer",
+    "tagline": "Building elegant solutions to complex problems",
+    "bio": "Passionate software engineer with 8+ years of experience building scalable web applications. I love turning complex problems into simple, beautiful solutions. When I'm not coding, you'll find me contributing to open source or mentoring junior developers.",
+    "avatarUrl": "https://example.com/avatar.jpg",
+    "resumeUrl": "https://example.com/resume.pdf",
+    "email": "alex@example.com",
+    "githubUrl": "https://github.com/alexchen",
+    "linkedinUrl": "https://linkedin.com/in/alexchen",
+    "twitterUrl": "https://twitter.com/alexchen"
+  },
+  "experiences": [
+    {
+      "company": "TechCorp Inc.",
+      "role": "Senior Software Engineer",
+      "location": "San Francisco, CA",
+      "employmentType": "Full-time",
+      "startDate": "2021-03-01",
+      "endDate": null,
+      "description": "Leading development of microservices architecture serving 10M+ users",
+      "techStack": "Java, Spring Boot, Kubernetes, PostgreSQL, Redis",
+      "companyUrl": "https://techcorp.example.com",
+      "logoUrl": "https://example.com/techcorp-logo.png",
+      "published": true,
+      "bullets": [
+        { "content": "Architected and implemented event-driven microservices reducing system latency by 40%" },
+        { "content": "Led team of 5 engineers in migrating legacy monolith to cloud-native architecture" },
+        { "content": "Established CI/CD pipelines reducing deployment time from 2 hours to 15 minutes" },
+        { "content": "Mentored 3 junior developers, helping them grow into mid-level engineers" }
+      ]
+    },
+    {
+      "company": "StartupXYZ",
+      "role": "Full-Stack Developer",
+      "location": "Remote",
+      "employmentType": "Full-time",
+      "startDate": "2018-06-15",
+      "endDate": "2021-02-28",
+      "description": "Full-stack development for B2B SaaS platform",
+      "techStack": "React, Node.js, TypeScript, MongoDB, AWS",
+      "companyUrl": "https://startupxyz.example.com",
+      "logoUrl": "https://example.com/startupxyz-logo.png",
+      "published": true,
+      "bullets": [
+        { "content": "Built real-time collaboration features used by 50,000+ daily active users" },
+        { "content": "Reduced page load time by 60% through code splitting and lazy loading" },
+        { "content": "Implemented comprehensive test suite achieving 85% code coverage" }
+      ]
+    },
+    {
+      "company": "WebAgency",
+      "role": "Junior Developer",
+      "location": "New York, NY",
+      "employmentType": "Full-time",
+      "startDate": "2016-01-10",
+      "endDate": "2018-05-31",
+      "description": "Developed custom web applications for agency clients",
+      "techStack": "PHP, Laravel, MySQL, JavaScript, jQuery",
+      "published": true,
+      "bullets": [
+        { "content": "Delivered 15+ client projects on time and within budget" },
+        { "content": "Developed reusable component library reducing development time by 30%" }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "OpenTask",
+      "slug": "opentask",
+      "description": "Open-source task management app with real-time collaboration",
+      "longDescription": "OpenTask is a modern task management application built with React and Node.js. It features real-time collaboration, keyboard shortcuts, and integrations with popular tools like Slack and GitHub.",
+      "techStack": "React, Node.js, Socket.io, PostgreSQL, Docker",
+      "liveUrl": "https://opentask.example.com",
+      "githubUrl": "https://github.com/alexchen/opentask",
+      "imageUrl": "https://example.com/opentask-screenshot.png",
+      "thumbnailUrl": "https://example.com/opentask-thumb.png",
+      "featured": true,
+      "published": true,
+      "bullets": [
+        { "content": "Real-time collaboration with WebSocket support" },
+        { "content": "Keyboard-first design with vim-like navigation" },
+        { "content": "2,500+ GitHub stars and 100+ contributors" }
+      ]
+    },
+    {
+      "title": "DevMetrics",
+      "slug": "devmetrics",
+      "description": "Developer productivity analytics dashboard",
+      "longDescription": "A comprehensive analytics platform for engineering teams to track code quality, deployment frequency, and team velocity.",
+      "techStack": "Vue.js, Python, FastAPI, TimescaleDB, Grafana",
+      "liveUrl": "https://devmetrics.example.com",
+      "githubUrl": "https://github.com/alexchen/devmetrics",
+      "imageUrl": "https://example.com/devmetrics-screenshot.png",
+      "featured": true,
+      "published": true,
+      "bullets": [
+        { "content": "Integrates with GitHub, GitLab, and Jira" },
+        { "content": "Custom dashboards with drag-and-drop widgets" },
+        { "content": "Used by 50+ engineering teams" }
+      ]
+    },
+    {
+      "title": "CLI Tools Collection",
+      "slug": "cli-tools",
+      "description": "Collection of useful CLI tools for developers",
+      "techStack": "Go, Rust",
+      "githubUrl": "https://github.com/alexchen/cli-tools",
+      "featured": false,
+      "published": true,
+      "bullets": [
+        { "content": "Fast JSON/YAML converter" },
+        { "content": "Git commit message generator" },
+        { "content": "Project scaffolding tool" }
+      ]
+    }
+  ],
+  "skillCategories": [
+    {
+      "name": "Languages",
+      "icon": "code",
+      "published": true,
+      "skills": [
+        { "name": "Java", "proficiency": "Expert" },
+        { "name": "TypeScript", "proficiency": "Expert" },
+        { "name": "Python", "proficiency": "Advanced" },
+        { "name": "Go", "proficiency": "Intermediate" },
+        { "name": "Rust", "proficiency": "Learning" }
+      ]
+    },
+    {
+      "name": "Frontend",
+      "icon": "browser",
+      "published": true,
+      "skills": [
+        { "name": "React", "proficiency": "Expert" },
+        { "name": "Vue.js", "proficiency": "Advanced" },
+        { "name": "Next.js", "proficiency": "Advanced" },
+        { "name": "Tailwind CSS", "proficiency": "Expert" }
+      ]
+    },
+    {
+      "name": "Backend",
+      "icon": "server",
+      "published": true,
+      "skills": [
+        { "name": "Spring Boot", "proficiency": "Expert" },
+        { "name": "Node.js", "proficiency": "Expert" },
+        { "name": "FastAPI", "proficiency": "Advanced" },
+        { "name": "GraphQL", "proficiency": "Advanced" }
+      ]
+    },
+    {
+      "name": "DevOps & Cloud",
+      "icon": "cloud",
+      "published": true,
+      "skills": [
+        { "name": "AWS", "proficiency": "Advanced" },
+        { "name": "Docker", "proficiency": "Expert" },
+        { "name": "Kubernetes", "proficiency": "Advanced" },
+        { "name": "Terraform", "proficiency": "Intermediate" },
+        { "name": "GitHub Actions", "proficiency": "Expert" }
+      ]
+    },
+    {
+      "name": "Databases",
+      "icon": "database",
+      "published": true,
+      "skills": [
+        { "name": "PostgreSQL", "proficiency": "Expert" },
+        { "name": "MongoDB", "proficiency": "Advanced" },
+        { "name": "Redis", "proficiency": "Advanced" },
+        { "name": "Elasticsearch", "proficiency": "Intermediate" }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of California, Berkeley",
+      "degree": "Master of Science",
+      "fieldOfStudy": "Computer Science",
+      "location": "Berkeley, CA",
+      "startYear": 2014,
+      "endYear": 2016,
+      "gpa": "3.9/4.0",
+      "description": "Focus on distributed systems and machine learning. Teaching assistant for CS 162 (Operating Systems).",
+      "logoUrl": "https://example.com/berkeley-logo.png",
+      "published": true
+    },
+    {
+      "institution": "University of Washington",
+      "degree": "Bachelor of Science",
+      "fieldOfStudy": "Computer Science",
+      "location": "Seattle, WA",
+      "startYear": 2010,
+      "endYear": 2014,
+      "gpa": "3.7/4.0",
+      "description": "Dean's List all semesters. President of ACM student chapter.",
+      "logoUrl": "https://example.com/uw-logo.png",
+      "published": true
+    }
+  ],
+  "certifications": [
+    {
+      "name": "AWS Solutions Architect - Professional",
+      "issuer": "Amazon Web Services",
+      "issueDate": "2023-06-15",
+      "expiryDate": "2026-06-15",
+      "credentialId": "AWS-SAP-12345",
+      "credentialUrl": "https://aws.amazon.com/verification/12345",
+      "badgeUrl": "https://example.com/aws-sap-badge.png",
+      "published": true
+    },
+    {
+      "name": "Certified Kubernetes Administrator (CKA)",
+      "issuer": "Cloud Native Computing Foundation",
+      "issueDate": "2022-09-20",
+      "expiryDate": "2025-09-20",
+      "credentialId": "CKA-2022-09876",
+      "credentialUrl": "https://www.credly.com/badges/12345",
+      "badgeUrl": "https://example.com/cka-badge.png",
+      "published": true
+    },
+    {
+      "name": "Google Cloud Professional Cloud Architect",
+      "issuer": "Google Cloud",
+      "issueDate": "2023-01-10",
+      "expiryDate": "2025-01-10",
+      "credentialId": "GCP-PCA-54321",
+      "credentialUrl": "https://cloud.google.com/certification/verify/54321",
+      "badgeUrl": "https://example.com/gcp-pca-badge.png",
+      "published": true
+    }
+  ],
+  "contactSettings": {
+    "email": "contact@alexchen.dev",
+    "phone": "+1 (555) 123-4567",
+    "location": "San Francisco, CA (PST)",
+    "availabilityStatus": "Open to interesting opportunities",
+    "formEnabled": true,
+    "formRecipient": "alex@example.com",
+    "successMessage": "Thanks for reaching out! I'll get back to you within 24 hours."
+  }
+}

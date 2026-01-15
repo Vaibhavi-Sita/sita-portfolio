@@ -1,0 +1,5 @@
+# Default test configuration
+# Import the test profile for actual values
+spring:
+  profiles:
+    active: test

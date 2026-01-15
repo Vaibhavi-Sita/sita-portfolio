@@ -1,0 +1,441 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Resume Import Schema",
+  "description": "Schema for importing a complete resume via POST /api/admin/import",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "type": "object",
+      "description": "Profile information (upserted)",
+      "required": ["name", "title"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Full name"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Professional title (e.g., 'Senior Software Engineer')"
+        },
+        "tagline": {
+          "type": "string",
+          "maxLength": 300,
+          "description": "Short tagline or motto"
+        },
+        "bio": {
+          "type": "string",
+          "description": "Full biography/about text"
+        },
+        "avatarUrl": {
+          "type": "string",
+          "maxLength": 500,
+          "format": "uri",
+          "description": "URL to profile picture"
+        },
+        "resumeUrl": {
+          "type": "string",
+          "maxLength": 500,
+          "format": "uri",
+          "description": "URL to downloadable resume/CV"
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 255,
+          "format": "email",
+          "description": "Public contact email"
+        },
+        "githubUrl": {
+          "type": "string",
+          "maxLength": 500,
+          "format": "uri",
+          "description": "GitHub profile URL"
+        },
+        "linkedinUrl": {
+          "type": "string",
+          "maxLength": 500,
+          "format": "uri",
+          "description": "LinkedIn profile URL"
+        },
+        "twitterUrl": {
+          "type": "string",
+          "maxLength": 500,
+          "format": "uri",
+          "description": "Twitter/X profile URL"
+        }
+      }
+    },
+    "experiences": {
+      "type": "array",
+      "description": "Work experiences (cleared and replaced, sorted by array order)",
+      "items": {
+        "type": "object",
+        "required": ["company", "role", "startDate"],
+        "properties": {
+          "company": {
+            "type": "string",
+            "maxLength": 150,
+            "description": "Company name"
+          },
+          "role": {
+            "type": "string",
+            "maxLength": 150,
+            "description": "Job title/role"
+          },
+          "location": {
+            "type": "string",
+            "maxLength": 150,
+            "description": "Location (city, remote, etc.)"
+          },
+          "employmentType": {
+            "type": "string",
+            "maxLength": 50,
+            "description": "Employment type (Full-time, Contract, etc.)"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Start date (YYYY-MM-DD)"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date",
+            "description": "End date (YYYY-MM-DD), null for current position"
+          },
+          "description": {
+            "type": "string",
+            "description": "Job description/summary"
+          },
+          "techStack": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Technologies used (comma-separated)"
+          },
+          "companyUrl": {
+            "type": "string",
+            "maxLength": 500,
+            "format": "uri",
+            "description": "Company website URL"
+          },
+          "logoUrl": {
+            "type": "string",
+            "maxLength": 500,
+            "format": "uri",
+            "description": "Company logo URL"
+          },
+          "published": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether visible on public site"
+          },
+          "bullets": {
+            "type": "array",
+            "description": "Accomplishment bullet points",
+            "items": {
+              "type": "object",
+              "required": ["content"],
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "description": "Bullet point text"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "projects": {
+      "type": "array",
+      "description": "Portfolio projects (cleared and replaced, sorted by array order)",
+      "items": {
+        "type": "object",
+        "required": ["title"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 150,
+            "description": "Project title"
+          },
+          "slug": {
+            "type": "string",
+            "maxLength": 150,
+            "description": "URL slug (auto-generated from title if not provided)"
+          },
+          "description": {
+            "type": "string",
+            "description": "Short description"
+          },
+          "longDescription": {
+            "type": "string",
+            "description": "Full description/README"
+          },
+          "techStack": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Technologies used (comma-separated)"
+          },
+          "liveUrl": {
+            "type": "string",
+            "maxLength": 500,
+            "format": "uri",
+            "description": "Live demo URL"
+          },
+          "githubUrl": {
+            "type": "string",
+            "maxLength": 500,
+            "format": "uri",
+            "description": "GitHub repository URL"
+          },
+          "imageUrl": {
+            "type": "string",
+            "maxLength": 500,
+            "format": "uri",
+            "description": "Main project image URL"
+          },
+          "thumbnailUrl": {
+            "type": "string",
+            "maxLength": 500,
+            "format": "uri",
+            "description": "Thumbnail image URL"
+          },
+          "featured": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to feature prominently"
+          },
+          "published": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether visible on public site"
+          },
+          "bullets": {
+            "type": "array",
+            "description": "Key features/highlights",
+            "items": {
+              "type": "object",
+              "required": ["content"],
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "description": "Feature/highlight text"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "skillCategories": {
+      "type": "array",
+      "description": "Skill categories with items (cleared and replaced, sorted by array order)",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 100,
+            "description": "Category name (e.g., 'Languages', 'Frameworks')"
+          },
+          "icon": {
+            "type": "string",
+            "maxLength": 50,
+            "description": "Icon identifier/class"
+          },
+          "published": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether visible on public site"
+          },
+          "skills": {
+            "type": "array",
+            "description": "Skills in this category",
+            "items": {
+              "type": "object",
+              "required": ["name"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "maxLength": 100,
+                  "description": "Skill name"
+                },
+                "iconUrl": {
+                  "type": "string",
+                  "maxLength": 500,
+                  "format": "uri",
+                  "description": "Skill icon URL"
+                },
+                "proficiency": {
+                  "type": "string",
+                  "maxLength": 50,
+                  "description": "Proficiency level (e.g., 'Expert', 'Intermediate')"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "education": {
+      "type": "array",
+      "description": "Education entries (cleared and replaced, sorted by array order)",
+      "items": {
+        "type": "object",
+        "required": ["institution", "degree", "startYear"],
+        "properties": {
+          "institution": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "School/university name"
+          },
+          "degree": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "Degree type (e.g., 'Bachelor of Science')"
+          },
+          "fieldOfStudy": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "Major/field (e.g., 'Computer Science')"
+          },
+          "location": {
+            "type": "string",
+            "maxLength": 150,
+            "description": "Location"
+          },
+          "startYear": {
+            "type": "integer",
+            "minimum": 1900,
+            "maximum": 2100,
+            "description": "Start year"
+          },
+          "endYear": {
+            "type": "integer",
+            "minimum": 1900,
+            "maximum": 2100,
+            "description": "End/graduation year (null if in progress)"
+          },
+          "gpa": {
+            "type": "string",
+            "maxLength": 20,
+            "description": "GPA (e.g., '3.8/4.0')"
+          },
+          "description": {
+            "type": "string",
+            "description": "Additional details, honors, activities"
+          },
+          "logoUrl": {
+            "type": "string",
+            "maxLength": 500,
+            "format": "uri",
+            "description": "School logo URL"
+          },
+          "published": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether visible on public site"
+          }
+        }
+      }
+    },
+    "certifications": {
+      "type": "array",
+      "description": "Professional certifications (cleared and replaced, sorted by array order)",
+      "items": {
+        "type": "object",
+        "required": ["name", "issuer", "issueDate"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "Certification name"
+          },
+          "issuer": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "Issuing organization"
+          },
+          "issueDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Issue date (YYYY-MM-DD)"
+          },
+          "expiryDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Expiry date (YYYY-MM-DD), null if no expiration"
+          },
+          "credentialId": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "Credential ID/number"
+          },
+          "credentialUrl": {
+            "type": "string",
+            "maxLength": 500,
+            "format": "uri",
+            "description": "Verification URL"
+          },
+          "badgeUrl": {
+            "type": "string",
+            "maxLength": 500,
+            "format": "uri",
+            "description": "Badge image URL"
+          },
+          "published": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether visible on public site"
+          }
+        }
+      }
+    },
+    "contactSettings": {
+      "type": "object",
+      "description": "Contact page settings (upserted)",
+      "required": ["email"],
+      "properties": {
+        "email": {
+          "type": "string",
+          "maxLength": 255,
+          "format": "email",
+          "description": "Contact email address"
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Phone number"
+        },
+        "location": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Location/timezone"
+        },
+        "availabilityStatus": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Current availability (e.g., 'Open to opportunities')"
+        },
+        "formEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether contact form is enabled"
+        },
+        "formRecipient": {
+          "type": "string",
+          "maxLength": 255,
+          "format": "email",
+          "description": "Email address for form submissions"
+        },
+        "successMessage": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Message shown after successful form submission"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
