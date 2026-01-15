@@ -1,5 +1,7 @@
+const backendBaseUrl = 'https://sita-portfolio-backend.onrender.com';
+
 export const environment = {
   production: true,
-  apiUrl: '/api', // Will be proxied in production
-  apiBaseUrl: '/api'
+  apiUrl: backendBaseUrl,
+  apiBaseUrl: backendBaseUrl
 };
