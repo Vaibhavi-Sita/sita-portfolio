@@ -9,31 +9,33 @@
 // Base: #0B0B10 (near-black)
 // ===========================================
 
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 // ===========================================
 // SCSS Variables - Palette Colors
 // ===========================================
 
-$color-mango: #FFBE0B;
-$color-orange: #FB5607;
-$color-winter-sky: #FF006E;
-$color-blue-violet: #8338EC;
-$color-tart-orange: #FF3333;
+$color-mango: #ffbe0b;
+$color-orange: #fb5607;
+$color-winter-sky: #ff006e;
+$color-blue-violet: #8338ec;
+$color-tart-orange: #ff3333;
+$color-green: #6cc644;
+$color-neon-green: #2cff05;
 
 // Neutrals
-$color-base-dark: #0B0B10;
-$color-base-light: #FFFFFF;
+$color-base-dark: #0b0b10;
+$color-base-light: #ffffff;
 $color-surface-dark: rgba($color-base-light, 0.04);
 $color-surface-elevated: rgba($color-base-light, 0.08);
 $color-border-subtle: rgba(255, 255, 255, 0.08);
 $color-border-medium: rgba(255, 255, 255, 0.15);
 
 // Text colors
-$color-text-primary: #FFFFFF;
+$color-text-primary: #ffffff;
 $color-text-secondary: rgba(255, 255, 255, 0.7);
 $color-text-muted: rgba(255, 255, 255, 0.45);
-$color-text-inverse: #0B0B10;
+$color-text-inverse: #0b0b10;
 
 // ===========================================
 // Angular Material Custom Palettes
@@ -64,7 +66,7 @@ $blue-violet-palette: (
     700: $color-text-primary,
     800: $color-text-primary,
     900: $color-text-primary,
-  )
+  ),
 );
 
 // Winter Sky palette (accent)
@@ -90,7 +92,7 @@ $winter-sky-palette: (
     700: $color-text-primary,
     800: $color-text-primary,
     900: $color-text-primary,
-  )
+  ),
 );
 
 // Define palettes
@@ -98,16 +100,20 @@ $portfolio-primary: mat.define-palette($blue-violet-palette);
 $portfolio-accent: mat.define-palette($winter-sky-palette);
 
 // Create dark theme (default)
-$portfolio-dark-theme: mat.define-dark-theme((
-  color: (
-    primary: $portfolio-primary,
-    accent: $portfolio-accent,
-  ),
-  typography: mat.define-typography-config(
-    $font-family: '"Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, sans-serif',
-  ),
-  density: 0,
-));
+$portfolio-dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $portfolio-primary,
+      accent: $portfolio-accent,
+    ),
+    typography:
+      mat.define-typography-config(
+        $font-family:
+          '"Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, sans-serif',
+      ),
+    density: 0,
+  )
+);
 
 // Apply dark theme as default
 @include mat.all-component-themes($portfolio-dark-theme);
@@ -154,7 +160,7 @@ $portfolio-dark-theme: mat.define-dark-theme((
     #{$color-winter-sky} 50%,
     #{$color-orange} 100%
   );
-  
+
   --gradient-vibrant: linear-gradient(
     90deg,
     #{$color-mango} 0%,
@@ -189,6 +195,7 @@ $portfolio-dark-theme: mat.define-dark-theme((
   --glow-pink: 0 0 40px rgba(255, 0, 110, 0.4);
   --glow-orange: 0 0 40px rgba(251, 86, 7, 0.4);
   --glow-mango: 0 0 40px rgba(255, 190, 11, 0.4);
+  --glow-neon-green: 0 0 40px rgba(44, 255, 5, 0.4);
 
   // Shadows
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -206,7 +213,9 @@ $portfolio-dark-theme: mat.define-dark-theme((
 // Global Reset & Base Styles
 // ===========================================
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -218,7 +227,8 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
@@ -229,17 +239,30 @@ body {
 // Typography
 // ===========================================
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 700;
   line-height: 1.2;
   margin-top: 0;
   letter-spacing: -0.02em;
 }
 
-h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
-h2 { font-size: clamp(2rem, 4vw, 3rem); }
-h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
-h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+}
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+h4 {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+}
 
 p {
   margin-top: 0;
@@ -283,10 +306,26 @@ a {
 // ===========================================
 
 .hero-gradient-bg {
-  --parallax-layer-1: radial-gradient(ellipse at 20% 30%, rgba($color-blue-violet, 0.3) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 20%, rgba($color-winter-sky, 0.25) 0%, transparent 50%);
-  --parallax-layer-2: radial-gradient(ellipse at 60% 80%, rgba($color-orange, 0.22) 0%, transparent 55%),
-    radial-gradient(ellipse at 10% 90%, rgba($color-mango, 0.2) 0%, transparent 45%);
+  --parallax-layer-1: radial-gradient(
+      ellipse at 20% 30%,
+      rgba($color-blue-violet, 0.3) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba($color-winter-sky, 0.25) 0%,
+      transparent 50%
+    );
+  --parallax-layer-2: radial-gradient(
+      ellipse at 60% 80%,
+      rgba($color-orange, 0.22) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 10% 90%,
+      rgba($color-mango, 0.2) 0%,
+      transparent 45%
+    );
 }
 
 // Solid gradient hero variant
@@ -305,22 +344,19 @@ a {
 
 .accent-border {
   border: 1px solid transparent;
-  background: 
-    linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+  background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
     var(--gradient-cool) border-box;
 }
 
 .accent-border-warm {
   border: 1px solid transparent;
-  background: 
-    linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+  background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
     var(--gradient-warm) border-box;
 }
 
 .accent-border-vibrant {
   border: 2px solid transparent;
-  background: 
-    linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+  background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
     var(--gradient-vibrant) border-box;
 }
 
@@ -334,8 +370,7 @@ a {
 
 .accent-border-glow {
   border: 1px solid rgba($color-blue-violet, 0.5);
-  box-shadow: 
-    inset 0 0 20px rgba($color-blue-violet, 0.1),
+  box-shadow: inset 0 0 20px rgba($color-blue-violet, 0.1),
     0 0 20px rgba($color-blue-violet, 0.2);
 }
 
@@ -347,7 +382,7 @@ a {
   display: inline-flex;
   align-items: center;
   padding: 0.25rem 0.75rem;
-  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", monospace;
   font-size: 0.8125rem;
   font-weight: 500;
   border-radius: 4px;
@@ -418,7 +453,11 @@ a {
   font-weight: 600;
   text-decoration: none;
   color: var(--text-primary);
-  background: linear-gradient(135deg, $color-blue-violet 0%, $color-winter-sky 100%);
+  background: linear-gradient(
+    135deg,
+    $color-blue-violet 0%,
+    $color-winter-sky 100%
+  );
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -464,7 +503,7 @@ a {
   overflow: hidden;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: var(--color-winter-sky);
@@ -500,16 +539,16 @@ a {
   font-weight: 700;
   text-decoration: none;
   color: var(--text-inverse);
-  background: linear-gradient(135deg, $color-orange 0%, $color-tart-orange 100%);
+  background: linear-gradient(135deg, $color-green 0%, $color-neon-green 100%);
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: all var(--transition-base);
-  box-shadow: var(--shadow-md), var(--glow-orange);
+  box-shadow: var(--shadow-md), var(--glow-neon-green);
 
   &:hover {
     transform: translateY(-3px) scale(1.02);
-    box-shadow: var(--shadow-lg), 0 0 60px rgba($color-orange, 0.6);
+    box-shadow: var(--shadow-lg), 0 0 60px rgba($color-green, 0.6);
   }
 
   &:active {
@@ -594,17 +633,37 @@ a {
 // Color Utility Classes
 // ===========================================
 
-.text-mango { color: var(--color-mango); }
-.text-orange { color: var(--color-orange); }
-.text-winter-sky { color: var(--color-winter-sky); }
-.text-blue-violet { color: var(--color-blue-violet); }
-.text-tart-orange { color: var(--color-tart-orange); }
+.text-mango {
+  color: var(--color-mango);
+}
+.text-orange {
+  color: var(--color-orange);
+}
+.text-winter-sky {
+  color: var(--color-winter-sky);
+}
+.text-blue-violet {
+  color: var(--color-blue-violet);
+}
+.text-tart-orange {
+  color: var(--color-tart-orange);
+}
 
-.bg-mango { background-color: var(--color-mango); }
-.bg-orange { background-color: var(--color-orange); }
-.bg-winter-sky { background-color: var(--color-winter-sky); }
-.bg-blue-violet { background-color: var(--color-blue-violet); }
-.bg-tart-orange { background-color: var(--color-tart-orange); }
+.bg-mango {
+  background-color: var(--color-mango);
+}
+.bg-orange {
+  background-color: var(--color-orange);
+}
+.bg-winter-sky {
+  background-color: var(--color-winter-sky);
+}
+.bg-blue-violet {
+  background-color: var(--color-blue-violet);
+}
+.bg-tart-orange {
+  background-color: var(--color-tart-orange);
+}
 
 // ===========================================
 // Card Styles
@@ -715,7 +774,11 @@ a {
 }
 
 .mat-mdc-raised-button.mat-primary {
-  background: linear-gradient(135deg, $color-blue-violet 0%, $color-winter-sky 100%) !important;
+  background: linear-gradient(
+    135deg,
+    $color-blue-violet 0%,
+    $color-winter-sky 100%
+  ) !important;
   box-shadow: var(--shadow-sm), 0 0 20px rgba($color-blue-violet, 0.3) !important;
 
   &:hover {
@@ -727,7 +790,7 @@ a {
   --mdc-chip-elevated-container-color: rgba(131, 56, 236, 0.15);
   --mdc-chip-label-text-color: #{$color-blue-violet};
   border: 1px solid rgba($color-blue-violet, 0.3) !important;
-  font-family: 'JetBrains Mono', 'SF Mono', monospace !important;
+  font-family: "JetBrains Mono", "SF Mono", monospace !important;
   font-size: 0.8125rem !important;
 }
 
@@ -764,7 +827,8 @@ a {
 // ===========================================
 
 @keyframes pulse-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba($color-blue-violet, 0.3);
   }
   50% {
@@ -798,7 +862,8 @@ a {
 // ===========================================
 
 .hover-elevate {
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  transition: transform var(--transition-base),
+    box-shadow var(--transition-base);
 
   &:hover {
     transform: translateY(-6px);
@@ -810,7 +875,7 @@ a {
   position: relative;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     bottom: -4px;
@@ -839,7 +904,7 @@ a {
 
   &::before,
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: -20%;
     z-index: 0;
@@ -868,46 +933,122 @@ a {
 }
 
 .parallax-home {
-  --parallax-layer-1: radial-gradient(ellipse at 15% 20%, rgba($color-blue-violet, 0.3) 0%, transparent 60%),
-    radial-gradient(ellipse at 85% 10%, rgba($color-winter-sky, 0.25) 0%, transparent 55%);
-  --parallax-layer-2: radial-gradient(ellipse at 70% 80%, rgba($color-orange, 0.22) 0%, transparent 55%),
-    radial-gradient(ellipse at 10% 90%, rgba($color-mango, 0.18) 0%, transparent 45%);
+  --parallax-layer-1: radial-gradient(
+      ellipse at 15% 20%,
+      rgba($color-blue-violet, 0.3) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at 85% 10%,
+      rgba($color-winter-sky, 0.25) 0%,
+      transparent 55%
+    );
+  --parallax-layer-2: radial-gradient(
+      ellipse at 70% 80%,
+      rgba($color-orange, 0.22) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 10% 90%,
+      rgba($color-mango, 0.18) 0%,
+      transparent 45%
+    );
 }
 
 .parallax-about {
-  --parallax-layer-1: radial-gradient(ellipse at 20% 30%, rgba($color-mango, 0.2) 0%, transparent 60%),
-    radial-gradient(ellipse at 85% 15%, rgba($color-blue-violet, 0.2) 0%, transparent 55%);
-  --parallax-layer-2: radial-gradient(ellipse at 50% 85%, rgba($color-winter-sky, 0.18) 0%, transparent 55%);
+  --parallax-layer-1: radial-gradient(
+      ellipse at 20% 30%,
+      rgba($color-mango, 0.2) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at 85% 15%,
+      rgba($color-blue-violet, 0.2) 0%,
+      transparent 55%
+    );
+  --parallax-layer-2: radial-gradient(
+    ellipse at 50% 85%,
+    rgba($color-winter-sky, 0.18) 0%,
+    transparent 55%
+  );
 }
 
 .parallax-experience {
-  --parallax-layer-1: radial-gradient(ellipse at 10% 20%, rgba($color-blue-violet, 0.22) 0%, transparent 60%);
-  --parallax-layer-2: radial-gradient(ellipse at 80% 70%, rgba($color-orange, 0.18) 0%, transparent 55%);
+  --parallax-layer-1: radial-gradient(
+    ellipse at 10% 20%,
+    rgba($color-blue-violet, 0.22) 0%,
+    transparent 60%
+  );
+  --parallax-layer-2: radial-gradient(
+    ellipse at 80% 70%,
+    rgba($color-orange, 0.18) 0%,
+    transparent 55%
+  );
 }
 
 .parallax-projects {
-  --parallax-layer-1: radial-gradient(ellipse at 25% 15%, rgba($color-winter-sky, 0.2) 0%, transparent 60%);
-  --parallax-layer-2: radial-gradient(ellipse at 80% 80%, rgba($color-mango, 0.18) 0%, transparent 55%);
+  --parallax-layer-1: radial-gradient(
+    ellipse at 25% 15%,
+    rgba($color-winter-sky, 0.2) 0%,
+    transparent 60%
+  );
+  --parallax-layer-2: radial-gradient(
+    ellipse at 80% 80%,
+    rgba($color-mango, 0.18) 0%,
+    transparent 55%
+  );
 }
 
 .parallax-skills {
-  --parallax-layer-1: radial-gradient(ellipse at 15% 25%, rgba($color-blue-violet, 0.2) 0%, transparent 60%);
-  --parallax-layer-2: radial-gradient(ellipse at 85% 75%, rgba($color-tart-orange, 0.18) 0%, transparent 55%);
+  --parallax-layer-1: radial-gradient(
+    ellipse at 15% 25%,
+    rgba($color-blue-violet, 0.2) 0%,
+    transparent 60%
+  );
+  --parallax-layer-2: radial-gradient(
+    ellipse at 85% 75%,
+    rgba($color-tart-orange, 0.18) 0%,
+    transparent 55%
+  );
 }
 
 .parallax-education {
-  --parallax-layer-1: radial-gradient(ellipse at 20% 20%, rgba($color-mango, 0.2) 0%, transparent 60%);
-  --parallax-layer-2: radial-gradient(ellipse at 75% 80%, rgba($color-blue-violet, 0.18) 0%, transparent 55%);
+  --parallax-layer-1: radial-gradient(
+    ellipse at 20% 20%,
+    rgba($color-mango, 0.2) 0%,
+    transparent 60%
+  );
+  --parallax-layer-2: radial-gradient(
+    ellipse at 75% 80%,
+    rgba($color-blue-violet, 0.18) 0%,
+    transparent 55%
+  );
 }
 
 .parallax-certifications {
-  --parallax-layer-1: radial-gradient(ellipse at 15% 30%, rgba($color-winter-sky, 0.2) 0%, transparent 60%);
-  --parallax-layer-2: radial-gradient(ellipse at 85% 70%, rgba($color-orange, 0.18) 0%, transparent 55%);
+  --parallax-layer-1: radial-gradient(
+    ellipse at 15% 30%,
+    rgba($color-winter-sky, 0.2) 0%,
+    transparent 60%
+  );
+  --parallax-layer-2: radial-gradient(
+    ellipse at 85% 70%,
+    rgba($color-orange, 0.18) 0%,
+    transparent 55%
+  );
 }
 
 .parallax-contact {
-  --parallax-layer-1: radial-gradient(ellipse at 10% 25%, rgba($color-tart-orange, 0.2) 0%, transparent 60%);
-  --parallax-layer-2: radial-gradient(ellipse at 80% 75%, rgba($color-blue-violet, 0.18) 0%, transparent 55%);
+  --parallax-layer-1: radial-gradient(
+    ellipse at 10% 25%,
+    rgba($color-tart-orange, 0.2) 0%,
+    transparent 60%
+  );
+  --parallax-layer-2: radial-gradient(
+    ellipse at 80% 75%,
+    rgba($color-blue-violet, 0.18) 0%,
+    transparent 55%
+  );
 }
 
 // ===========================================
