@@ -1,7 +1,16 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+  ReactiveFormsModule,
+  FormArray,
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
+import {
+  CdkDragDrop,
+  DragDropModule,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,7 +37,9 @@ import { AdminExperienceService } from '../../services/admin-experience.service'
       <div class="list-card">
         <header class="section-header">
           <h2>Experience</h2>
-          <p class="section-subtitle">Manage roles, bullets, publish state, and order.</p>
+          <p class="section-subtitle">
+            Manage roles, bullets, publish state, and order.
+          </p>
         </header>
 
         <div
@@ -38,28 +49,36 @@ import { AdminExperienceService } from '../../services/admin-experience.service'
           [cdkDropListData]="experiences"
         >
           @for (exp of experiences; track exp.id; let i = $index) {
-            <div class="item-row" cdkDrag>
-              <div class="drag-handle" cdkDragHandle>
-                <mat-icon>drag_indicator</mat-icon>
-              </div>
-              <div class="item-meta" (click)="edit(exp)">
-                <div class="item-title">{{ exp.role }} &#64; {{ exp.company }}</div>
-                <div class="item-sub">{{ exp.location || 'Remote/unspecified' }}</div>
-              </div>
-              <mat-slide-toggle
-                [checked]="exp.published"
-                (change)="togglePublish(exp, $event.checked)"
-                aria-label="Publish toggle"
-              >
-                {{ exp.published ? 'Published' : 'Draft' }}
-              </mat-slide-toggle>
-              <button class="icon-btn" (click)="edit(exp)" aria-label="Edit">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button class="icon-btn danger" (click)="remove(exp)" aria-label="Delete">
-                <mat-icon>delete</mat-icon>
-              </button>
+          <div class="item-row" cdkDrag>
+            <div class="drag-handle" cdkDragHandle>
+              <mat-icon>drag_indicator</mat-icon>
             </div>
+            <div class="item-meta" (click)="edit(exp)">
+              <div class="item-title">
+                {{ exp.role }} &#64; {{ exp.company }}
+              </div>
+              <div class="item-sub">
+                {{ exp.location || 'Remote/unspecified' }}
+              </div>
+            </div>
+            <mat-slide-toggle
+              [checked]="exp.published"
+              (change)="togglePublish(exp, $event.checked)"
+              aria-label="Publish toggle"
+            >
+              {{ exp.published ? 'Published' : 'Draft' }}
+            </mat-slide-toggle>
+            <button class="icon-btn" (click)="edit(exp)" aria-label="Edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              class="icon-btn danger"
+              (click)="remove(exp)"
+              aria-label="Delete"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
           }
         </div>
 
@@ -73,7 +92,7 @@ import { AdminExperienceService } from '../../services/admin-experience.service'
         <div class="form-header">
           <h3>{{ editingId ? 'Edit experience' : 'Create experience' }}</h3>
           @if (saving) {
-            <span class="saving">Saving...</span>
+          <span class="saving">Saving...</span>
           }
         </div>
         <form [formGroup]="form" (ngSubmit)="save()">
@@ -114,7 +133,11 @@ import { AdminExperienceService } from '../../services/admin-experience.service'
 
           <mat-form-field appearance="outline" class="full">
             <mat-label>Description</mat-label>
-            <textarea matInput rows="3" formControlName="description"></textarea>
+            <textarea
+              matInput
+              rows="3"
+              formControlName="description"
+            ></textarea>
           </mat-form-field>
           <mat-form-field appearance="outline" class="full">
             <mat-label>Tech stack (comma separated)</mat-label>
@@ -122,7 +145,9 @@ import { AdminExperienceService } from '../../services/admin-experience.service'
           </mat-form-field>
 
           <div class="toggle-row">
-            <mat-slide-toggle formControlName="published">Published</mat-slide-toggle>
+            <mat-slide-toggle formControlName="published"
+              >Published</mat-slide-toggle
+            >
           </div>
 
           <div class="bullets">
@@ -139,29 +164,46 @@ import { AdminExperienceService } from '../../services/admin-experience.service'
               (cdkDropListDropped)="onBulletReorder($event)"
               [cdkDropListData]="bulletControls"
             >
-              @for (bulletCtrl of bulletControls; track bulletCtrl.value.__key; let i = $index) {
-                <div class="bullet-row" cdkDrag>
-                  <div class="drag-handle" cdkDragHandle>
-                    <mat-icon>drag_indicator</mat-icon>
-                  </div>
-                  <mat-form-field appearance="outline" class="bullet-field">
-                    <mat-label>Bullet</mat-label>
-                    <input matInput [formControl]="bulletCtrl.get('content')" />
-                  </mat-form-field>
-                  <button type="button" class="icon-btn danger" (click)="removeBullet(i)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
+              @for (bulletCtrl of bulletControls; track bulletCtrl.value.__key;
+              let i = $index) {
+              <div class="bullet-row" cdkDrag>
+                <div class="drag-handle" cdkDragHandle>
+                  <mat-icon>drag_indicator</mat-icon>
                 </div>
+                <mat-form-field appearance="outline" class="bullet-field">
+                  <mat-label>Bullet</mat-label>
+                  <input
+                    matInput
+                    [formControl]="$any(bulletCtrl.get('content'))"
+                  />
+                </mat-form-field>
+                <button
+                  type="button"
+                  class="icon-btn danger"
+                  (click)="removeBullet(i)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
               }
             </div>
           </div>
 
           <div class="actions">
-            <button type="submit" class="btn-primary" [disabled]="form.invalid || saving">
+            <button
+              type="submit"
+              class="btn-primary"
+              [disabled]="form.invalid || saving"
+            >
               <mat-icon>save</mat-icon>
               Save
             </button>
-            <button type="button" class="btn-ghost" (click)="cancelEdit()" [disabled]="saving">
+            <button
+              type="button"
+              class="btn-ghost"
+              (click)="cancelEdit()"
+              [disabled]="saving"
+            >
               Cancel
             </button>
           </div>
@@ -362,7 +404,10 @@ export class ExperienceAdminComponent implements OnInit {
         fa.push(
           this.fb.group({
             id: [b.id],
-            content: [b.content, [Validators.required, Validators.minLength(1)]],
+            content: [
+              b.content,
+              [Validators.required, Validators.minLength(1)],
+            ],
             __key: [b.id || crypto.randomUUID()],
           })
         );
@@ -411,19 +456,35 @@ export class ExperienceAdminComponent implements OnInit {
     (this.form.get('bullets') as FormArray).removeAt(index);
   }
 
-  onBulletReorder(event: CdkDragDrop<FormArray>): void {
-    moveItemInArray(this.bulletControls, event.previousIndex, event.currentIndex);
+  onBulletReorder(event: CdkDragDrop<any[]>): void {
+    moveItemInArray(
+      this.bulletControls,
+      event.previousIndex,
+      event.currentIndex
+    );
   }
 
   onReorder(event: CdkDragDrop<Experience[]>): void {
+    const previous = [...this.experiences];
     moveItemInArray(this.experiences, event.previousIndex, event.currentIndex);
     const orderedIds = this.experiences.map((e) => e.id);
-    this.api.reorder(orderedIds).subscribe((data) => (this.experiences = data));
+    this.api.reorder(orderedIds).subscribe({
+      next: (data) => (this.experiences = data),
+      error: () => {
+        this.experiences = previous;
+      },
+    });
   }
 
   togglePublish(exp: Experience, published: boolean): void {
-    this.api.setPublished(exp.id, published).subscribe((updated) => {
-      exp.published = updated.published;
+    const prev = exp.published;
+    this.api.setPublished(exp.id, published).subscribe({
+      next: (updated) => {
+        exp.published = updated.published;
+      },
+      error: () => {
+        exp.published = prev;
+      },
     });
   }
 
@@ -454,9 +515,9 @@ export class ExperienceAdminComponent implements OnInit {
   } {
     const clean = (v: any) => (v === null || v === '' ? undefined : v);
     const raw = this.form.value;
-    const bullets: { id: string | null; content: string }[] = (raw.bullets || []).map(
-      (b: any) => ({ id: b.id ?? null, content: b.content || '' })
-    );
+    const bullets: { id: string | null; content: string }[] = (
+      raw.bullets || []
+    ).map((b: any) => ({ id: b.id ?? null, content: b.content || '' }));
 
     const payload: Partial<Experience> = {
       company: clean(raw.company),
@@ -492,13 +553,19 @@ export class ExperienceAdminComponent implements OnInit {
     for (let idx = 0; idx < formBullets.length; idx++) {
       const fb = formBullets[idx];
       if (fb.id && existingMap.has(fb.id)) {
-        await this.api.updateBullet(experienceId, fb.id, fb.content, idx).toPromise();
+        await this.api
+          .updateBullet(experienceId, fb.id, fb.content, idx)
+          .toPromise();
       } else if (!fb.id) {
-        const res = await this.api.addBullet(experienceId, fb.content).toPromise();
+        const res = await this.api
+          .addBullet(experienceId, fb.content)
+          .toPromise();
         if (!res?.bullets) continue;
         const created = res.bullets.find((b) => b.content === fb.content);
         if (created?.id) {
-          await this.api.updateBullet(experienceId, created.id, created.content, idx).toPromise();
+          await this.api
+            .updateBullet(experienceId, created.id, created.content, idx)
+            .toPromise();
         }
       }
     }

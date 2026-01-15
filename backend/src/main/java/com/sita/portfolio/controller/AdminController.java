@@ -23,6 +23,8 @@ import java.util.Map;
 @Slf4j
 public class AdminController {
 
+    private final org.springframework.jdbc.core.JdbcTemplate jdbcTemplate;
+
     /**
      * Returns the current authenticated admin user's info.
      * GET /api/admin/me
@@ -53,6 +55,25 @@ public class AdminController {
                 Map.of("message", "Welcome to the admin dashboard"),
                 request.getRequestURI()
         ));
+    }
+
+    /**
+     * Database diagnostic endpoint for admins.
+     * GET /api/admin/diag/db
+     */
+    @GetMapping("/diag/db")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> databaseDiagnostics(HttpServletRequest request) {
+        Map<String, Object> row = jdbcTemplate.queryForMap(
+                "SELECT current_database() AS current_database, inet_server_addr() AS inet_server_addr, current_user AS current_user"
+        );
+
+        Map<String, Object> data = Map.of(
+                "currentDatabase", String.valueOf(row.get("current_database")),
+                "serverAddress", String.valueOf(row.get("inet_server_addr")),
+                "currentUser", String.valueOf(row.get("current_user"))
+        );
+
+        return ResponseEntity.ok(ApiResponse.success(data, request.getRequestURI()));
     }
 
 }

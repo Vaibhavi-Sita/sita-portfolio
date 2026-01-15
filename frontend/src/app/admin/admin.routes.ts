@@ -13,33 +13,52 @@ export const ADMIN_ROUTES: Routes = [
     canActivate: [authGuard],
     canActivateChild: [authGuard],
     loadComponent: () =>
-      import('./layout/admin-shell.component').then((m) => m.AdminShellComponent),
+      import('./layout/admin-shell.component').then(
+        (m) => m.AdminShellComponent
+      ),
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'profile' },
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () =>
+          import('./dashboard/admin-dashboard.component').then(
+            (m) => m.AdminDashboardComponent
+          ),
+      },
       {
         path: 'profile',
         loadComponent: () =>
-          import('./profile/profile-admin.component').then((m) => m.ProfileAdminComponent),
+          import('./profile/profile-admin.component').then(
+            (m) => m.ProfileAdminComponent
+          ),
       },
       {
         path: 'experience',
         loadComponent: () =>
-          import('./experience/experience-admin.component').then((m) => m.ExperienceAdminComponent),
+          import('./experience/experience-admin.component').then(
+            (m) => m.ExperienceAdminComponent
+          ),
       },
       {
         path: 'projects',
         loadComponent: () =>
-          import('./projects/projects-admin.component').then((m) => m.ProjectsAdminComponent),
+          import('./projects/projects-admin.component').then(
+            (m) => m.ProjectsAdminComponent
+          ),
       },
       {
         path: 'skills',
         loadComponent: () =>
-          import('./skills/skills-admin.component').then((m) => m.SkillsAdminComponent),
+          import('./skills/skills-admin.component').then(
+            (m) => m.SkillsAdminComponent
+          ),
       },
       {
         path: 'education',
         loadComponent: () =>
-          import('./education/education-admin.component').then((m) => m.EducationAdminComponent),
+          import('./education/education-admin.component').then(
+            (m) => m.EducationAdminComponent
+          ),
       },
       {
         path: 'certifications',
@@ -51,17 +70,16 @@ export const ADMIN_ROUTES: Routes = [
       {
         path: 'contact',
         loadComponent: () =>
-          import('./contact/contact-admin.component').then((m) => m.ContactAdminComponent),
+          import('./contact/contact-admin.component').then(
+            (m) => m.ContactAdminComponent
+          ),
       },
       {
         path: 'import',
         loadComponent: () =>
-          import('./import/import-admin.component').then((m) => m.ImportAdminComponent),
-      },
-      {
-        path: 'dashboard',
-        loadComponent: () =>
-          import('./dashboard/dashboard.component').then((m) => m.DashboardComponent),
+          import('./import/import-admin.component').then(
+            (m) => m.ImportAdminComponent
+          ),
       },
     ],
   },

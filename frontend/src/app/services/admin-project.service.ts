@@ -9,13 +9,13 @@ interface ReorderRequestDto {
 }
 
 interface PublishDto {
-  published: boolean;
+  isPublished: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
 export class AdminProjectService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = environment.apiUrl;
+  private readonly baseUrl = environment.apiBaseUrl || environment.apiUrl;
 
   getAll(): Observable<Project[]> {
     return this.http
@@ -31,7 +31,10 @@ export class AdminProjectService {
 
   update(id: string, payload: Partial<Project>): Observable<Project> {
     return this.http
-      .put<ApiResponse<Project>>(`${this.baseUrl}/api/admin/projects/${id}`, payload)
+      .put<ApiResponse<Project>>(
+        `${this.baseUrl}/api/admin/projects/${id}`,
+        payload
+      )
       .pipe(map((res) => res.data));
   }
 
@@ -42,26 +45,40 @@ export class AdminProjectService {
   }
 
   setPublished(id: string, published: boolean): Observable<Project> {
-    const body: PublishDto = { published };
+    const body: PublishDto = { isPublished: published };
     return this.http
-      .patch<ApiResponse<Project>>(`${this.baseUrl}/api/admin/projects/${id}/publish`, body)
+      .patch<ApiResponse<Project>>(
+        `${this.baseUrl}/api/admin/projects/${id}/publish`,
+        body
+      )
       .pipe(map((res) => res.data));
   }
 
   reorder(ids: string[]): Observable<Project[]> {
     const body: ReorderRequestDto = { orderedIds: ids };
     return this.http
-      .put<ApiResponse<Project[]>>(`${this.baseUrl}/api/admin/projects/reorder`, body)
+      .put<ApiResponse<Project[]>>(
+        `${this.baseUrl}/api/admin/projects/reorder`,
+        body
+      )
       .pipe(map((res) => res.data));
   }
 
   addBullet(projectId: string, content: string): Observable<Project> {
     return this.http
-      .post<ApiResponse<Project>>(`${this.baseUrl}/api/admin/projects/${projectId}/bullets`, { content })
+      .post<ApiResponse<Project>>(
+        `${this.baseUrl}/api/admin/projects/${projectId}/bullets`,
+        { content }
+      )
       .pipe(map((res) => res.data));
   }
 
-  updateBullet(projectId: string, bulletId: string, content: string, sortOrder: number): Observable<Project> {
+  updateBullet(
+    projectId: string,
+    bulletId: string,
+    content: string,
+    sortOrder: number
+  ): Observable<Project> {
     return this.http
       .put<ApiResponse<Project>>(
         `${this.baseUrl}/api/admin/projects/${projectId}/bullets/${bulletId}`,

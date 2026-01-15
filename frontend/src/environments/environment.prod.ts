@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: '/api' // Will be proxied in production
+  apiUrl: '/api', // Will be proxied in production
+  apiBaseUrl: '/api'
 };

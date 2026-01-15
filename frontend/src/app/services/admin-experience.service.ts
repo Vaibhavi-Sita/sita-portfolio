@@ -9,13 +9,13 @@ interface ReorderRequestDto {
 }
 
 interface PublishDto {
-  published: boolean;
+  isPublished: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
 export class AdminExperienceService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = environment.apiUrl;
+  private readonly baseUrl = environment.apiBaseUrl || environment.apiUrl;
 
   getAll(): Observable<Experience[]> {
     return this.http
@@ -25,13 +25,19 @@ export class AdminExperienceService {
 
   create(payload: Partial<Experience>): Observable<Experience> {
     return this.http
-      .post<ApiResponse<Experience>>(`${this.baseUrl}/api/admin/experiences`, payload)
+      .post<ApiResponse<Experience>>(
+        `${this.baseUrl}/api/admin/experiences`,
+        payload
+      )
       .pipe(map((res) => res.data));
   }
 
   update(id: string, payload: Partial<Experience>): Observable<Experience> {
     return this.http
-      .put<ApiResponse<Experience>>(`${this.baseUrl}/api/admin/experiences/${id}`, payload)
+      .put<ApiResponse<Experience>>(
+        `${this.baseUrl}/api/admin/experiences/${id}`,
+        payload
+      )
       .pipe(map((res) => res.data));
   }
 
@@ -42,16 +48,22 @@ export class AdminExperienceService {
   }
 
   setPublished(id: string, published: boolean): Observable<Experience> {
-    const body: PublishDto = { published };
+    const body: PublishDto = { isPublished: published };
     return this.http
-      .patch<ApiResponse<Experience>>(`${this.baseUrl}/api/admin/experiences/${id}/publish`, body)
+      .patch<ApiResponse<Experience>>(
+        `${this.baseUrl}/api/admin/experiences/${id}/publish`,
+        body
+      )
       .pipe(map((res) => res.data));
   }
 
   reorder(ids: string[]): Observable<Experience[]> {
     const body: ReorderRequestDto = { orderedIds: ids };
     return this.http
-      .put<ApiResponse<Experience[]>>(`${this.baseUrl}/api/admin/experience/reorder`, body)
+      .put<ApiResponse<Experience[]>>(
+        `${this.baseUrl}/api/admin/experience/reorder`,
+        body
+      )
       .pipe(map((res) => res.data));
   }
 
@@ -64,7 +76,12 @@ export class AdminExperienceService {
       .pipe(map((res) => res.data));
   }
 
-  updateBullet(experienceId: string, bulletId: string, content: string, sortOrder: number): Observable<Experience> {
+  updateBullet(
+    experienceId: string,
+    bulletId: string,
+    content: string,
+    sortOrder: number
+  ): Observable<Experience> {
     return this.http
       .put<ApiResponse<Experience>>(
         `${this.baseUrl}/api/admin/experiences/${experienceId}/bullets/${bulletId}`,

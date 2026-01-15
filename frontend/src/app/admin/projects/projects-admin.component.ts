@@ -1,7 +1,16 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+  ReactiveFormsModule,
+  FormArray,
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
+import {
+  CdkDragDrop,
+  DragDropModule,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,7 +37,9 @@ import { AdminProjectService } from '../../services/admin-project.service';
       <div class="list-card">
         <header class="section-header">
           <h2>Projects</h2>
-          <p class="section-subtitle">Manage projects, bullets, publish, and order.</p>
+          <p class="section-subtitle">
+            Manage projects, bullets, publish, and order.
+          </p>
         </header>
 
         <div
@@ -38,27 +49,27 @@ import { AdminProjectService } from '../../services/admin-project.service';
           (cdkDropListDropped)="onReorder($event)"
         >
           @for (proj of projects; track proj.id) {
-            <div class="item-row" cdkDrag>
-              <div class="drag-handle" cdkDragHandle>
-                <mat-icon>drag_indicator</mat-icon>
-              </div>
-              <div class="item-meta" (click)="edit(proj)">
-                <div class="item-title">{{ proj.title }}</div>
-                <div class="item-sub">{{ proj.slug || 'no-slug' }}</div>
-              </div>
-              <mat-slide-toggle
-                [checked]="proj.published"
-                (change)="togglePublish(proj, $event.checked)"
-              >
-                {{ proj.published ? 'Published' : 'Draft' }}
-              </mat-slide-toggle>
-              <button class="icon-btn" (click)="edit(proj)">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button class="icon-btn danger" (click)="remove(proj)">
-                <mat-icon>delete</mat-icon>
-              </button>
+          <div class="item-row" cdkDrag>
+            <div class="drag-handle" cdkDragHandle>
+              <mat-icon>drag_indicator</mat-icon>
             </div>
+            <div class="item-meta" (click)="edit(proj)">
+              <div class="item-title">{{ proj.title }}</div>
+              <div class="item-sub">{{ proj.slug || 'no-slug' }}</div>
+            </div>
+            <mat-slide-toggle
+              [checked]="proj.published"
+              (change)="togglePublish(proj, $event.checked)"
+            >
+              {{ proj.published ? 'Published' : 'Draft' }}
+            </mat-slide-toggle>
+            <button class="icon-btn" (click)="edit(proj)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button class="icon-btn danger" (click)="remove(proj)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
           }
         </div>
 
@@ -104,16 +115,28 @@ import { AdminProjectService } from '../../services/admin-project.service';
 
           <mat-form-field appearance="outline" class="full">
             <mat-label>Description</mat-label>
-            <textarea matInput rows="3" formControlName="description"></textarea>
+            <textarea
+              matInput
+              rows="3"
+              formControlName="description"
+            ></textarea>
           </mat-form-field>
           <mat-form-field appearance="outline" class="full">
             <mat-label>Long description</mat-label>
-            <textarea matInput rows="4" formControlName="longDescription"></textarea>
+            <textarea
+              matInput
+              rows="4"
+              formControlName="longDescription"
+            ></textarea>
           </mat-form-field>
 
           <div class="toggle-row">
-            <mat-slide-toggle formControlName="featured">Featured</mat-slide-toggle>
-            <mat-slide-toggle formControlName="published">Published</mat-slide-toggle>
+            <mat-slide-toggle formControlName="featured"
+              >Featured</mat-slide-toggle
+            >
+            <mat-slide-toggle formControlName="published"
+              >Published</mat-slide-toggle
+            >
           </div>
 
           <div class="bullets">
@@ -130,29 +153,46 @@ import { AdminProjectService } from '../../services/admin-project.service';
               [cdkDropListData]="bulletControls"
               (cdkDropListDropped)="onBulletReorder($event)"
             >
-              @for (bulletCtrl of bulletControls; track bulletCtrl.value.__key; let i = $index) {
-                <div class="bullet-row" cdkDrag>
-                  <div class="drag-handle" cdkDragHandle>
-                    <mat-icon>drag_indicator</mat-icon>
-                  </div>
-                  <mat-form-field appearance="outline" class="bullet-field">
-                    <mat-label>Bullet</mat-label>
-                    <input matInput [formControl]="bulletCtrl.get('content')!" />
-                  </mat-form-field>
-                  <button type="button" class="icon-btn danger" (click)="removeBullet(i)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
+              @for (bulletCtrl of bulletControls; track bulletCtrl.value.__key;
+              let i = $index) {
+              <div class="bullet-row" cdkDrag>
+                <div class="drag-handle" cdkDragHandle>
+                  <mat-icon>drag_indicator</mat-icon>
                 </div>
+                <mat-form-field appearance="outline" class="bullet-field">
+                  <mat-label>Bullet</mat-label>
+                  <input
+                    matInput
+                    [formControl]="$any(bulletCtrl.get('content'))"
+                  />
+                </mat-form-field>
+                <button
+                  type="button"
+                  class="icon-btn danger"
+                  (click)="removeBullet(i)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
               }
             </div>
           </div>
 
           <div class="actions">
-            <button type="submit" class="btn-primary" [disabled]="form.invalid || saving">
+            <button
+              type="submit"
+              class="btn-primary"
+              [disabled]="form.invalid || saving"
+            >
               <mat-icon>save</mat-icon>
               Save
             </button>
-            <button type="button" class="btn-ghost" (click)="cancelEdit()" [disabled]="saving">
+            <button
+              type="button"
+              class="btn-ghost"
+              (click)="cancelEdit()"
+              [disabled]="saving"
+            >
               Cancel
             </button>
           </div>
@@ -404,17 +444,33 @@ export class ProjectsAdminComponent implements OnInit {
   }
 
   onBulletReorder(event: CdkDragDrop<any[]>): void {
-    moveItemInArray(this.bulletControls, event.previousIndex, event.currentIndex);
+    moveItemInArray(
+      this.bulletControls,
+      event.previousIndex,
+      event.currentIndex
+    );
   }
 
   onReorder(event: CdkDragDrop<Project[]>): void {
+    const previous = [...this.projects];
     moveItemInArray(this.projects, event.previousIndex, event.currentIndex);
     const orderedIds = this.projects.map((p) => p.id);
-    this.api.reorder(orderedIds).subscribe((data) => (this.projects = data));
+    this.api.reorder(orderedIds).subscribe({
+      next: (data) => (this.projects = data),
+      error: () => {
+        this.projects = previous;
+      },
+    });
   }
 
   togglePublish(proj: Project, published: boolean): void {
-    this.api.setPublished(proj.id, published).subscribe((updated) => (proj.published = updated.published));
+    const prev = proj.published;
+    this.api.setPublished(proj.id, published).subscribe({
+      next: (updated) => (proj.published = updated.published),
+      error: () => {
+        proj.published = prev;
+      },
+    });
   }
 
   save(): void {
@@ -444,9 +500,9 @@ export class ProjectsAdminComponent implements OnInit {
   } {
     const clean = (v: any) => (v === null || v === '' ? undefined : v);
     const raw = this.form.value;
-    const bullets: { id: string | null; content: string }[] = (raw.bullets || []).map(
-      (b: any) => ({ id: b.id ?? null, content: b.content || '' })
-    );
+    const bullets: { id: string | null; content: string }[] = (
+      raw.bullets || []
+    ).map((b: any) => ({ id: b.id ?? null, content: b.content || '' }));
 
     const payload: Partial<Project> = {
       title: clean(raw.title),
@@ -481,13 +537,17 @@ export class ProjectsAdminComponent implements OnInit {
     for (let idx = 0; idx < formBullets.length; idx++) {
       const fb = formBullets[idx];
       if (fb.id && existingMap.has(fb.id)) {
-        await this.api.updateBullet(projectId, fb.id, fb.content, idx).toPromise();
+        await this.api
+          .updateBullet(projectId, fb.id, fb.content, idx)
+          .toPromise();
       } else if (!fb.id) {
         const res = await this.api.addBullet(projectId, fb.content).toPromise();
         if (!res?.bullets) continue;
         const created = res.bullets.find((b) => b.content === fb.content);
         if (created?.id) {
-          await this.api.updateBullet(projectId, created.id, created.content, idx).toPromise();
+          await this.api
+            .updateBullet(projectId, created.id, created.content, idx)
+            .toPromise();
         }
       }
     }

@@ -1,0 +1,234 @@
+{
+  "profile": {
+    "name": "Jane Developer",
+    "title": "Full Stack Engineer",
+    "tagline": "Building beautiful, performant web applications",
+    "bio": "Passionate developer with 5+ years of experience building scalable web applications. I love working with modern technologies and helping teams deliver exceptional products.",
+    "email": "jane@example.com",
+    "githubUrl": "https://github.com/janedev",
+    "linkedinUrl": "https://linkedin.com/in/janedev",
+    "twitterUrl": "https://twitter.com/janedev"
+  },
+  "experiences": [
+    {
+      "company": "Tech Corp",
+      "role": "Senior Software Engineer",
+      "location": "San Francisco, CA",
+      "employmentType": "Full-time",
+      "startDate": "2022-01-15",
+      "description": "Leading frontend development for the core product, working closely with design and backend teams to deliver features that delight users.",
+      "techStack": "React, TypeScript, GraphQL, Node.js, AWS",
+      "companyUrl": "https://techcorp.example.com",
+      "published": true,
+      "bullets": [
+        { "content": "Led migration from legacy jQuery system to modern React architecture, improving maintainability and developer velocity" },
+        { "content": "Improved application performance by 40% through code splitting, lazy loading, and optimized bundle sizes" },
+        { "content": "Mentored 3 junior developers, conducting code reviews and pair programming sessions" },
+        { "content": "Implemented comprehensive testing strategy achieving 85% code coverage" }
+      ]
+    },
+    {
+      "company": "StartupXYZ",
+      "role": "Full Stack Developer",
+      "location": "Remote",
+      "employmentType": "Full-time",
+      "startDate": "2020-03-01",
+      "endDate": "2021-12-31",
+      "description": "Built and maintained multiple web applications in a fast-paced startup environment.",
+      "techStack": "Angular, Java, Spring Boot, PostgreSQL, Docker",
+      "companyUrl": "https://startupxyz.example.com",
+      "published": true,
+      "bullets": [
+        { "content": "Developed RESTful APIs serving 10k+ daily active users with 99.9% uptime" },
+        { "content": "Implemented CI/CD pipeline with GitHub Actions, reducing deployment time by 60%" },
+        { "content": "Designed and built real-time notification system using WebSockets" }
+      ]
+    },
+    {
+      "company": "Digital Agency",
+      "role": "Junior Developer",
+      "location": "New York, NY",
+      "employmentType": "Full-time",
+      "startDate": "2019-01-10",
+      "endDate": "2020-02-28",
+      "description": "Worked on various client projects building responsive websites and web applications.",
+      "techStack": "JavaScript, Vue.js, PHP, MySQL, WordPress",
+      "published": true,
+      "bullets": [
+        { "content": "Built 15+ responsive websites for clients across various industries" },
+        { "content": "Collaborated with designers to implement pixel-perfect UI components" }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Portfolio Builder",
+      "slug": "portfolio-builder",
+      "description": "A modern portfolio website generator with drag-and-drop content management",
+      "longDescription": "A full-featured portfolio management system built with Angular and Spring Boot. Features include drag-and-drop reordering, JSON import/export, and a beautiful responsive design.",
+      "techStack": "Angular 18, Spring Boot 3, PostgreSQL, Docker",
+      "githubUrl": "https://github.com/janedev/portfolio-builder",
+      "liveUrl": "https://portfolio.example.com",
+      "featured": true,
+      "published": true,
+      "bullets": [
+        { "content": "Built with Angular 18 standalone components and signals" },
+        { "content": "RESTful API with Spring Boot 3 and Spring Security" },
+        { "content": "Drag-and-drop reordering using Angular CDK" },
+        { "content": "Docker Compose for easy local development" }
+      ]
+    },
+    {
+      "title": "Task Manager",
+      "slug": "task-manager",
+      "description": "A collaborative task management application with real-time updates",
+      "techStack": "React, Node.js, Socket.io, MongoDB",
+      "githubUrl": "https://github.com/janedev/task-manager",
+      "featured": false,
+      "published": true,
+      "bullets": [
+        { "content": "Real-time collaboration using WebSockets" },
+        { "content": "Kanban-style board with drag-and-drop" }
+      ]
+    },
+    {
+      "title": "Weather Dashboard",
+      "slug": "weather-dashboard",
+      "description": "A beautiful weather dashboard with location-based forecasts",
+      "techStack": "Vue.js, Chart.js, OpenWeather API",
+      "githubUrl": "https://github.com/janedev/weather-dashboard",
+      "liveUrl": "https://weather.example.com",
+      "featured": false,
+      "published": true,
+      "bullets": [
+        { "content": "7-day forecast with interactive charts" },
+        { "content": "Geolocation support and city search" }
+      ]
+    }
+  ],
+  "skillCategories": [
+    {
+      "name": "Frontend",
+      "icon": "code",
+      "published": true,
+      "skills": [
+        { "name": "React", "proficiency": "Expert" },
+        { "name": "Angular", "proficiency": "Expert" },
+        { "name": "TypeScript", "proficiency": "Expert" },
+        { "name": "JavaScript", "proficiency": "Expert" },
+        { "name": "Vue.js", "proficiency": "Advanced" },
+        { "name": "HTML5/CSS3", "proficiency": "Expert" },
+        { "name": "Tailwind CSS", "proficiency": "Advanced" },
+        { "name": "SCSS/Sass", "proficiency": "Advanced" }
+      ]
+    },
+    {
+      "name": "Backend",
+      "icon": "storage",
+      "published": true,
+      "skills": [
+        { "name": "Java", "proficiency": "Expert" },
+        { "name": "Spring Boot", "proficiency": "Expert" },
+        { "name": "Node.js", "proficiency": "Advanced" },
+        { "name": "Express.js", "proficiency": "Advanced" },
+        { "name": "Python", "proficiency": "Intermediate" },
+        { "name": "GraphQL", "proficiency": "Advanced" }
+      ]
+    },
+    {
+      "name": "Database",
+      "icon": "dns",
+      "published": true,
+      "skills": [
+        { "name": "PostgreSQL", "proficiency": "Expert" },
+        { "name": "MongoDB", "proficiency": "Advanced" },
+        { "name": "Redis", "proficiency": "Intermediate" },
+        { "name": "MySQL", "proficiency": "Advanced" }
+      ]
+    },
+    {
+      "name": "DevOps & Cloud",
+      "icon": "cloud",
+      "published": true,
+      "skills": [
+        { "name": "Docker", "proficiency": "Advanced" },
+        { "name": "Kubernetes", "proficiency": "Intermediate" },
+        { "name": "AWS", "proficiency": "Advanced" },
+        { "name": "GitHub Actions", "proficiency": "Advanced" },
+        { "name": "Terraform", "proficiency": "Intermediate" }
+      ]
+    },
+    {
+      "name": "Tools & Testing",
+      "icon": "build",
+      "published": true,
+      "skills": [
+        { "name": "Git", "proficiency": "Expert" },
+        { "name": "Jest", "proficiency": "Advanced" },
+        { "name": "Cypress", "proficiency": "Advanced" },
+        { "name": "Figma", "proficiency": "Intermediate" },
+        { "name": "Jira", "proficiency": "Advanced" }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of Technology",
+      "degree": "Bachelor of Science",
+      "fieldOfStudy": "Computer Science",
+      "location": "Boston, MA",
+      "startYear": 2015,
+      "endYear": 2019,
+      "gpa": "3.8/4.0",
+      "description": "Focused on software engineering, algorithms, and web development. Dean's List all semesters.",
+      "published": true
+    },
+    {
+      "institution": "Community College",
+      "degree": "Associate Degree",
+      "fieldOfStudy": "Information Technology",
+      "location": "Boston, MA",
+      "startYear": 2013,
+      "endYear": 2015,
+      "gpa": "3.9/4.0",
+      "published": true
+    }
+  ],
+  "certifications": [
+    {
+      "name": "AWS Solutions Architect - Associate",
+      "issuer": "Amazon Web Services",
+      "issueDate": "2023-06-15",
+      "expiryDate": "2026-06-15",
+      "credentialId": "AWS-SA-123456",
+      "credentialUrl": "https://aws.amazon.com/verification",
+      "published": true
+    },
+    {
+      "name": "Google Professional Cloud Developer",
+      "issuer": "Google Cloud",
+      "issueDate": "2023-03-20",
+      "expiryDate": "2025-03-20",
+      "credentialId": "GCP-PCD-789012",
+      "credentialUrl": "https://cloud.google.com/certification",
+      "published": true
+    },
+    {
+      "name": "Certified Kubernetes Administrator",
+      "issuer": "Cloud Native Computing Foundation",
+      "issueDate": "2022-11-10",
+      "expiryDate": "2025-11-10",
+      "credentialId": "CKA-345678",
+      "credentialUrl": "https://www.cncf.io/certification/cka",
+      "published": true
+    }
+  ],
+  "contactSettings": {
+    "email": "jane@example.com",
+    "phone": "+1 (555) 123-4567",
+    "location": "San Francisco, CA",
+    "availabilityStatus": "Available for new opportunities",
+    "formEnabled": true,
+    "successMessage": "Thanks for reaching out! I'll get back to you within 24 hours."
+  }
+}
