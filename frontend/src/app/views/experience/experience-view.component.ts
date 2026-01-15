@@ -52,12 +52,23 @@ import { SectionHeaderComponent } from '../../shared';
           </div>
           <div class="experience-card card-glow reveal-on-scroll hover-elevate">
             <div class="card-header">
-              <h3 class="role">{{ exp.role }}</h3>
-              <div class="company-info">
-                <span class="company text-blue-violet">{{ exp.company }}</span>
-                @if (exp.location) {
-                <span class="location">• {{ exp.location }}</span>
+              <div class="company-row">
+                @if (exp.logoUrl) {
+                <div class="company-logo">
+                  <img [src]="exp.logoUrl" [alt]="exp.company + ' logo'" />
+                </div>
                 }
+                <div class="company-meta">
+                  <h3 class="role">{{ exp.role }}</h3>
+                  <div class="company-info">
+                    <span class="company text-blue-violet">{{
+                      exp.company
+                    }}</span>
+                    @if (exp.location) {
+                    <span class="location"> • {{ exp.location }}</span>
+                    }
+                  </div>
+                </div>
               </div>
               <p class="date-range">
                 {{ exp.startDate | date : 'MMM yyyy' }} —
@@ -77,8 +88,9 @@ import { SectionHeaderComponent } from '../../shared';
             </ul>
             } @if (exp.techStack) {
             <div class="chip-group">
-              @for (tech of getTechArray(exp.techStack); track tech) {
-              <span class="chip-code">{{ tech }}</span>
+              @for (tech of getTechArray(exp.techStack); track tech; let i =
+              $index) {
+              <span [class]="getChipClass(i)">{{ tech }}</span>
               }
             </div>
             }
@@ -112,7 +124,7 @@ import { SectionHeaderComponent } from '../../shared';
       }
 
       .timeline {
-        max-width: 900px;
+        max-width: 1500px;
         margin: 0 auto;
         position: relative;
       }
@@ -183,6 +195,30 @@ import { SectionHeaderComponent } from '../../shared';
 
       .card-header {
         margin-bottom: 1rem;
+      }
+
+      .company-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .company-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--border-subtle);
+        background: var(--bg-secondary);
+        display: grid;
+        place-items: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+      }
+
+      .company-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
       }
 
       .role {
@@ -261,5 +297,15 @@ export class ExperienceViewComponent {
 
   getTechArray(techStack: string): string[] {
     return techStack.split(',').map((t) => t.trim());
+  }
+
+  getChipClass(index: number): string {
+    const classes = [
+      'chip-code',
+      'chip-code-pink',
+      'chip-code-orange',
+      'chip-code-mango',
+    ];
+    return classes[index % classes.length];
   }
 }

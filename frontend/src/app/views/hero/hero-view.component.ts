@@ -33,7 +33,7 @@ import { Profile } from '../../models';
         }
         <div class="hero-actions">
           <button class="btn-primary" (click)="viewWork.emit()">
-            View My Work
+            Dive In
             <mat-icon>arrow_forward</mat-icon>
           </button>
           <button class="btn-secondary" (click)="contactClick.emit()">

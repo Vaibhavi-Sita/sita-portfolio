@@ -399,9 +399,17 @@ a {
 }
 
 .chip-code-orange {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", monospace;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border-radius: 4px;
   background: rgba($color-orange, 0.15);
   color: var(--color-orange);
   border-color: rgba($color-orange, 0.3);
+  transition: all var(--transition-fast);
 
   &:hover {
     background: rgba($color-orange, 0.25);
@@ -410,9 +418,17 @@ a {
 }
 
 .chip-code-pink {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", monospace;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border-radius: 4px;
   background: rgba($color-winter-sky, 0.15);
   color: var(--color-winter-sky);
   border-color: rgba($color-winter-sky, 0.3);
+  transition: all var(--transition-fast);
 
   &:hover {
     background: rgba($color-winter-sky, 0.25);
@@ -421,10 +437,17 @@ a {
 }
 
 .chip-code-mango {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", monospace;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border-radius: 4px;
   background: rgba($color-mango, 0.15);
   color: $color-mango;
   border-color: rgba($color-mango, 0.3);
-
+  transition: all var(--transition-fast);
   &:hover {
     background: rgba($color-mango, 0.25);
     border-color: rgba($color-mango, 0.5);

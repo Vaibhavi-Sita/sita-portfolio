@@ -19,11 +19,7 @@ import { SectionHeaderComponent } from '../../shared';
       data-parallax-speed="0.1"
       data-parallax-speed2="0.2"
     >
-      <app-section-header
-        title="About Me"
-        subtitle="A little bit about who I am"
-        number="01"
-      >
+      <app-section-header title="About Me" subtitle="Kurzgesagt" number="01">
       </app-section-header>
 
       <div class="about-content">
