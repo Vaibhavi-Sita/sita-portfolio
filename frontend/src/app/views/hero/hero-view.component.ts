@@ -22,7 +22,7 @@ import { Profile } from '../../models';
     >
       <div class="hero-content reveal-on-scroll">
         <p class="hero-greeting">Hey there, I’m</p>
-        <h1 class="hero-name text-gradient">{{ profile.name }}</h1>
+        <h1 class="hero-name text-gradient">{{ profile.nickname }}</h1>
         <p class="hero-title">{{ profile.title }}</p>
         @if (profile.tagline) {
         <p class="hero-tagline">{{ profile.tagline }}</p>
@@ -60,6 +60,16 @@ import { Profile } from '../../models';
             class="social-link"
           >
             <mat-icon>business</mat-icon>
+          </a>
+          } @if (profile.nickname) {
+          <a
+            [href]="profile.nickname"
+            target="_blank"
+            rel="noopener"
+            aria-label="Nickname"
+            class="social-link"
+          >
+            <mat-icon>person</mat-icon>
           </a>
           } @if (profile.email) {
           <a

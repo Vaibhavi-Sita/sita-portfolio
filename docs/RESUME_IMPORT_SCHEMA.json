@@ -7,7 +7,10 @@
     "profile": {
       "type": "object",
       "description": "Profile information (upserted)",
-      "required": ["name", "title"],
+      "required": [
+        "name",
+        "title"
+      ],
       "properties": {
         "name": {
           "type": "string",
@@ -63,6 +66,11 @@
           "maxLength": 500,
           "format": "uri",
           "description": "Twitter/X profile URL"
+        },
+        "nickname": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Nickname"
         }
       }
     },
@@ -71,7 +79,11 @@
       "description": "Work experiences (cleared and replaced, sorted by array order)",
       "items": {
         "type": "object",
-        "required": ["company", "role", "startDate"],
+        "required": [
+          "company",
+          "role",
+          "startDate"
+        ],
         "properties": {
           "company": {
             "type": "string",
@@ -134,7 +146,9 @@
             "description": "Accomplishment bullet points",
             "items": {
               "type": "object",
-              "required": ["content"],
+              "required": [
+                "content"
+              ],
               "properties": {
                 "content": {
                   "type": "string",
@@ -151,7 +165,9 @@
       "description": "Portfolio projects (cleared and replaced, sorted by array order)",
       "items": {
         "type": "object",
-        "required": ["title"],
+        "required": [
+          "title"
+        ],
         "properties": {
           "title": {
             "type": "string",
@@ -215,7 +231,9 @@
             "description": "Key features/highlights",
             "items": {
               "type": "object",
-              "required": ["content"],
+              "required": [
+                "content"
+              ],
               "properties": {
                 "content": {
                   "type": "string",
@@ -232,7 +250,9 @@
       "description": "Skill categories with items (cleared and replaced, sorted by array order)",
       "items": {
         "type": "object",
-        "required": ["name"],
+        "required": [
+          "name"
+        ],
         "properties": {
           "name": {
             "type": "string",
@@ -254,7 +274,9 @@
             "description": "Skills in this category",
             "items": {
               "type": "object",
-              "required": ["name"],
+              "required": [
+                "name"
+              ],
               "properties": {
                 "name": {
                   "type": "string",
@@ -283,7 +305,11 @@
       "description": "Education entries (cleared and replaced, sorted by array order)",
       "items": {
         "type": "object",
-        "required": ["institution", "degree", "startYear"],
+        "required": [
+          "institution",
+          "degree",
+          "startYear"
+        ],
         "properties": {
           "institution": {
             "type": "string",
@@ -345,7 +371,11 @@
       "description": "Professional certifications (cleared and replaced, sorted by array order)",
       "items": {
         "type": "object",
-        "required": ["name", "issuer", "issueDate"],
+        "required": [
+          "name",
+          "issuer",
+          "issueDate"
+        ],
         "properties": {
           "name": {
             "type": "string",
@@ -395,7 +425,9 @@
     "contactSettings": {
       "type": "object",
       "description": "Contact page settings (upserted)",
-      "required": ["email"],
+      "required": [
+        "email"
+      ],
       "properties": {
         "email": {
           "type": "string",

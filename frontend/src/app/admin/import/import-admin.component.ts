@@ -566,6 +566,8 @@ export class ImportAdminComponent {
         email: 'jane@example.com',
         githubUrl: 'https://github.com/janedev',
         linkedinUrl: 'https://linkedin.com/in/janedev',
+        twitterUrl: 'https://twitter.com/janedev',
+        nickname: 'Jane Developer',
       },
       experiences: [
         {

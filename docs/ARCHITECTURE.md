@@ -39,6 +39,7 @@
 ## Backend Architecture
 
 ### Technology Stack
+
 - **Framework**: Spring Boot 3.x
 - **Language**: Java 17+
 - **Build Tool**: Maven
@@ -71,14 +72,14 @@ All controllers return JSON responses. No server-side HTML rendering.
 @RestController
 @RequestMapping("/api/v1")
 public class ProjectController {
-    
+
     @GetMapping("/projects")
     public ResponseEntity<List<ProjectDTO>> getPublishedProjects() { }
-    
+
     @GetMapping("/admin/projects")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ProjectDTO>> getAllProjects() { }
-    
+
     @PostMapping("/admin/projects")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProjectDTO> createProject(@RequestBody ProjectDTO dto) { }
@@ -87,23 +88,24 @@ public class ProjectController {
 
 ### API Endpoint Structure
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| GET | `/api/v1/portfolio` | Public | All published content |
-| GET | `/api/v1/projects` | Public | Published projects |
-| GET | `/api/v1/experience` | Public | Published experience |
-| POST | `/api/v1/auth/login` | Public | Admin login |
-| POST | `/api/v1/auth/refresh` | Public | Refresh JWT token |
-| GET | `/api/v1/admin/*` | JWT | Admin read operations |
-| POST | `/api/v1/admin/*` | JWT | Admin create operations |
-| PUT | `/api/v1/admin/*` | JWT | Admin update operations |
-| DELETE | `/api/v1/admin/*` | JWT | Admin delete operations |
+| Method | Endpoint               | Auth   | Description             |
+| ------ | ---------------------- | ------ | ----------------------- |
+| GET    | `/api/v1/portfolio`    | Public | All published content   |
+| GET    | `/api/v1/projects`     | Public | Published projects      |
+| GET    | `/api/v1/experience`   | Public | Published experience    |
+| POST   | `/api/v1/auth/login`   | Public | Admin login             |
+| POST   | `/api/v1/auth/refresh` | Public | Refresh JWT token       |
+| GET    | `/api/v1/admin/*`      | JWT    | Admin read operations   |
+| POST   | `/api/v1/admin/*`      | JWT    | Admin create operations |
+| PUT    | `/api/v1/admin/*`      | JWT    | Admin update operations |
+| DELETE | `/api/v1/admin/*`      | JWT    | Admin delete operations |
 
 ### Response Format
 
 All API responses follow a consistent structure:
 
 **Success Response:**
+
 ```json
 {
   "data": { ... },
@@ -112,6 +114,7 @@ All API responses follow a consistent structure:
 ```
 
 **Error Response:**
+
 ```json
 {
   "error": {
@@ -128,6 +131,7 @@ All API responses follow a consistent structure:
 ## Frontend Architecture
 
 ### Technology Stack
+
 - **Framework**: Angular 17+
 - **Language**: TypeScript
 - **Styling**: SCSS
@@ -180,10 +184,10 @@ frontend/
 
 ### MVC Mapping
 
-| MVC Concept | Angular Implementation |
-|-------------|----------------------|
-| **Model** | TypeScript interfaces in `models/` defining data shapes |
-| **View** | Component templates (HTML) in `views/` |
+| MVC Concept    | Angular Implementation                                  |
+| -------------- | ------------------------------------------------------- |
+| **Model**      | TypeScript interfaces in `models/` defining data shapes |
+| **View**       | Component templates (HTML) in `views/`                  |
 | **Controller** | Services in `controllers/services/` + Component classes |
 
 ### Data Flow
@@ -280,6 +284,7 @@ User Interaction
                      │ email        │
                      │ github_url   │
                      │ linkedin_url │
+                     │ nickname     │
                      │ updated_at   │
                      └──────────────┘
 ```
@@ -324,10 +329,10 @@ Admin endpoints are protected using JSON Web Tokens (JWT).
 
 ### Token Strategy
 
-| Token Type | Storage | Lifetime | Usage |
-|------------|---------|----------|-------|
-| Access Token | Memory (variable) | 15 minutes | API authentication |
-| Refresh Token | HttpOnly Cookie | 7 days | Obtain new access token |
+| Token Type    | Storage           | Lifetime   | Usage                   |
+| ------------- | ----------------- | ---------- | ----------------------- |
+| Access Token  | Memory (variable) | 15 minutes | API authentication      |
+| Refresh Token | HttpOnly Cookie   | 7 days     | Obtain new access token |
 
 ### Security Measures
 
@@ -353,12 +358,14 @@ Admin endpoints are protected using JSON Web Tokens (JWT).
 ### HTTP Headers
 
 **Request:**
+
 ```
 Content-Type: application/json
 Authorization: Bearer <jwt-token>  (admin routes only)
 ```
 
 **Response:**
+
 ```
 Content-Type: application/json
 X-Content-Type-Options: nosniff
@@ -400,15 +407,16 @@ X-Frame-Options: DENY
 
 ### Local Setup
 
-| Service | Port | URL |
-|---------|------|-----|
-| Angular Dev Server | 4200 | http://localhost:4200 |
-| Spring Boot | 8080 | http://localhost:8080 |
-| PostgreSQL (Supabase) | - | Remote connection |
+| Service               | Port | URL                   |
+| --------------------- | ---- | --------------------- |
+| Angular Dev Server    | 4200 | http://localhost:4200 |
+| Spring Boot           | 8080 | http://localhost:8080 |
+| PostgreSQL (Supabase) | -    | Remote connection     |
 
 ### Environment Variables
 
 **Backend (`application.yml`):**
+
 ```yaml
 spring:
   datasource:
@@ -418,16 +426,17 @@ spring:
 
 jwt:
   secret: ${JWT_SECRET}
-  expiration: 900000  # 15 minutes
+  expiration: 900000 # 15 minutes
 
 cors:
   allowed-origins: ${CORS_ORIGINS:http://localhost:4200}
 ```
 
 **Frontend (`environment.ts`):**
+
 ```typescript
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080/api/v1'
-};
+  apiUrl: 'http://localhost:8080/api/v1',
+}
 ```

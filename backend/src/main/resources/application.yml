@@ -12,18 +12,18 @@ spring:
     username: ${SPRING_DATASOURCE_USERNAME:}
     password: ${SPRING_DATASOURCE_PASSWORD:}
     driver-class-name: org.postgresql.Driver
-    
+
     # HikariCP settings optimized for connection pooler
     # Keep small - Supabase pooler already multiplexes connections
     hikari:
       pool-name: PortfolioHikariPool
       maximum-pool-size: 5
       minimum-idle: 0
-      idle-timeout: 300000           # 5 minutes
-      connection-timeout: 30000      # 30 seconds
-      max-lifetime: 1800000          # 30 minutes
-      keepalive-time: 60000          # 1 minute
-      validation-timeout: 5000       # 5 seconds
+      idle-timeout: 300000 # 5 minutes
+      connection-timeout: 30000 # 30 seconds
+      max-lifetime: 1800000 # 30 minutes
+      keepalive-time: 60000 # 1 minute
+      validation-timeout: 5000 # 5 seconds
       leak-detection-threshold: 60000
       connection-test-query: SELECT 1
 
@@ -58,6 +58,9 @@ spring:
     default-schema: portfolio
     connect-retries: 3
     connect-retries-interval: 10
+    url: ${SPRING_DATASOURCE_URL}
+    user: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
 
 # =========================================
 # Server Configuration
@@ -77,7 +80,7 @@ server:
 app:
   jwt:
     secret: ${JWT_SECRET:}
-    expiration-ms: 900000           # 15 minutes
+    expiration-ms: 900000 # 15 minutes
     refresh-expiration-ms: 604800000 # 7 days
   cors:
     allowed-origin: ${CORS_ALLOWED_ORIGIN:http://localhost:4200}
@@ -95,7 +98,7 @@ logging:
     org.flywaydb: INFO
     com.zaxxer.hikari: INFO
   pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    console: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
 
 # =========================================
 # Management / Actuator

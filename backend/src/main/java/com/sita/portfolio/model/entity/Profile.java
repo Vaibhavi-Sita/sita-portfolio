@@ -52,4 +52,6 @@ public class Profile extends BaseEntity {
     @Column(name = "twitter_url", length = 500)
     private String twitterUrl;
 
+    @Column(name = "nickname", length = 100)
+    private String nickname;
 }

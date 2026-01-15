@@ -28,6 +28,7 @@ export interface ResumeImportData {
     githubUrl?: string;
     linkedinUrl?: string;
     twitterUrl?: string;
+    nickname?: string;
   };
   experiences?: Array<{
     company: string;

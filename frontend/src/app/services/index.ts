@@ -16,3 +16,4 @@ export { AdminEducationService } from './admin-education.service';
 export { AdminCertificationService } from './admin-certification.service';
 export { AdminContactService } from './admin-contact.service';
 export { AdminImportService } from './admin-import.service';
+export { AdminProfileService } from './admin-profile.service';

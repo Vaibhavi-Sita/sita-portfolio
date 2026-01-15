@@ -1,15 +1,16 @@
 {
   "profile": {
-    "name": "Alex Chen",
+    "name": "Sita G",
     "title": "Senior Full-Stack Engineer",
     "tagline": "Building elegant solutions to complex problems",
     "bio": "Passionate software engineer with 8+ years of experience building scalable web applications. I love turning complex problems into simple, beautiful solutions. When I'm not coding, you'll find me contributing to open source or mentoring junior developers.",
     "avatarUrl": "https://example.com/avatar.jpg",
     "resumeUrl": "https://example.com/resume.pdf",
     "email": "alex@example.com",
-    "githubUrl": "https://github.com/alexchen",
-    "linkedinUrl": "https://linkedin.com/in/alexchen",
-    "twitterUrl": "https://twitter.com/alexchen"
+    "githubUrl": "https://github.com/Vaibhavi-Sita",
+    "linkedinUrl": "https://linkedin.com/in/vaibhavigs",
+    "twitterUrl": "https://twitter.com/vaibhavigs",
+    "nickname": "SITA"
   },
   "experiences": [
     {
@@ -25,10 +26,18 @@
       "logoUrl": "https://example.com/techcorp-logo.png",
       "published": true,
       "bullets": [
-        { "content": "Architected and implemented event-driven microservices reducing system latency by 40%" },
-        { "content": "Led team of 5 engineers in migrating legacy monolith to cloud-native architecture" },
-        { "content": "Established CI/CD pipelines reducing deployment time from 2 hours to 15 minutes" },
-        { "content": "Mentored 3 junior developers, helping them grow into mid-level engineers" }
+        {
+          "content": "Architected and implemented event-driven microservices reducing system latency by 40%"
+        },
+        {
+          "content": "Led team of 5 engineers in migrating legacy monolith to cloud-native architecture"
+        },
+        {
+          "content": "Established CI/CD pipelines reducing deployment time from 2 hours to 15 minutes"
+        },
+        {
+          "content": "Mentored 3 junior developers, helping them grow into mid-level engineers"
+        }
       ]
     },
     {
@@ -44,9 +53,15 @@
       "logoUrl": "https://example.com/startupxyz-logo.png",
       "published": true,
       "bullets": [
-        { "content": "Built real-time collaboration features used by 50,000+ daily active users" },
-        { "content": "Reduced page load time by 60% through code splitting and lazy loading" },
-        { "content": "Implemented comprehensive test suite achieving 85% code coverage" }
+        {
+          "content": "Built real-time collaboration features used by 50,000+ daily active users"
+        },
+        {
+          "content": "Reduced page load time by 60% through code splitting and lazy loading"
+        },
+        {
+          "content": "Implemented comprehensive test suite achieving 85% code coverage"
+        }
       ]
     },
     {
@@ -60,8 +75,12 @@
       "techStack": "PHP, Laravel, MySQL, JavaScript, jQuery",
       "published": true,
       "bullets": [
-        { "content": "Delivered 15+ client projects on time and within budget" },
-        { "content": "Developed reusable component library reducing development time by 30%" }
+        {
+          "content": "Delivered 15+ client projects on time and within budget"
+        },
+        {
+          "content": "Developed reusable component library reducing development time by 30%"
+        }
       ]
     }
   ],
@@ -79,9 +98,15 @@
       "featured": true,
       "published": true,
       "bullets": [
-        { "content": "Real-time collaboration with WebSocket support" },
-        { "content": "Keyboard-first design with vim-like navigation" },
-        { "content": "2,500+ GitHub stars and 100+ contributors" }
+        {
+          "content": "Real-time collaboration with WebSocket support"
+        },
+        {
+          "content": "Keyboard-first design with vim-like navigation"
+        },
+        {
+          "content": "2,500+ GitHub stars and 100+ contributors"
+        }
       ]
     },
     {
@@ -96,9 +121,15 @@
       "featured": true,
       "published": true,
       "bullets": [
-        { "content": "Integrates with GitHub, GitLab, and Jira" },
-        { "content": "Custom dashboards with drag-and-drop widgets" },
-        { "content": "Used by 50+ engineering teams" }
+        {
+          "content": "Integrates with GitHub, GitLab, and Jira"
+        },
+        {
+          "content": "Custom dashboards with drag-and-drop widgets"
+        },
+        {
+          "content": "Used by 50+ engineering teams"
+        }
       ]
     },
     {
@@ -110,9 +141,15 @@
       "featured": false,
       "published": true,
       "bullets": [
-        { "content": "Fast JSON/YAML converter" },
-        { "content": "Git commit message generator" },
-        { "content": "Project scaffolding tool" }
+        {
+          "content": "Fast JSON/YAML converter"
+        },
+        {
+          "content": "Git commit message generator"
+        },
+        {
+          "content": "Project scaffolding tool"
+        }
       ]
     }
   ],
@@ -122,11 +159,26 @@
       "icon": "code",
       "published": true,
       "skills": [
-        { "name": "Java", "proficiency": "Expert" },
-        { "name": "TypeScript", "proficiency": "Expert" },
-        { "name": "Python", "proficiency": "Advanced" },
-        { "name": "Go", "proficiency": "Intermediate" },
-        { "name": "Rust", "proficiency": "Learning" }
+        {
+          "name": "Java",
+          "proficiency": "Expert"
+        },
+        {
+          "name": "TypeScript",
+          "proficiency": "Expert"
+        },
+        {
+          "name": "Python",
+          "proficiency": "Advanced"
+        },
+        {
+          "name": "Go",
+          "proficiency": "Intermediate"
+        },
+        {
+          "name": "Rust",
+          "proficiency": "Learning"
+        }
       ]
     },
     {
@@ -134,10 +186,22 @@
       "icon": "browser",
       "published": true,
       "skills": [
-        { "name": "React", "proficiency": "Expert" },
-        { "name": "Vue.js", "proficiency": "Advanced" },
-        { "name": "Next.js", "proficiency": "Advanced" },
-        { "name": "Tailwind CSS", "proficiency": "Expert" }
+        {
+          "name": "React",
+          "proficiency": "Expert"
+        },
+        {
+          "name": "Vue.js",
+          "proficiency": "Advanced"
+        },
+        {
+          "name": "Next.js",
+          "proficiency": "Advanced"
+        },
+        {
+          "name": "Tailwind CSS",
+          "proficiency": "Expert"
+        }
       ]
     },
     {
@@ -145,10 +209,22 @@
       "icon": "server",
       "published": true,
       "skills": [
-        { "name": "Spring Boot", "proficiency": "Expert" },
-        { "name": "Node.js", "proficiency": "Expert" },
-        { "name": "FastAPI", "proficiency": "Advanced" },
-        { "name": "GraphQL", "proficiency": "Advanced" }
+        {
+          "name": "Spring Boot",
+          "proficiency": "Expert"
+        },
+        {
+          "name": "Node.js",
+          "proficiency": "Expert"
+        },
+        {
+          "name": "FastAPI",
+          "proficiency": "Advanced"
+        },
+        {
+          "name": "GraphQL",
+          "proficiency": "Advanced"
+        }
       ]
     },
     {
@@ -156,11 +232,26 @@
       "icon": "cloud",
       "published": true,
       "skills": [
-        { "name": "AWS", "proficiency": "Advanced" },
-        { "name": "Docker", "proficiency": "Expert" },
-        { "name": "Kubernetes", "proficiency": "Advanced" },
-        { "name": "Terraform", "proficiency": "Intermediate" },
-        { "name": "GitHub Actions", "proficiency": "Expert" }
+        {
+          "name": "AWS",
+          "proficiency": "Advanced"
+        },
+        {
+          "name": "Docker",
+          "proficiency": "Expert"
+        },
+        {
+          "name": "Kubernetes",
+          "proficiency": "Advanced"
+        },
+        {
+          "name": "Terraform",
+          "proficiency": "Intermediate"
+        },
+        {
+          "name": "GitHub Actions",
+          "proficiency": "Expert"
+        }
       ]
     },
     {
@@ -168,10 +259,22 @@
       "icon": "database",
       "published": true,
       "skills": [
-        { "name": "PostgreSQL", "proficiency": "Expert" },
-        { "name": "MongoDB", "proficiency": "Advanced" },
-        { "name": "Redis", "proficiency": "Advanced" },
-        { "name": "Elasticsearch", "proficiency": "Intermediate" }
+        {
+          "name": "PostgreSQL",
+          "proficiency": "Expert"
+        },
+        {
+          "name": "MongoDB",
+          "proficiency": "Advanced"
+        },
+        {
+          "name": "Redis",
+          "proficiency": "Advanced"
+        },
+        {
+          "name": "Elasticsearch",
+          "proficiency": "Intermediate"
+        }
       ]
     }
   ],

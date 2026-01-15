@@ -81,6 +81,9 @@ public class ImportResumeRequest {
 
         @Size(max = 500)
         private String twitterUrl;
+
+        @Size(max = 100)
+        private String nickname;
     }
 
     @Data

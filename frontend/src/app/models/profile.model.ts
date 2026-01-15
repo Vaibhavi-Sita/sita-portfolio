@@ -13,6 +13,7 @@ export interface Profile {
   githubUrl?: string;
   linkedinUrl?: string;
   twitterUrl?: string;
+  nickname?: string;
   createdAt: string;
   updatedAt: string;
 }

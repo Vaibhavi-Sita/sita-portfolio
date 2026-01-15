@@ -1,0 +1,1 @@
+UPDATE portfolio.profile SET nickname = 'Sita' WHERE nickname IS NULL;

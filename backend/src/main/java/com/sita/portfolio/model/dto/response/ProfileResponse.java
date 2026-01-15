@@ -27,5 +27,5 @@ public class ProfileResponse {
     private String githubUrl;
     private String linkedinUrl;
     private String twitterUrl;
-
+    private String nickname;
 }

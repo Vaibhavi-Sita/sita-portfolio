@@ -115,7 +115,7 @@ public class ImportService {
         profile.setGithubUrl(profileImport.getGithubUrl());
         profile.setLinkedinUrl(profileImport.getLinkedinUrl());
         profile.setTwitterUrl(profileImport.getTwitterUrl());
-
+        profile.setNickname(profileImport.getNickname());
         profileRepository.save(profile);
     }
 

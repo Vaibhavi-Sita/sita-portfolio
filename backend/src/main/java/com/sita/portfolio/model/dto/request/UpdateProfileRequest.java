@@ -53,4 +53,6 @@ public class UpdateProfileRequest {
     @Size(max = 500, message = "Twitter URL must not exceed 500 characters")
     private String twitterUrl;
 
+    @Size(max = 100, message = "Nickname must not exceed 100 characters")
+    private String nickname;
 }

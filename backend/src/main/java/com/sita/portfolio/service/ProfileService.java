@@ -50,7 +50,7 @@ public class ProfileService {
         if (request.getGithubUrl() != null) profile.setGithubUrl(request.getGithubUrl());
         if (request.getLinkedinUrl() != null) profile.setLinkedinUrl(request.getLinkedinUrl());
         if (request.getTwitterUrl() != null) profile.setTwitterUrl(request.getTwitterUrl());
-
+        if (request.getNickname() != null) profile.setNickname(request.getNickname());
         Profile saved = profileRepository.save(profile);
         log.info("Updated profile: {}", saved.getName());
 

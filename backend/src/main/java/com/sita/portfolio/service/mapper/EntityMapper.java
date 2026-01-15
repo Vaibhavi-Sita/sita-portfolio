@@ -32,6 +32,7 @@ public class EntityMapper {
                 .githubUrl(entity.getGithubUrl())
                 .linkedinUrl(entity.getLinkedinUrl())
                 .twitterUrl(entity.getTwitterUrl())
+                .nickname(entity.getNickname())
                 .build();
     }
 

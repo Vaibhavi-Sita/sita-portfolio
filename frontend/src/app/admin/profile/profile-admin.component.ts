@@ -5,8 +5,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { finalize } from 'rxjs';
 import { Profile } from '../../models';
-import { PortfolioService } from '../../services';
+import {
+  AdminProfileService,
+  UpdateProfilePayload,
+} from '../../services/admin-profile.service';
 
 @Component({
   selector: 'app-profile-admin',
@@ -23,7 +27,9 @@ import { PortfolioService } from '../../services';
     <section class="admin-section">
       <header class="section-header">
         <h2>Profile</h2>
-        <p class="section-subtitle">Update your headline, bio, and social links.</p>
+        <p class="section-subtitle">
+          Update your headline, bio, and social links.
+        </p>
       </header>
 
       <form class="form-card" [formGroup]="form" (ngSubmit)="save()">
@@ -31,6 +37,10 @@ import { PortfolioService } from '../../services';
           <mat-form-field appearance="outline">
             <mat-label>Name</mat-label>
             <input matInput formControlName="name" required />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Nickname</mat-label>
+            <input matInput formControlName="nickname" />
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Title</mat-label>
@@ -70,9 +80,16 @@ import { PortfolioService } from '../../services';
           <mat-label>LinkedIn URL</mat-label>
           <input matInput formControlName="linkedinUrl" />
         </mat-form-field>
-
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Nickname</mat-label>
+          <input matInput formControlName="nickname" />
+        </mat-form-field>
         <div class="actions">
-          <button class="btn-primary" type="submit" [disabled]="form.invalid || saving">
+          <button
+            class="btn-primary"
+            type="submit"
+            [disabled]="form.invalid || saving"
+          >
             <mat-icon>save</mat-icon>
             Save
           </button>
@@ -113,7 +130,7 @@ import { PortfolioService } from '../../services';
 })
 export class ProfileAdminComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
-  private readonly portfolio = inject(PortfolioService);
+  private readonly adminProfile = inject(AdminProfileService);
 
   form = this.fb.group({
     name: ['', Validators.required],
@@ -126,12 +143,13 @@ export class ProfileAdminComponent implements OnInit {
     avatarUrl: [''],
     githubUrl: [''],
     linkedinUrl: [''],
+    nickname: [''],
   });
 
   saving = false;
 
   ngOnInit(): void {
-    this.portfolio.getProfile().subscribe((profile) => {
+    this.adminProfile.get().subscribe((profile: Profile) => {
       if (profile) {
         this.form.patchValue(profile as any);
       }
@@ -141,9 +159,36 @@ export class ProfileAdminComponent implements OnInit {
   save(): void {
     if (this.form.invalid) return;
     this.saving = true;
-    // Placeholder: wire to admin profile endpoint when available
-    setTimeout(() => {
-      this.saving = false;
-    }, 400);
+    const {
+      name,
+      title,
+      tagline,
+      bio,
+      avatarUrl,
+      email,
+      githubUrl,
+      linkedinUrl,
+      nickname,
+    } = this.form.value;
+
+    const payload: UpdateProfilePayload = {
+      name: name || undefined,
+      title: title || undefined,
+      tagline: tagline || undefined,
+      bio: bio || undefined,
+      avatarUrl: avatarUrl || undefined,
+      email: email || undefined,
+      githubUrl: githubUrl || undefined,
+      linkedinUrl: linkedinUrl || undefined,
+      nickname: nickname || undefined,
+    };
+
+    this.adminProfile
+      .update(payload)
+      .pipe(finalize(() => (this.saving = false)))
+      .subscribe({
+        next: (updated) => this.form.patchValue(updated as any),
+        error: (err) => console.error('Failed to update profile', err),
+      });
   }
 }
