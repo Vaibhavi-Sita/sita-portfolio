@@ -22,4 +22,17 @@ export interface ContactFormData {
   email: string;
   subject?: string;
   message: string;
+  honeypot?: string;
+}
+
+export interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  subject?: string;
+  message: string;
+  status: 'new' | 'read' | 'archived';
+  createdAt: string;
+  userAgent?: string;
+  ipAddress?: string;
 }

@@ -6,7 +6,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatChipsModule } from '@angular/material/chips';
+import { finalize } from 'rxjs/operators';
 import { AdminContactService } from '../../services/admin-contact.service';
+import { AdminContactMessagesService } from '../../services/admin-contact-messages.service';
+import { NotificationService } from '../../services';
+import { ContactMessage } from '../../models';
 
 @Component({
   selector: 'app-contact-admin',
@@ -19,6 +24,7 @@ import { AdminContactService } from '../../services/admin-contact.service';
     MatButtonModule,
     MatIconModule,
     MatSlideToggleModule,
+    MatChipsModule,
   ],
   template: `
     <section class="admin-section">
@@ -110,6 +116,63 @@ import { AdminContactService } from '../../services/admin-contact.service';
         </div>
       </form>
     </section>
+
+    <section class="admin-section">
+      <header class="section-header">
+        <h2>Contact Messages</h2>
+        <p class="section-subtitle">
+          Inbox of public submissions (newest first).
+        </p>
+      </header>
+
+      <div class="form-card">
+        @if (messagesLoading) {
+        <div class="loading-row">
+          <mat-icon class="spin">autorenew</mat-icon>
+          Loading messages...
+        </div>
+        } @else if (!messages.length) {
+        <p class="muted">No messages yet.</p>
+        } @else {
+        <div class="messages">
+          @for (msg of messages; track msg.id) {
+          <article class="message-card">
+            <div class="message-header">
+              <div>
+                <div class="message-name">{{ msg.name }}</div>
+                <div class="message-meta">
+                  {{ msg.email }} • {{ msg.createdAt | date : 'short' }}
+                </div>
+              </div>
+              <mat-chip-set>
+                <mat-chip [color]="statusColor(msg.status)" selected>
+                  {{ msg.status }}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+            <div class="message-subject" *ngIf="msg.subject">
+              {{ msg.subject }}
+            </div>
+            <div class="message-body">
+              {{ msg.message }}
+            </div>
+            <div class="message-actions">
+              <button class="btn-secondary" (click)="updateStatus(msg, 'read')">
+                Mark read
+              </button>
+              <button
+                class="btn-tertiary"
+                (click)="updateStatus(msg, 'archived')"
+              >
+                Archive
+              </button>
+            </div>
+          </article>
+          }
+        </div>
+        }
+      </div>
+    </section>
   `,
   styles: [
     `
@@ -184,12 +247,79 @@ import { AdminContactService } from '../../services/admin-contact.service';
         width: 18px;
         height: 18px;
       }
+
+      .messages {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .message-card {
+        border: 1px solid var(--border-subtle);
+        border-radius: 12px;
+        padding: 1rem;
+        background: var(--bg-card);
+      }
+
+      .message-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .message-name {
+        font-weight: 700;
+      }
+
+      .message-meta {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .message-subject {
+        margin-top: 0.35rem;
+        font-weight: 600;
+      }
+
+      .message-body {
+        margin-top: 0.5rem;
+        white-space: pre-wrap;
+      }
+
+      .message-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+      }
+
+      .loading-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-muted);
+      }
+
+      .spin {
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
     `,
   ],
 })
 export class ContactAdminComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly api = inject(AdminContactService);
+  private readonly messagesService = inject(AdminContactMessagesService);
+  private readonly notify = inject(NotificationService);
 
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -203,9 +333,12 @@ export class ContactAdminComponent implements OnInit {
 
   saving = false;
   saveSuccess = false;
+  messages: ContactMessage[] = [];
+  messagesLoading = false;
 
   ngOnInit(): void {
     this.load();
+    this.loadMessages();
   }
 
   load(): void {
@@ -257,5 +390,53 @@ export class ContactAdminComponent implements OnInit {
         this.saving = false;
       },
     });
+  }
+
+  loadMessages(): void {
+    this.messagesLoading = true;
+    this.messagesService
+      .list(0, 20)
+      .pipe(finalize(() => (this.messagesLoading = false)))
+      .subscribe({
+        next: (page) => {
+          this.messages = page.content;
+        },
+        error: (err) => {
+          console.error('Failed to load messages', err);
+          this.notify.error('Failed to load messages');
+        },
+      });
+  }
+
+  updateStatus(
+    message: ContactMessage,
+    status: 'new' | 'read' | 'archived'
+  ): void {
+    if (message.status === status) {
+      return;
+    }
+    this.messagesService.updateStatus(message.id, status).subscribe({
+      next: (updated) => {
+        this.messages = this.messages.map((m) =>
+          m.id === updated.id ? { ...m, status: updated.status } : m
+        );
+        this.notify.success(`Marked as ${status}`);
+      },
+      error: (err) => {
+        console.error('Failed to update message status', err);
+        this.notify.error('Could not update status');
+      },
+    });
+  }
+
+  statusColor(status: string): 'primary' | 'accent' | 'warn' {
+    switch (status) {
+      case 'read':
+        return 'accent';
+      case 'archived':
+        return 'warn';
+      default:
+        return 'primary';
+    }
   }
 }

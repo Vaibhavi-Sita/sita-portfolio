@@ -3,12 +3,18 @@ package com.sita.portfolio.controller;
 import com.sita.portfolio.exception.ResourceNotFoundException;
 import com.sita.portfolio.model.dto.ApiResponse;
 import com.sita.portfolio.model.dto.HealthResponse;
+import com.sita.portfolio.model.dto.request.ContactMessageRequest;
 import com.sita.portfolio.model.dto.response.*;
+import com.sita.portfolio.service.ContactMessageService;
 import com.sita.portfolio.service.HealthService;
 import com.sita.portfolio.service.PortfolioService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import java.util.Map;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +33,7 @@ public class PublicController {
 
     private final HealthService healthService;
     private final PortfolioService portfolioService;
+    private final ContactMessageService contactMessageService;
 
     /**
      * Health check endpoint.
@@ -139,6 +146,19 @@ public class PublicController {
             throw new ResourceNotFoundException("Contact settings not found");
         }
         return ResponseEntity.ok(ApiResponse.success(contact, request.getRequestURI()));
+    }
+
+    /**
+     * Submit a contact message (public).
+     * POST /api/public/contact/messages
+     */
+    @PostMapping("/contact/messages")
+    public ResponseEntity<ApiResponse<Map<String, String>>> submitContactMessage(
+            @Valid @RequestBody ContactMessageRequest contactMessageRequest,
+            HttpServletRequest request) {
+        contactMessageService.submit(contactMessageRequest, request);
+        Map<String, String> result = Map.of("status", "received");
+        return ResponseEntity.ok(ApiResponse.success(result, request.getRequestURI()));
     }
 
 }

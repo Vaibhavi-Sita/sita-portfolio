@@ -109,6 +109,16 @@ import { ContactSectionHeaderComponent } from '../../shared/components/section-h
             (ngSubmit)="submitForm()"
             class="contact-form"
           >
+            <!-- Honeypot field to trap bots -->
+            <input
+              type="text"
+              formControlName="honeypot"
+              tabindex="-1"
+              autocomplete="off"
+              aria-hidden="true"
+              style="position: absolute; left: -9999px; opacity: 0;"
+            />
+
             <mat-form-field appearance="outline">
               <mat-label>Name</mat-label>
               <input matInput formControlName="name" placeholder="Your name" />
@@ -381,6 +391,7 @@ export class ContactViewComponent {
       email: ['', [Validators.required, Validators.email]],
       subject: [''],
       message: ['', Validators.required],
+      honeypot: [''], // hidden anti-spam field
     });
   }
 

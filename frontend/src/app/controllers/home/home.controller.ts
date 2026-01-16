@@ -8,8 +8,13 @@ import {
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { PortfolioService, StateService } from '../../services';
+import { catchError, finalize } from 'rxjs/operators';
+import {
+  PortfolioService,
+  StateService,
+  ContactService,
+  NotificationService,
+} from '../../services';
 import { MotionService } from '../../services/motion.service';
 import { ContactFormData } from '../../models';
 import {
@@ -138,6 +143,8 @@ import { LoadingSpinnerComponent } from '../../shared';
 })
 export class HomeController implements OnInit, AfterViewInit, OnDestroy {
   private readonly portfolioService = inject(PortfolioService);
+  private readonly contactService = inject(ContactService);
+  private readonly notify = inject(NotificationService);
   private readonly router = inject(Router);
   private readonly motionService = inject(MotionService);
   readonly state = inject(StateService);
@@ -226,11 +233,20 @@ export class HomeController implements OnInit, AfterViewInit, OnDestroy {
 
   handleContactSubmit(data: ContactFormData): void {
     this.isSubmittingContact = true;
-    // TODO: Implement contact form submission
-    console.log('Contact form submitted:', data);
-    setTimeout(() => {
-      this.isSubmittingContact = false;
-      alert('Message sent! (Demo mode)');
-    }, 1000);
+    this.contactService
+      .submit(data)
+      .pipe(finalize(() => (this.isSubmittingContact = false)))
+      .subscribe({
+        next: () => {
+          const successMessage =
+            this.state.contactSettings()?.successMessage ||
+            'Message sent successfully!';
+          this.notify.success(successMessage);
+        },
+        error: (err) => {
+          console.error('Contact form submission failed:', err);
+          this.notify.error('Failed to send message. Please try again.');
+        },
+      });
   }
 }

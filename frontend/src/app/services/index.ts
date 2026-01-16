@@ -6,6 +6,9 @@
 export { ApiService } from './api.service';
 export { AuthService } from './auth.service';
 export { PortfolioService } from './portfolio.service';
+export { ContactService } from './contact.service';
+export { AdminContactMessagesService } from './admin-contact-messages.service';
+export { NotificationService } from './notification.service';
 export { StateService } from './state.service';
 export { ScrollService } from './scroll.service';
 export { MotionService } from './motion.service';

@@ -7,12 +7,12 @@ spring:
   # Slightly more lenient connection settings for development
   datasource:
     hikari:
-      connection-timeout: 60000     # 60 seconds - more lenient for cold starts
+      connection-timeout: 60000 # 60 seconds - more lenient for cold starts
       leak-detection-threshold: 120000 # 2 minutes
 
   # SQL logging - set to true to enable query logging
   jpa:
-    show-sql: false  # Change to true to see SQL queries
+    show-sql: false # Change to true to see SQL queries
     properties:
       hibernate:
         format_sql: true
