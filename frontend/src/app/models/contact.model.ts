@@ -23,6 +23,7 @@ export interface ContactFormData {
   subject?: string;
   message: string;
   honeypot?: string;
+  captchaToken: string;
 }
 
 export interface ContactMessage {

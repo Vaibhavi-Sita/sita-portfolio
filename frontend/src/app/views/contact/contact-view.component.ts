@@ -1,4 +1,13 @@
-import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  inject,
+  AfterViewInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
@@ -12,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ContactSettings, ContactFormData } from '../../models';
+import { environment } from '../../../environments/environment';
 import { SectionHeaderComponent } from '../../shared';
 import { ContactSectionHeaderComponent } from '../../shared/components/section-header/contact-section-header.component';
 
@@ -118,6 +128,9 @@ import { ContactSectionHeaderComponent } from '../../shared/components/section-h
               aria-hidden="true"
               style="position: absolute; left: -9999px; opacity: 0;"
             />
+
+            <!-- reCAPTCHA -->
+            <div id="recaptcha-container" class="recaptcha-container"></div>
 
             <mat-form-field appearance="outline">
               <mat-label>Name</mat-label>
@@ -355,6 +368,10 @@ import { ContactSectionHeaderComponent } from '../../shared/components/section-h
         width: 100%;
       }
 
+      .recaptcha-container {
+        margin-bottom: 0.5rem;
+      }
+
       .spinning {
         animation: spin 1s linear infinite;
       }
@@ -377,13 +394,17 @@ import { ContactSectionHeaderComponent } from '../../shared/components/section-h
     `,
   ],
 })
-export class ContactViewComponent {
+export class ContactViewComponent implements AfterViewInit, OnChanges {
   @Input() settings: ContactSettings | null = null;
   @Input() isSubmitting = false;
   @Output() formSubmit = new EventEmitter<ContactFormData>();
 
   private readonly fb = inject(FormBuilder);
   contactForm: FormGroup;
+  recaptchaReady = false;
+  private recaptchaWidgetId: number | null = null;
+  private readonly siteKey = environment.recaptchaSiteKey;
+  private wasSubmitting = false;
 
   constructor() {
     this.contactForm = this.fb.group({
@@ -392,12 +413,84 @@ export class ContactViewComponent {
       subject: [''],
       message: ['', Validators.required],
       honeypot: [''], // hidden anti-spam field
+      captchaToken: ['', Validators.required],
     });
+
+    if (!this.siteKey) {
+      // If no site key configured, do not block submission, but backend will enforce if enabled there.
+      this.contactForm.get('captchaToken')?.clearValidators();
+      this.contactForm.get('captchaToken')?.updateValueAndValidity();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.loadRecaptchaScript();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes['isSubmitting'] &&
+      this.wasSubmitting &&
+      this.isSubmitting === false
+    ) {
+      this.resetRecaptcha();
+    }
+    this.wasSubmitting = this.isSubmitting;
   }
 
   submitForm(): void {
     if (this.contactForm.valid) {
       this.formSubmit.emit(this.contactForm.value as ContactFormData);
+    }
+  }
+
+  private loadRecaptchaScript(): void {
+    if (!this.siteKey) {
+      console.warn(
+        'reCAPTCHA site key missing; form will submit without captcha.'
+      );
+      return;
+    }
+    if (document.getElementById('recaptcha-script')) {
+      this.renderRecaptcha();
+      return;
+    }
+    const script = document.createElement('script');
+    script.id = 'recaptcha-script';
+    script.src = 'https://www.google.com/recaptcha/api.js';
+    script.async = true;
+    script.defer = true;
+    script.onload = () => this.renderRecaptcha();
+    document.body.appendChild(script);
+  }
+
+  private renderRecaptcha(): void {
+    // @ts-ignore
+    const grecaptcha = (window as any).grecaptcha;
+    if (!grecaptcha || !this.siteKey) {
+      return;
+    }
+    this.recaptchaWidgetId = grecaptcha.render('recaptcha-container', {
+      sitekey: this.siteKey,
+      callback: (token: string) => {
+        this.contactForm.patchValue({ captchaToken: token });
+        this.recaptchaReady = true;
+      },
+      'expired-callback': () => {
+        this.contactForm.patchValue({ captchaToken: '' });
+      },
+      'error-callback': () => {
+        this.contactForm.patchValue({ captchaToken: '' });
+      },
+    });
+  }
+
+  resetRecaptcha(): void {
+    // @ts-ignore
+    const grecaptcha = (window as any).grecaptcha;
+    if (this.recaptchaWidgetId !== null && grecaptcha) {
+      grecaptcha.reset(this.recaptchaWidgetId);
+      this.contactForm.patchValue({ captchaToken: '' });
     }
   }
 }
