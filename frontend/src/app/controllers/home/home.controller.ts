@@ -74,6 +74,9 @@ import { LoadingSpinnerComponent } from '../../shared';
       [experiences]="state.experiences()"
     ></app-experience-view>
 
+    <!-- Education Section -->
+    <app-education-view [education]="state.education()"></app-education-view>
+
     <!-- Projects Section -->
     <app-projects-view
       [projects]="state.projects()"
@@ -83,9 +86,6 @@ import { LoadingSpinnerComponent } from '../../shared';
 
     <!-- Skills Section -->
     <app-skills-view [categories]="state.skills()"></app-skills-view>
-
-    <!-- Education Section -->
-    <app-education-view [education]="state.education()"></app-education-view>
 
     <!-- Certifications Section -->
     <app-certifications-view

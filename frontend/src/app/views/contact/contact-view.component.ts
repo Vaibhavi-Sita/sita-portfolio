@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ContactSettings, ContactFormData } from '../../models';
 import { SectionHeaderComponent } from '../../shared';
+import { ContactSectionHeaderComponent } from '../../shared/components/section-header/contact-section-header.component';
 
 /**
  * Contact section view - displays contact info and form
@@ -28,7 +29,7 @@ import { SectionHeaderComponent } from '../../shared';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    SectionHeaderComponent,
+    ContactSectionHeaderComponent,
   ],
   template: `
     <section
@@ -38,12 +39,12 @@ import { SectionHeaderComponent } from '../../shared';
       data-parallax-speed="0.12"
       data-parallax-speed2="0.22"
     >
-      <app-section-header
+      <app-contact-section-header
         title="Get In Touch"
-        subtitle="Have an idea? Let’s ship it before the coffee gets cold"
+        subtitle="I'm always interested in hearing about new opportunities, exciting projects, or just having a conversation about technology."
         number="06"
       >
-      </app-section-header>
+      </app-contact-section-header>
 
       <div class="contact-content">
         <div class="contact-info reveal-on-scroll">
@@ -72,7 +73,7 @@ import { SectionHeaderComponent } from '../../shared';
               [href]="'tel:' + settings!.phone"
               class="contact-method reveal-on-scroll"
             >
-              <div class="method-icon method-icon-pink">
+              <div class="method-icon method-icon-green">
                 <mat-icon>phone</mat-icon>
               </div>
               <div class="method-content">
@@ -82,7 +83,7 @@ import { SectionHeaderComponent } from '../../shared';
             </a>
             } @if (settings?.location) {
             <div class="contact-method reveal-on-scroll">
-              <div class="method-icon method-icon-orange">
+              <div class="method-icon">
                 <mat-icon>location_on</mat-icon>
               </div>
               <div class="method-content">
@@ -205,6 +206,20 @@ import { SectionHeaderComponent } from '../../shared';
         line-height: 1.7;
         margin-bottom: 2rem;
       }
+      .section-title {
+        font-size: clamp(2rem, 5vw, 2.75rem);
+        font-weight: 700;
+        margin: 0;
+        background: linear-gradient(
+          135deg,
+          var(--color-green) 0%,
+          var(--color-mango) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: 0 0 5px var(--color-neon-green);
+      }
 
       .contact-methods {
         display: flex;
@@ -244,6 +259,10 @@ import { SectionHeaderComponent } from '../../shared';
       .method-icon-pink {
         background: rgba(255, 0, 110, 0.15);
         color: var(--color-winter-sky);
+      }
+      .method-icon-green {
+        background: rgba(44, 255, 5, 0.15);
+        color: var(--color-neon-green);
       }
 
       .method-icon-orange {

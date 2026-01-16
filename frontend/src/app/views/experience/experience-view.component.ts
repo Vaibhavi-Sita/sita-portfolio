@@ -88,9 +88,8 @@ import { SectionHeaderComponent } from '../../shared';
             </ul>
             } @if (exp.techStack) {
             <div class="chip-group">
-              @for (tech of getTechArray(exp.techStack); track tech; let i =
-              $index) {
-              <span [class]="getChipClass(i)">{{ tech }}</span>
+              @for (tech of getTechArray(exp.techStack); track tech) {
+              <span [class]="'chip-code-mango'">{{ tech }}</span>
               }
             </div>
             }
@@ -299,13 +298,13 @@ export class ExperienceViewComponent {
     return techStack.split(',').map((t) => t.trim());
   }
 
-  getChipClass(index: number): string {
-    const classes = [
-      'chip-code',
-      'chip-code-pink',
-      'chip-code-orange',
-      'chip-code-mango',
-    ];
-    return classes[index % classes.length];
-  }
+  // getChipClass(index: number): string {
+  //   const classes = [
+  //     'chip-code',
+  //     'chip-code-pink',
+  //     'chip-code-orange',
+  //     'chip-code-mango',
+  //   ];
+  //   return classes[index % classes.length];
+  // }
 }
