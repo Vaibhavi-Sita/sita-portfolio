@@ -50,8 +50,8 @@ import { ContactSectionHeaderComponent } from '../../shared/components/section-h
         <div class="contact-info reveal-on-scroll">
           <h3 class="info-title">Let's Talk</h3>
           <p class="info-description">
-            I'm always interested in hearing about new opportunities, exciting
-            projects, or just having a conversation about technology.
+            You can reach out to me by filling out the form or by using the
+            contact methods listed below. I would love to hear from you!
           </p>
 
           <div class="contact-methods">

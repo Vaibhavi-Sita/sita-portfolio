@@ -15,7 +15,7 @@ import { Profile } from '../../models';
       <div class="footer-content">
         <div class="footer-brand">
           <span class="logo">
-            <span class="logo-symbol">&lt;</span>
+            <span class="logo-symbol">&lt; </span>
             {{ profile?.name || 'Portfolio' }}
             <span class="logo-symbol">/&gt;</span>
           </span>
