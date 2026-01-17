@@ -42,6 +42,7 @@ server:
   compression:
     enabled: true
     mime-types: application/json,application/xml,text/html,text/plain
+    port: ${PORT:8080}
 
 # =========================================
 # Production Logging - Minimal

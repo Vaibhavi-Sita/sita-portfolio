@@ -1,4 +1,4 @@
-const backendBaseUrl = 'https://sita-portfolio-backend.onrender.com';
+const backendBaseUrl = 'https://sita-site.onrender.com';
 
 export const environment = {
   production: true,

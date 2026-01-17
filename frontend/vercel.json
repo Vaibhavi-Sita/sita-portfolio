@@ -5,7 +5,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://sita-portfolio-backend.onrender.com/api/$1"
+      "destination": "https://sita-site.onrender.com/api/$1"
     },
     {
       "source": "/(.*)",
