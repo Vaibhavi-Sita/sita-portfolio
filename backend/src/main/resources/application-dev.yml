@@ -6,6 +6,10 @@
 spring:
   # Slightly more lenient connection settings for development
   datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
     hikari:
       connection-timeout: 60000 # 60 seconds - more lenient for cold starts
       leak-detection-threshold: 120000 # 2 minutes
@@ -21,6 +25,10 @@ spring:
   flyway:
     connect-retries: 5
     connect-retries-interval: 5
+    url: ${SPRING_DATASOURCE_URL}
+    user: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
 
 # Server error details for debugging
 server:

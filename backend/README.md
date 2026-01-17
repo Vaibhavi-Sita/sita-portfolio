@@ -19,11 +19,11 @@ Spring Boot REST API for the portfolio application.
    ```
 
 2. **Configure database:**
-   
+
    Edit `.env` and set your Supabase Session Pooler URL:
-   
+
    ```env
-   SPRING_DATASOURCE_URL=jdbc:postgresql://aws-0-us-east-1.pooler.supabase.com:5432/postgres?user=postgres.yourref&password=yourpassword
+   SPRING_DATASOURCE_URL=jdbc:postgresql://your_url/host?user=postgres.yourref&password=yourpassword
    ```
 
 3. **Generate JWT secret:**
@@ -31,7 +31,7 @@ Spring Boot REST API for the portfolio application.
    ```bash
    # Linux/macOS
    openssl rand -base64 48
-   
+
    # Windows PowerShell
    [Convert]::ToBase64String((1..48 | ForEach-Object { Get-Random -Maximum 256 }) -as [byte[]])
    ```
@@ -43,7 +43,7 @@ Spring Boot REST API for the portfolio application.
    ```
 
    Or on Windows:
-   
+
    ```cmd
    mvnw.cmd spring-boot:run
    ```
@@ -52,10 +52,10 @@ Spring Boot REST API for the portfolio application.
 
 > ⚠️ **IMPORTANT: Change these credentials immediately after first login!**
 
-| Field    | Value                    |
-| -------- | ------------------------ |
-| Email    | `admin@portfolio.local`  |
-| Password | `ChangeMe123!`           |
+| Field    | Value                   |
+| -------- | ----------------------- |
+| Email    | `admin@portfolio.local` |
+| Password | `ChangeMe123!`          |
 
 ### How to Change Password
 
@@ -66,7 +66,7 @@ Spring Boot REST API for the portfolio application.
 ```sql
 -- Generate a new BCrypt hash (cost factor 12)
 -- Use an online BCrypt generator or your application
-UPDATE portfolio.admin_user 
+UPDATE portfolio.admin_user
 SET password_hash = '$2a$12$YOUR_NEW_BCRYPT_HASH_HERE',
     updated_at = NOW()
 WHERE email = 'admin@portfolio.local';
@@ -74,31 +74,21 @@ WHERE email = 'admin@portfolio.local';
 
 ### Generate BCrypt Hash
 
-You can generate a BCrypt hash using:
-
-**Java (in your application):**
-```java
-String hash = new BCryptPasswordEncoder(12).encode("YourNewPassword");
-System.out.println(hash);
-```
-
-**Online:** Use a BCrypt generator with cost factor 12
-
 ## API Endpoints
 
 ### Public Endpoints (No Authentication)
 
-| Method | Endpoint              | Description          |
-| ------ | --------------------- | -------------------- |
-| GET    | `/api/public/health`  | Health check         |
-| POST   | `/api/auth/login`     | Admin login          |
+| Method | Endpoint             | Description  |
+| ------ | -------------------- | ------------ |
+| GET    | `/api/public/health` | Health check |
+| POST   | `/api/auth/login`    | Admin login  |
 
 ### Admin Endpoints (Requires JWT)
 
-| Method | Endpoint              | Description          |
-| ------ | --------------------- | -------------------- |
-| GET    | `/api/admin/me`       | Current user info    |
-| GET    | `/api/admin/dashboard`| Dashboard access     |
+| Method | Endpoint               | Description       |
+| ------ | ---------------------- | ----------------- |
+| GET    | `/api/admin/me`        | Current user info |
+| GET    | `/api/admin/dashboard` | Dashboard access  |
 
 ### Authentication
 
@@ -107,10 +97,11 @@ System.out.println(hash);
    ```bash
    curl -X POST http://localhost:8080/api/auth/login \
      -H "Content-Type: application/json" \
-     -d '{"email": "admin@portfolio.local", "password": "ChangeMe123!"}'
+     -d '{"email": "admin@portfolio.local", "password": "nah!"}'
    ```
 
    Response:
+
    ```json
    {
      "timestamp": "2024-01-15T10:30:00Z",
@@ -134,12 +125,12 @@ System.out.println(hash);
 
 ### Environment Variables
 
-| Variable                 | Description                          | Required |
-| ------------------------ | ------------------------------------ | -------- |
-| `SPRING_PROFILES_ACTIVE` | Active profile (dev, prod)           | No       |
-| `SPRING_DATASOURCE_URL`  | JDBC URL for Supabase                | Yes      |
-| `JWT_SECRET`             | Secret key for JWT signing (min 32)  | Yes      |
-| `CORS_ALLOWED_ORIGIN`    | Frontend URL for CORS                | No       |
+| Variable                 | Description                         | Required |
+| ------------------------ | ----------------------------------- | -------- |
+| `SPRING_PROFILES_ACTIVE` | Active profile (dev, prod)          | No       |
+| `SPRING_DATASOURCE_URL`  | JDBC URL for Supabase               | Yes      |
+| `JWT_SECRET`             | Secret key for JWT signing (min 32) | Yes      |
+| `CORS_ALLOWED_ORIGIN`    | Frontend URL for CORS               | No       |
 
 ### Profiles
 
@@ -150,7 +141,7 @@ System.out.println(hash);
 # Run with dev profile
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
 
-# Run with prod profile  
+# Run with prod profile
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=prod
 ```
 

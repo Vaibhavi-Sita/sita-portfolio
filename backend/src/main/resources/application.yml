@@ -8,9 +8,9 @@ spring:
   # Uses Supabase Session Pooler (IPv4 compatible)
   # Set SPRING_DATASOURCE_URL to full JDBC URL from Supabase
   datasource:
-    url: ${SPRING_DATASOURCE_URL:}
-    username: ${SPRING_DATASOURCE_USERNAME:}
-    password: ${SPRING_DATASOURCE_PASSWORD:}
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
     # HikariCP settings optimized for connection pooler

@@ -28,6 +28,12 @@ public class EnvironmentValidator {
     @Value("${spring.datasource.url:}")
     private String datasourceUrl;
 
+    @Value("${spring.datasource.username:}")
+    private String datasourceUsername;
+
+    @Value("${spring.datasource.password:}")
+    private String datasourcePassword;
+
     @Value("${JWT_SECRET:}")
     private String jwtSecret;
 
@@ -35,11 +41,21 @@ public class EnvironmentValidator {
     public void validateEnvironment() {
         List<String> errors = new ArrayList<>();
 
-        // Validate datasource URL
+        // Validate datasource URL + credentials
         if (isBlank(datasourceUrl)) {
             errors.add("SPRING_DATASOURCE_URL is not set");
         } else if (!isValidJdbcUrl(datasourceUrl)) {
-            errors.add("SPRING_DATASOURCE_URL is invalid. Expected format: jdbc:postgresql://host:port/database?...");
+            errors.add("SPRING_DATASOURCE_URL is invalid. Expected format: jdbc:postgresql://host:port/database");
+        }
+
+        boolean urlHasCreds = urlContainsCredentials(datasourceUrl);
+        if (!urlHasCreds) {
+            if (isBlank(datasourceUsername)) {
+                errors.add("SPRING_DATASOURCE_USERNAME is not set");
+            }
+            if (isBlank(datasourcePassword)) {
+                errors.add("SPRING_DATASOURCE_PASSWORD is not set");
+            }
         }
 
         // Validate JWT secret
@@ -88,6 +104,11 @@ public class EnvironmentValidator {
             return false;
         }
         return JDBC_URL_PATTERN.matcher(url).matches();
+    }
+
+    private boolean urlContainsCredentials(String url) {
+        String lower = url.toLowerCase();
+        return lower.contains("user=") || lower.contains("username=") || lower.contains("password=");
     }
 
     private String buildErrorMessage(List<String> errors) {
