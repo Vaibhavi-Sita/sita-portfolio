@@ -32,7 +32,7 @@ import { Profile } from '../../models';
         </p>
         }
         <div class="hero-actions">
-          <button class="btn-primary" (click)="viewWork.emit()">
+          <button class="btn-primary" (click)="experienceClick.emit()">
             Dive In
             <mat-icon>arrow_forward</mat-icon>
           </button>
@@ -243,6 +243,6 @@ import { Profile } from '../../models';
 })
 export class HeroViewComponent {
   @Input() profile: Profile | null = null;
-  @Output() viewWork = new EventEmitter<void>();
+  @Output() experienceClick = new EventEmitter<void>();
   @Output() contactClick = new EventEmitter<void>();
 }

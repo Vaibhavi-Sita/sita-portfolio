@@ -66,7 +66,7 @@ import { LoadingSpinnerComponent } from '../../shared';
     <!-- Home / Hero Section -->
     <app-hero-view
       [profile]="state.profile()"
-      (viewWork)="scrollToSection('experience')"
+      (experienceClick)="scrollToSection('experience')"
       (contactClick)="scrollToSection('contact')"
     >
     </app-hero-view>
