@@ -7,6 +7,8 @@ import {
   AfterViewInit,
   OnChanges,
   SimpleChanges,
+  ElementRef,
+  ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -130,7 +132,11 @@ import { ContactSectionHeaderComponent } from '../../shared/components/section-h
             />
 
             <!-- reCAPTCHA -->
-            <div id="recaptcha-container" class="recaptcha-container"></div>
+            <div
+              #recaptchaContainer
+              id="recaptcha-container"
+              class="recaptcha-container"
+            ></div>
 
             <mat-form-field appearance="outline">
               <mat-label>Name</mat-label>
@@ -398,6 +404,8 @@ export class ContactViewComponent implements AfterViewInit, OnChanges {
   @Input() settings: ContactSettings | null = null;
   @Input() isSubmitting = false;
   @Output() formSubmit = new EventEmitter<ContactFormData>();
+  @ViewChild('recaptchaContainer')
+  private recaptchaContainer?: ElementRef<HTMLDivElement>;
 
   private readonly fb = inject(FormBuilder);
   contactForm: FormGroup;
@@ -405,6 +413,9 @@ export class ContactViewComponent implements AfterViewInit, OnChanges {
   private recaptchaWidgetId: number | null = null;
   private readonly siteKey = environment.recaptchaSiteKey;
   private wasSubmitting = false;
+  private recaptchaScriptLoaded = false;
+  private recaptchaRendered = false;
+  private renderRetryHandle: number | null = null;
 
   constructor() {
     this.contactForm = this.fb.group({
@@ -425,6 +436,7 @@ export class ContactViewComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
     this.loadRecaptchaScript();
+    this.scheduleRenderAttempt();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -436,6 +448,11 @@ export class ContactViewComponent implements AfterViewInit, OnChanges {
       this.resetRecaptcha();
     }
     this.wasSubmitting = this.isSubmitting;
+
+    // NEW: when settings arrive and formEnabled becomes true, try render
+    if (changes['settings'] && this.settings?.formEnabled) {
+      this.scheduleRenderAttempt();
+    }
   }
 
   submitForm(): void {
@@ -451,26 +468,62 @@ export class ContactViewComponent implements AfterViewInit, OnChanges {
       );
       return;
     }
-    if (document.getElementById('recaptcha-script')) {
-      this.renderRecaptcha();
+
+    const existing = document.getElementById(
+      'recaptcha-script'
+    ) as HTMLScriptElement | null;
+    if (existing) {
+      this.recaptchaScriptLoaded = true;
+      this.scheduleRenderAttempt();
       return;
     }
+
     const script = document.createElement('script');
     script.id = 'recaptcha-script';
-    script.src = 'https://www.google.com/recaptcha/api.js';
+    script.src = 'https://www.google.com/recaptcha/api.js?render=explicit';
     script.async = true;
     script.defer = true;
-    script.onload = () => this.renderRecaptcha();
+    script.onload = () => {
+      this.recaptchaScriptLoaded = true;
+      const grecaptcha = (window as any).grecaptcha;
+      if (grecaptcha?.ready) {
+        grecaptcha.ready(() => this.tryRenderRecaptcha());
+      } else {
+        this.tryRenderRecaptcha();
+      }
+    };
+    script.onerror = () => {
+      console.error('Failed to load reCAPTCHA script.');
+    };
     document.body.appendChild(script);
   }
 
-  private renderRecaptcha(): void {
-    // @ts-ignore
+  private scheduleRenderAttempt(delay = 50): void {
+    if (this.recaptchaRendered) return;
+    if (this.renderRetryHandle !== null) {
+      window.clearTimeout(this.renderRetryHandle);
+    }
+    this.renderRetryHandle = window.setTimeout(
+      () => this.tryRenderRecaptcha(),
+      delay
+    );
+  }
+
+  private tryRenderRecaptcha(): void {
+    if (!this.siteKey) return;
+    if (!this.settings?.formEnabled) return;
+    if (!this.recaptchaScriptLoaded) return;
+    if (this.recaptchaRendered) return;
+
+    const el = this.recaptchaContainer?.nativeElement;
     const grecaptcha = (window as any).grecaptcha;
-    if (!grecaptcha || !this.siteKey) {
+    if (!el || !grecaptcha || typeof grecaptcha.render !== 'function') {
+      // try again once the view and script are fully ready
+      this.scheduleRenderAttempt();
       return;
     }
-    this.recaptchaWidgetId = grecaptcha.render('recaptcha-container', {
+
+    this.recaptchaWidgetId = grecaptcha.render(el, {
       sitekey: this.siteKey,
       callback: (token: string) => {
         this.contactForm.patchValue({ captchaToken: token });
@@ -478,19 +531,23 @@ export class ContactViewComponent implements AfterViewInit, OnChanges {
       },
       'expired-callback': () => {
         this.contactForm.patchValue({ captchaToken: '' });
+        this.recaptchaReady = false;
       },
       'error-callback': () => {
         this.contactForm.patchValue({ captchaToken: '' });
+        this.recaptchaReady = false;
       },
     });
+
+    this.recaptchaRendered = true;
   }
 
   resetRecaptcha(): void {
-    // @ts-ignore
     const grecaptcha = (window as any).grecaptcha;
     if (this.recaptchaWidgetId !== null && grecaptcha) {
       grecaptcha.reset(this.recaptchaWidgetId);
       this.contactForm.patchValue({ captchaToken: '' });
+      this.recaptchaReady = false;
     }
   }
 }
