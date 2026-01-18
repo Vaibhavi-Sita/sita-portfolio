@@ -70,6 +70,15 @@ import { Profile } from '../../models';
             <mat-icon>email</mat-icon>
           </a>
           }
+          @if (profile.resumeUrl) {
+          <a
+            [href]="profile.resumeUrl"
+            target="_blank"
+            rel="noopener"
+            aria-label="Resume"
+            class="social-link"
+          >
+            <mat-icon>file_present</mat-icon>
         </div>
       </div>
       <div class="hero-decoration">
