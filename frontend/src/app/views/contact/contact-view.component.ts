@@ -344,15 +344,19 @@ import { ContactSectionHeaderComponent } from '../../shared/components/section-h
       }
 
       @keyframes pulse {
-        0%,
+        0%{
+        opacity: 1;
+        transform: scale(0.75);
+        }
+        70% {
+          opacity: 0;
+          transform: scale(1.5);
+        }
         100% {
-          opacity: 1;
-          transform: scale(1);
+          opacity: 0.75;
+          transform: scale(0.75);
         }
-        50% {
-          opacity: 0.5;
-          transform: scale(1.2);
-        }
+      
       }
 
       .contact-form-wrapper {
