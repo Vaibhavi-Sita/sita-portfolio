@@ -67,6 +67,8 @@ export class LayoutController implements OnInit, AfterViewInit {
   ];
 
   ngOnInit(): void {
+    // Reset active section on boot (prevents stale HMR state defaulting to other links)
+    this.scrollService.activeSection.set('home');
     // Handle initial hash in URL
     this.scrollService.handleInitialHash();
   }
