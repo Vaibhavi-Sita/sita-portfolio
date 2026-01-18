@@ -137,6 +137,9 @@ import { ContactSectionHeaderComponent } from '../../shared/components/section-h
               id="recaptcha-container"
               class="recaptcha-container"
             ></div>
+            <div class="recaptcha-error" *ngIf="showCaptchaError">
+              Please click the checkbox to verify you are not a robot.
+            </div>
 
             <mat-form-field appearance="outline">
               <mat-label>Name</mat-label>
@@ -187,7 +190,7 @@ import { ContactSectionHeaderComponent } from '../../shared/components/section-h
             <button
               type="submit"
               class="btn-cta submit-btn"
-              [disabled]="contactForm.invalid || isSubmitting"
+              [disabled]="isSubmitting"
             >
               @if (isSubmitting) {
               <mat-icon class="spinning">sync</mat-icon>
@@ -329,12 +332,12 @@ import { ContactSectionHeaderComponent } from '../../shared/components/section-h
         border-radius: 50px;
         color: var(--color-neon-green);
         font-weight: 500;
-        font-size: 0.9375rem;
+        font-size: 1.25rem;
       }
 
       .availability-dot {
-        width: 10px;
-        height: 10px;
+        width: 20px;
+        height: 20px;
         border-radius: 50%;
         background: var(--color-neon-green);
         animation: pulse 2s ease-in-out infinite;
@@ -378,6 +381,12 @@ import { ContactSectionHeaderComponent } from '../../shared/components/section-h
         margin-bottom: 0.5rem;
       }
 
+      .recaptcha-error {
+        color: #f44336;
+        font-size: 1.5rem;
+        margin: -0.25rem 0 0.5rem;
+      }
+
       .spinning {
         animation: spin 1s linear infinite;
       }
@@ -416,6 +425,8 @@ export class ContactViewComponent implements AfterViewInit, OnChanges {
   private recaptchaScriptLoaded = false;
   private recaptchaRendered = false;
   private renderRetryHandle: number | null = null;
+  private submitted = false;
+  private focusAttempted = false;
 
   constructor() {
     this.contactForm = this.fb.group({
@@ -456,9 +467,13 @@ export class ContactViewComponent implements AfterViewInit, OnChanges {
   }
 
   submitForm(): void {
-    if (this.contactForm.valid) {
-      this.formSubmit.emit(this.contactForm.value as ContactFormData);
+    this.submitted = true;
+    if (this.contactForm.invalid) {
+      this.contactForm.markAllAsTouched();
+      this.focusFirstInvalidControl();
+      return;
     }
+    this.formSubmit.emit(this.contactForm.value as ContactFormData);
   }
 
   private loadRecaptchaScript(): void {
@@ -548,6 +563,22 @@ export class ContactViewComponent implements AfterViewInit, OnChanges {
       grecaptcha.reset(this.recaptchaWidgetId);
       this.contactForm.patchValue({ captchaToken: '' });
       this.recaptchaReady = false;
+    }
+  }
+
+  get showCaptchaError(): boolean {
+    const ctrl = this.contactForm.get('captchaToken');
+    return this.submitted && !!ctrl && ctrl.invalid;
+  }
+
+  private focusFirstInvalidControl(): void {
+    if (this.focusAttempted) return;
+    const invalid = document.querySelector(
+      '.contact-form .ng-invalid:not(form)'
+    ) as HTMLElement | null;
+    if (invalid?.focus) {
+      invalid.focus();
+      this.focusAttempted = true;
     }
   }
 }
