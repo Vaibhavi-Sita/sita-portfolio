@@ -61,16 +61,7 @@ import { Profile } from '../../models';
           >
             <mat-icon>business</mat-icon>
           </a>
-          } @if (profile.email) {
-          <a
-            [href]="'mailto:' + profile.email"
-            aria-label="Email"
-            class="social-link"
-          >
-            <mat-icon>email</mat-icon>
-          </a>
-          }
-          @if (profile.resumeUrl) {
+          }  @if (profile.resumeUrl) {
           <a
             [href]="profile.resumeUrl"
             target="_blank"
@@ -79,6 +70,17 @@ import { Profile } from '../../models';
             class="social-link"
           >
             <mat-icon>file_present</mat-icon>
+          </a>
+          } 
+          @if (profile.email) {
+          <a
+            [href]="'mailto:' + profile.email"
+            aria-label="Email"
+            class="social-link"
+          >
+            <mat-icon>email</mat-icon>
+          </a>
+          }
         </div>
       </div>
       <div class="hero-decoration">
