@@ -74,6 +74,7 @@ export class LayoutController implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.scrollService.activeSection.set('home');
     // Initialize section observer after view is ready
     setTimeout(() => {
       this.scrollService.initSectionObserver(

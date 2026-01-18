@@ -81,15 +81,33 @@ export class ScrollService implements OnDestroy {
         }
       );
 
-      // Observe each section
-      sectionIds.forEach((id) => {
-        const element = document.getElementById(id);
-        if (element) {
-          this.observer?.observe(element);
-          this.observedElements.set(id, element);
-        }
-      });
+      // Observe each section, retrying briefly for late-rendered content (e.g., hero)
+      this.observeSections(sectionIds);
     });
+  }
+
+  /**
+   * Try to observe provided section IDs, with a few retries for late DOM availability.
+   */
+  private observeSections(sectionIds: string[], attempt = 0): void {
+    const missing: string[] = [];
+
+    sectionIds.forEach((id) => {
+      if (this.observedElements.has(id)) {
+        return;
+      }
+      const element = document.getElementById(id);
+      if (element) {
+        this.observer?.observe(element);
+        this.observedElements.set(id, element);
+      } else {
+        missing.push(id);
+      }
+    });
+
+    if (missing.length && attempt < 5) {
+      setTimeout(() => this.observeSections(missing, attempt + 1), 200);
+    }
   }
 
   /**
