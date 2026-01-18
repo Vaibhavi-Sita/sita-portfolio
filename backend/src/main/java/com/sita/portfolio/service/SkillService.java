@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Service for skill management (admin operations).
@@ -160,40 +162,41 @@ public class SkillService {
         // Validate category exists
         SkillCategory category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException("SkillCategory", "id", request.getCategoryId()));
-        
-        // Extract item IDs and validate all exist
-        List<UUID> itemIds = request.getItems().stream()
-                .map(ReorderSkillItemsRequest.ItemOrder::getId)
-                .toList();
-        
-        List<SkillItem> items = itemRepository.findAllById(itemIds);
-        if (items.size() != itemIds.size()) {
+
+        // Extract ordered IDs and validate all exist
+        List<UUID> orderedIds = request.getOrderedIds();
+
+        List<SkillItem> items = itemRepository.findAllById(orderedIds);
+        if (items.size() != orderedIds.size()) {
             List<UUID> foundIds = items.stream().map(SkillItem::getId).toList();
-            List<UUID> missingIds = itemIds.stream()
+            List<UUID> missingIds = orderedIds.stream()
                     .filter(id -> !foundIds.contains(id))
                     .toList();
             throw new BadRequestException(
                     "Invalid skill item IDs: " + missingIds,
-                    "items"
+                    "orderedIds"
             );
         }
-        
+
+        Map<UUID, SkillItem> itemsById = items.stream()
+                .collect(Collectors.toMap(SkillItem::getId, item -> item));
+
         // Validate all items belong to the specified category
-        for (SkillItem item : items) {
+        for (UUID itemId : orderedIds) {
+            SkillItem item = itemsById.get(itemId);
             if (!item.getCategory().getId().equals(request.getCategoryId())) {
                 throw new BadRequestException(
                         "Skill item " + item.getId() + " does not belong to category " + request.getCategoryId(),
-                        "items"
+                        "orderedIds"
                 );
             }
         }
-        
-        // Update sort orders
-        for (ReorderSkillItemsRequest.ItemOrder order : request.getItems()) {
-            items.stream()
-                    .filter(item -> item.getId().equals(order.getId()))
-                    .findFirst()
-                    .ifPresent(item -> item.setSortOrder(order.getSortOrder()));
+
+        // Update sort orders based on provided order
+        for (int i = 0; i < orderedIds.size(); i++) {
+            UUID itemId = orderedIds.get(i);
+            SkillItem item = itemsById.get(itemId);
+            item.setSortOrder(i);
         }
         itemRepository.saveAll(items);
         
