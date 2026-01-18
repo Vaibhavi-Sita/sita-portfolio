@@ -1,85 +1,221 @@
 # Sita Portfolio
 
-A full-stack portfolio application with a Spring Boot backend and Angular frontend.
+A production grade full stack portfolio platform designed with strict separation of concerns, secure API boundaries, and cloud native deployment.
 
-## Project Structure
+The system is architected as a decoupled Angular single page application and a Spring Boot REST API backed by a managed PostgreSQL database.
+
+Live: https://hey-sita.dev/
+
+---
+
+## High Level Architecture
 
 ```
-├── backend/          # Spring Boot REST API
-├── frontend/         # Angular SPA
-└── README.md
+Client Browser
+      ↓
+Angular SPA (Vercel)
+      ↓ HTTPS / JSON
+Spring Boot API (Render)
+      ↓ JDBC
+Supabase PostgreSQL
 ```
 
-## Prerequisites
+---
 
-- **Backend**: Java 17+, Maven 3.8+
-- **Frontend**: Node.js 18+, npm 9+, Angular CLI
+## Architectural Goals
 
-## Getting Started
+| Goal | Description |
+|----|------------|
+| Separation of concerns | Frontend and backend evolve independently |
+| Security | No direct client database access |
+| Scalability | Stateless REST APIs |
+| Maintainability | Layered backend design |
+| Deployability | Cloud native hosting |
 
-### Backend (Spring Boot)
+---
 
-```bash
-cd backend
+## Backend System Design
 
-# Install dependencies and run
-./mvnw spring-boot:run
+### Architectural Pattern
 
-# Or on Windows
-mvnw.cmd spring-boot:run
+- MVC with a dedicated service layer
+- DTO based API contracts
+- Stateless REST architecture
+
+### Backend Layers
+
+| Layer | Responsibility |
+|-----|----------------|
+| Controller | API endpoints, validation, authorization |
+| Service | Business logic orchestration |
+| Repository | Data access abstraction |
+| Security | JWT authentication and authorization |
+| DTO | Controlled data exposure |
+
+### Backend Structure
+
+```
+backend/
+└── src/main/java/com/portfolio/
+    ├── controller/
+    ├── service/
+    ├── repository/
+    ├── model/
+    ├── dto/
+    ├── security/
+    ├── config/
+    └── exception/
 ```
 
-The API will be available at `http://localhost:8080`
+---
 
-### Frontend (Angular)
+## Frontend System Design
 
-```bash
-cd frontend
+### Architectural Style
 
-# Install dependencies
-npm install
+- Single Page Application
+- MVC inspired separation
+- Service driven data access
+- Strongly typed domain models
 
-# Start development server
-ng serve
+### MVC Mapping
+
+| Concept | Angular Implementation |
+|------|------------------------|
+| Model | TypeScript interfaces |
+| View | Component templates |
+| Controller | Services and components |
+
+### Frontend Structure
+
+```
+frontend/
+└── src/app/
+    ├── models/
+    ├── views/
+    ├── services/
+    ├── guards/
+    ├── interceptors/
+    ├── shared/
+    └── core/
 ```
 
-The application will be available at `http://localhost:4200`
+---
 
-## Development
+## Data Flow
 
-### Running Both Services
-
-For local development, run both services in separate terminals:
-
-**Terminal 1 - Backend:**
-
-```bash
-cd backend && ./mvnw spring-boot:run
+```
+User Action
+    ↓
+Angular View
+    ↓
+Angular Service
+    ↓
+REST API Call
+    ↓
+Spring Controller
+    ↓
+Service Layer
+    ↓
+Repository
+    ↓
+Database
 ```
 
-**Terminal 2 - Frontend:**
+All validation, authorization, and persistence logic resides on the backend.
 
-```bash
-cd frontend && ng serve
+---
+
+## Database Design
+
+### Characteristics
+
+- Supabase managed PostgreSQL
+- Backend only access
+- Schema aligned with domain entities
+- Publishing and ordering controls
+
+### Core Domains
+
+| Domain | Purpose |
+|-----|---------|
+| Profile | Personal metadata |
+| Projects | Portfolio content |
+| Experience | Work history |
+| Education | Academic records |
+| Skills | Categorized skills |
+| Certifications | Professional credentials |
+| Admin | Privileged access |
+
+---
+
+## Authentication Architecture
+
+### Strategy
+
+- JWT based authentication
+- Stateless authorization
+- Role restricted admin APIs
+
+### Token Model
+
+| Token | Scope | Storage |
+|-----|------|---------|
+| Access Token | API authorization | Memory |
+| Refresh Token | Token renewal | HttpOnly cookie |
+
+### Security Controls
+
+- BCrypt password hashing
+- Signed JWT tokens
+- Centralized request filtering
+- Restricted CORS policy
+
+---
+
+## Deployment Architecture
+
+### Hosting Platforms
+
+| Component | Platform |
+|--------|----------|
+| Frontend | Vercel |
+| Backend | Render |
+| Database | Supabase PostgreSQL |
+
+### Deployment Topology
+
+```
+Client
+  ↓
+Vercel CDN
+  ↓
+Angular SPA
+  ↓
+Render API Service
+  ↓
+Supabase PostgreSQL
 ```
 
-## Build for Production
+Frontend and backend are independently deployable and horizontally scalable.
 
-### Backend
+---
 
-```bash
-cd backend
-./mvnw clean package
-java -jar target/*.jar
-```
+## Communication Contract
 
-### Frontend
+| Aspect | Design |
+|-----|-------|
+| Protocol | HTTPS |
+| Format | JSON |
+| Style | REST |
+| Authentication | Bearer JWT |
+| Error Handling | Centralized |
 
-```bash
-cd frontend
-ng build --configuration production
-```
+---
 
 ## License
 
-MIT
+All Rights Reserved
+
+This repository is proprietary software.
+Unauthorized copying, redistribution, or reuse is strictly prohibited.
