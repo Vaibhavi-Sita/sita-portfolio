@@ -41,11 +41,11 @@ import { SectionHeaderComponent } from '../../shared';
               <span class="highlight-label">Years Experience</span>
             </div>
             <div class="highlight reveal-on-scroll hover-elevate">
-              <span class="highlight-number text-gradient">20+</span>
-              <span class="highlight-label">Projects Completed</span>
+              <span class="highlight-number text-gradient">10+</span>
+              <span class="highlight-label">Projects</span>
             </div>
             <div class="highlight reveal-on-scroll hover-elevate">
-              <span class="highlight-number text-gradient">10+</span>
+              <span class="highlight-number text-gradient">20+</span>
               <span class="highlight-label">Technologies</span>
             </div>
           </div>
