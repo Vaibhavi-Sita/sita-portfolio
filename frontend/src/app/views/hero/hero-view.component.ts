@@ -47,6 +47,7 @@ import { Profile } from '../../models';
             target="_blank"
             rel="noopener"
             aria-label="GitHub"
+            title="GitHub"
             class="social-link"
           >
             <mat-icon>code</mat-icon>
@@ -57,6 +58,7 @@ import { Profile } from '../../models';
             target="_blank"
             rel="noopener"
             aria-label="LinkedIn"
+            title="LinkedIn"
             class="social-link"
           >
             <mat-icon>business</mat-icon>
@@ -67,6 +69,7 @@ import { Profile } from '../../models';
             target="_blank"
             rel="noopener"
             aria-label="Resume"
+            title="Resume"
             class="social-link"
           >
             <mat-icon>file_present</mat-icon>
@@ -76,6 +79,7 @@ import { Profile } from '../../models';
           <a
             [href]="'mailto:' + profile.email"
             aria-label="Email"
+            title="Email"
             class="social-link"
           >
             <mat-icon>email</mat-icon>
@@ -153,6 +157,7 @@ import { Profile } from '../../models';
         display: flex;
         gap: 1rem;
         justify-content: center;
+        flex-wrap: wrap;
       }
 
       .social-link {
@@ -174,6 +179,7 @@ import { Profile } from '../../models';
           box-shadow: var(--glow-violet);
         }
       }
+
 
       .hero-decoration {
         position: absolute;
