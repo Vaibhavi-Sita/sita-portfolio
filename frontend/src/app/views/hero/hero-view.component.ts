@@ -51,6 +51,7 @@ import { Profile } from '../../models';
             class="social-link"
           >
             <mat-icon>code</mat-icon>
+            <span class="social-label">GitHub</span>
           </a>
           } @if (profile.linkedinUrl) {
           <a
@@ -62,6 +63,7 @@ import { Profile } from '../../models';
             class="social-link"
           >
             <mat-icon>business</mat-icon>
+            <span class="social-label">LinkedIn</span>
           </a>
           }  @if (profile.resumeUrl) {
           <a
@@ -73,6 +75,7 @@ import { Profile } from '../../models';
             class="social-link"
           >
             <mat-icon>file_present</mat-icon>
+            <span class="social-label">Resume</span>
           </a>
           } 
           @if (profile.email) {
@@ -83,6 +86,7 @@ import { Profile } from '../../models';
             class="social-link"
           >
             <mat-icon>email</mat-icon>
+            <span class="social-label">Email</span>
           </a>
           }
         </div>
@@ -162,11 +166,14 @@ import { Profile } from '../../models';
 
       .social-link {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
+        gap: 0.35rem;
+        width: 88px;
+        height: 92px;
+        padding: 0.5rem;
+        border-radius: 14px;
         background: var(--bg-elevated);
         border: 1px solid var(--border-subtle);
         color: var(--text-secondary);
@@ -178,6 +185,16 @@ import { Profile } from '../../models';
           transform: translateY(-3px);
           box-shadow: var(--glow-violet);
         }
+      }
+
+      .social-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        letter-spacing: 0.01em;
+      }
+
+      .social-link:hover .social-label {
+        color: var(--color-blue-violet);
       }
 
 
