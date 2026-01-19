@@ -48,6 +48,10 @@ import { SectionHeaderComponent } from '../../shared';
               <span class="highlight-number text-gradient">20+</span>
               <span class="highlight-label">Technologies</span>
             </div>
+            <div class="highlight reveal-on-scroll hover-elevate">
+              <span class="highlight-number text-gradient">❤︎⁠</span>
+              <span class="highlight-label">Dance & Boba</span>
+            </div>
           </div>
         </div>
       </div>
@@ -106,6 +110,9 @@ import { SectionHeaderComponent } from '../../shared';
 
       .about-text {
         max-width: 600px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
       }
 
       .bio {
