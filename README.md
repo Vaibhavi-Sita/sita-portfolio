@@ -7,7 +7,14 @@ The system is architected as a decoupled Angular single page application and a S
 Live: https://hey-sita.dev/
 
 ---
+## Preview
 
+<p align="center">
+  <img src="https://mlnhxrpbhuwmggkcnjqv.supabase.co/storage/v1/object/public/public-assets/landingpage.png" alt="Landing Page" width="45%"/>
+  <img src="https://mlnhxrpbhuwmggkcnjqv.supabase.co/storage/v1/object/public/public-assets/admindashboard.png" alt="Admin Dashboard" width="45%"/>
+</p>
+
+---
 ## High Level Architecture
 
 ```
