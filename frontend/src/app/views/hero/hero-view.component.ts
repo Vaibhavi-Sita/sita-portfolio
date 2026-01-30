@@ -65,7 +65,7 @@ import { Profile } from '../../models';
             <mat-icon>business</mat-icon>
             <span class="social-label">LinkedIn</span>
           </a>
-          }  @if (profile.resumeUrl) {
+          } @if (profile.resumeUrl) {
           <a
             [href]="profile.resumeUrl"
             target="_blank"
@@ -77,8 +77,7 @@ import { Profile } from '../../models';
             <mat-icon>file_present</mat-icon>
             <span class="social-label">Resume</span>
           </a>
-          } 
-          @if (profile.email) {
+          } @if (profile.email) {
           <a
             [href]="'mailto:' + profile.email"
             aria-label="Email"
@@ -90,11 +89,19 @@ import { Profile } from '../../models';
           </a>
           }
         </div>
+        <br />
+        @if (availabilityStatus) {
+        <div class="availability-badge">
+          <span class="availability-dot"></span>
+          <span class="availability-text">{{ availabilityStatus }}</span>
+        </div>
+        }
       </div>
       <div class="hero-decoration">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
         <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
       </div>
     </section>
     }
@@ -148,6 +155,54 @@ import { Profile } from '../../models';
         max-width: 600px;
         line-height: 1.7;
       }
+      .availability-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        margin-bottom: 2rem;
+        background: rgba(44, 255, 5, 0.1);
+        border: 1px solid rgba(44, 255, 5, 0.3);
+        border-radius: 50px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--color-neon-green);
+        animation: fadeIn 0.5s ease-out;
+      }
+
+      .availability-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--color-neon-green);
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      .availability-text {
+        letter-spacing: 0.02em;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        70% {
+          opacity: 0;
+          transform: scale(1.5);
+        }
+      }
 
       .hero-actions {
         display: flex;
@@ -197,7 +252,6 @@ import { Profile } from '../../models';
         color: var(--color-blue-violet);
       }
 
-
       .hero-decoration {
         position: absolute;
         inset: 0;
@@ -225,7 +279,7 @@ import { Profile } from '../../models';
       .orb-2 {
         width: 300px;
         height: 300px;
-        background: var(--color-winter-sky);
+        background: var(--color-blue-violet);
         top: 50%;
         right: -5%;
         animation-delay: -3s;
@@ -234,8 +288,8 @@ import { Profile } from '../../models';
       .orb-3 {
         width: 250px;
         height: 250px;
-        background: var(--color-orange);
-        bottom: 10%;
+        background: var(--color-winter-sky);
+        bottom: 20%;
         left: 20%;
         animation-delay: -6s;
       }
@@ -246,10 +300,10 @@ import { Profile } from '../../models';
           transform: translate(0, 0);
         }
         33% {
-          transform: translate(20px, -20px);
+          transform: translate(50px, -50px);
         }
         66% {
-          transform: translate(-20px, 20px);
+          transform: translate(-50px, 50px);
         }
       }
 
@@ -277,6 +331,7 @@ import { Profile } from '../../models';
 })
 export class HeroViewComponent {
   @Input() profile: Profile | null = null;
+  @Input() availabilityStatus?: string;
   @Output() experienceClick = new EventEmitter<void>();
   @Output() contactClick = new EventEmitter<void>();
 }

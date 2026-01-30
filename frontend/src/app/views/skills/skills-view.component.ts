@@ -71,7 +71,7 @@ import { SectionHeaderComponent, SkillBadgeComponent } from '../../shared';
   styles: [
     `
       .skills {
-        background: var(--bg-secondary);
+        background: transparent;
       }
 
       .empty-state {

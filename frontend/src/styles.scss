@@ -310,18 +310,18 @@ a {
 .hero-gradient-bg {
   --parallax-layer-1: radial-gradient(
       ellipse at 20% 30%,
-      rgba($color-blue-violet, 0.3) 0%,
+      rgba($color-blue-violet, 0.8) 0%,
       transparent 55%
     ),
     radial-gradient(
-      ellipse at 80% 20%,
+      ellipse at 80% 10%,
       rgba($color-winter-sky, 0.25) 0%,
       transparent 50%
     );
   --parallax-layer-2: radial-gradient(
       ellipse at 60% 80%,
       rgba($color-orange, 0.22) 0%,
-      transparent 55%
+      transparent 33%
     ),
     radial-gradient(
       ellipse at 10% 90%,

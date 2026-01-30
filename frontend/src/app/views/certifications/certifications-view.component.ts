@@ -79,7 +79,7 @@ import { SectionHeaderComponent } from '../../shared';
   styles: [
     `
       .certifications {
-        background: var(--bg-secondary);
+        background: transparent;
       }
 
       .empty-state {

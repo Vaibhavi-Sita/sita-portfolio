@@ -103,7 +103,7 @@ import { SectionHeaderComponent } from '../../shared';
   styles: [
     `
       .experience {
-        background: var(--bg-secondary);
+        background: transparent;
       }
 
       .empty-state {

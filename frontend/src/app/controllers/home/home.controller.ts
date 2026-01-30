@@ -66,6 +66,7 @@ import { LoadingSpinnerComponent } from '../../shared';
     <!-- Home / Hero Section -->
     <app-hero-view
       [profile]="state.profile()"
+      [availabilityStatus]="state.contactSettings()?.availabilityStatus"
       (experienceClick)="scrollToSection('experience')"
       (contactClick)="scrollToSection('contact')"
     >

@@ -5,11 +5,13 @@ import { Injectable, NgZone, inject } from '@angular/core';
  * Honors prefers-reduced-motion for accessibility.
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MotionService {
   private readonly ngZone = inject(NgZone);
-  private readonly motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  private readonly motionQuery = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  );
 
   private parallaxElements: HTMLElement[] = [];
   private revealObserver: IntersectionObserver | null = null;
@@ -143,11 +145,13 @@ export class MotionService {
         {
           root: null,
           rootMargin: '0px 0px -10% 0px',
-          threshold: 0.2
+          threshold: 0.2,
         }
       );
 
-      revealElements.forEach((element) => this.revealObserver?.observe(element));
+      revealElements.forEach((element) =>
+        this.revealObserver?.observe(element)
+      );
     });
   }
 
